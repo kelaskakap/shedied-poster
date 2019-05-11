@@ -22,7 +22,7 @@ class HomeDesigning extends AbstractParser {
 
         $prologue = pq('div.top_blocks p.first')->text();
         if (!trim($prologue))
-            $prologue = pq('div.entry p:first-child')->text();
+            $prologue = pq('div.entry p:first')->text();
 
         $this->prologue = trim($prologue);
 

@@ -143,7 +143,7 @@ class PojokJogjaController extends Controller {
     }
 
     protected function loopPostLinks(Numbers $helper) {
-
+        
         $post_links = array_reverse($this->post_links);
         $key = 0;
 
@@ -173,7 +173,8 @@ class PojokJogjaController extends Controller {
                 if ($helper->need_Gallery())
                     if (!$parser->getGallery())
                         $gallery = false;
-
+                
+                    
                 if (strlen($parser->getContent()) > 0 && $gallery) {
 
                     CWriter::removeHtmlComments($parser);
@@ -330,8 +331,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'iok9ososos',
-                'link' => 'http://www.home-designing.com/black-bedroom-furniture-set-design-ideas-images-tip-accessories'
+                'title' => 'ko9iiik',
+                'link' => 'http://www.home-designing.com/an-eclectic-minimalist-apartment'
             ];
         }
 
