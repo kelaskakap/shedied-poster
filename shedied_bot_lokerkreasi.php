@@ -23,12 +23,24 @@ function shedied_exec_bot($sources = [], $count = 1, $transient_name = '', $swee
 
         if (empty($post_links) && !$sweeper && !empty($sources) && $helper) {
 
+            $fr = get_transient('firstRun');
+            if (!$fr)
+                $fr = [];
+
             foreach ($sources as $sourceId => $source) {
 
-                $controller->setUrl($source['url']);
+                $t = isset($fr[$sourceId]) ? (int) $fr[$sourceId] : 50;
+                $Url = $source['url'];
+                $Page = $t > 1 ? 'page/' . $t : '';
+
+                $controller->setUrl($Url . $Page);
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
                 $helper->fetchPostLinks($controller);
+
+                $t--;
+                $fr[$sourceId] = $t;
+                set_transient('firstRun', $fr);
             }
 
             $post_links = $controller->getPostLinks();
