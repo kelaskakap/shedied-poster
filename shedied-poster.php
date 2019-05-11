@@ -95,8 +95,8 @@ function shedied_load_jquery_ui() {
     //  // tell WordPress to load jQuery UI tabs
     // wp_deregister_script('jquery'); 
 //echo "load jquery ui";
-    wp_register_script('kp_jquery', 'http://code.jquery.com/jquery-1.10.2.js', false, '1.10.2', false);
-    wp_register_script('kp-jquery-ui', 'http://code.jquery.com/ui/1.11.4/jquery-ui.js', false, '1.11.4', false);
+    wp_register_script('kp_jquery', 'https://code.jquery.com/jquery-1.10.2.js', false, '1.10.2', false);
+    wp_register_script('kp-jquery-ui', 'https://code.jquery.com/ui/1.11.4/jquery-ui.js', false, '1.11.4', false);
     wp_register_script('kp-main', plugins_url('main_news.js', __FILE__));
     wp_register_style('kp-bootstrap', plugins_url('overcast.css', __FILE__));
     wp_register_style('kp-style', plugins_url('style.css', __FILE__));
