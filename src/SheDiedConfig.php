@@ -26,7 +26,7 @@ class SheDieDConfig {
             elseif (self::SITE_DOMAIN == Dua::AWESOMEDECORS_US)
                 self::$sources = Dua::sources();
             elseif (self::SITE_DOMAIN == Tiga::POJOKJOGJA_COM)
-                self::$sources = Tiga::sources ();
+                self::$sources = Tiga::sources();
         }
     }
 
@@ -42,8 +42,29 @@ class SheDieDConfig {
         if (array_key_exists($id, self::$sources)) {
             return self::$sources[$id];
         } else {
-            throw new \Exception('Source ID ' . $id . ' is not found');
+            return FALSE;
         }
+    }
+
+    static public function pick_Sources(Array $indexes, Array $cats) {
+
+        if (count($indexes) != count($cats))
+            return;
+
+        $x = [];
+
+        foreach ($indexes as $key => $val) {
+
+            $t = self::getSource($val);
+
+            if ($t) {
+
+                $t['cat'] = $cats[$key];
+                $x[] = $t;
+            }
+        }
+
+        return $x;
     }
 
 }
