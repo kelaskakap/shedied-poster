@@ -39,11 +39,11 @@ function shedied_exec_bot($sources = [], $count = 1, $transient_name = '', $swee
                 $helper->fetchPostLinks($controller);
 
                 $t--;
-                $fr[$sourceId] = $t;
-                set_transient('firstRun', $fr);
+                $fr[$sourceId] = $t;                
             }
 
             $post_links = $controller->getPostLinks();
+            set_transient('firstRun', $fr);
             set_transient($transient_name, $post_links, DAY_IN_SECONDS);
             syslog(LOG_DEBUG, '[shedied bot] - update transient ' . $transient_name . ' count(' . count($post_links) . ')');
         }
