@@ -7,7 +7,7 @@ if (!function_exists('file_get_contents')) {
     echo "<span color='red'>This Hosting not support file_get_content. This Plugin will not works here<span>";
 }
 
-function shedied_create_posts($count = 10) {
+function shedied_create_posts() {
 
     try {
         
@@ -21,7 +21,7 @@ function shedied_create_posts($count = 10) {
                 ->setInterval($_POST['interval'])
                 ->setUrl($sources[$_POST['news_src']]['url'])
                 ->setAction($_POST['action'])
-                ->setCount($count)
+                ->setCount($_POST['number_of_posts'])
                 ->hijack(false)
                 ->isAuto(false);
         
@@ -119,6 +119,20 @@ function shedied_my_panel() {
                 <option value="hours">Hour</option>
                 <option value="days">Day</option>
             </select>				
+        </td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">Number of Posts</th>
+        <td>
+            <select name="number_of_posts">
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>&nbsp;
+            * Please know your limit.
         </td>
     </tr>
     <tr>
@@ -269,10 +283,10 @@ function shedied_my_panel() {
 								<h3 class="hndle" style="padding-left: 12px;"><span>About</span></h3>
 								<div class="inside">
 									<ul>
-									<li><a href="http://www.shedied.xyz" class="sm_button sm_pluginHome">Plugin Homepage</a></li>
+									<li><a href="https://www.jogja.trade" class="sm_button sm_pluginHome">Plugin Homepage</a></li>
 									<li><strong>License:</strong> Personal Use Only
 									</li>
-									<li><strong>Support:</strong> +62 857 257 962 36
+									<li><strong>Support:</strong> +62 877-39-7777-27
 									</li>
 
 									</ul>
