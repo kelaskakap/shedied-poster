@@ -135,8 +135,8 @@ class WPWrapper {
         
         foreach ($parser->getGallery() as $key => $img) {
             
-            if ($key > 10)
-                break;
+            //if ($key > 10)
+            //    break;
             
             $img = (object) $img;
             #upload image
