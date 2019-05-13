@@ -107,8 +107,13 @@ class PojokJogjaController extends Controller {
     }
 
     public function setCount($count) {
-        $this->count = $count;
+        $this->count = (int) $count;
         return $this;
+    }
+
+    public function getCount() {
+
+        return $this->count;
     }
 
     public function isAuto($bool) {
@@ -143,7 +148,7 @@ class PojokJogjaController extends Controller {
     }
 
     protected function loopPostLinks(Numbers $helper) {
-        
+
         $post_links = array_reverse($this->post_links);
         $key = 0;
 
@@ -173,8 +178,8 @@ class PojokJogjaController extends Controller {
                 if ($helper->need_Gallery())
                     if (!$parser->getGallery())
                         $gallery = false;
-                
-                    
+
+
                 if (strlen($parser->getContent()) > 0 && $gallery) {
 
                     CWriter::removeHtmlComments($parser);

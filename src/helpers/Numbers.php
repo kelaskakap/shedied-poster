@@ -26,4 +26,9 @@ abstract class Numbers {
         $this->need_gallery = (bool) $need;
     }
 
+    public function enough($links = [], PojokJogjaController $controller) {
+
+        return count($links) >= $controller->getCount();
+    }
+
 }
