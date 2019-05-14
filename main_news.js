@@ -19,7 +19,7 @@ jQuery("document").ready(function ($) {
     change_categories(data);
 
     jQuery('.bulkposttype').change(function () {
-        
+        jQuery('.categorylist, .cpgcategorylist').html('');
         data.bulkposttype = jQuery(this).val();
         change_categories(data);
     });
@@ -30,7 +30,7 @@ function change_categories(data) {
 
     jQuery.post(ajaxurl, data, function (response) {
         
-        jQuery('.categorylist').html(response);
+        jQuery('.categorylist, .cpgcategorylist').html(response);
     });
 }
 

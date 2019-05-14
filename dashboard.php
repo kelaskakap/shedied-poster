@@ -260,12 +260,17 @@ function shedied_my_panel() {
 				<td>
 				Source: ';
     echo shedied_gen_news_combo("set_news_src");
-    echo "Category";
-    wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'set_category', 'orderby' => 'name',
-        'selected' => "", 'hierarchical' => true, 'show_option_none' => __('None')));
-    echo "Authors";
+    echo ' Post Type: ';
+    echo '<select name="cpg_bulk_post_type" class="bulkposttype">
+						<option value="post">Posts</option>
+						<option value="page">Pages</option>
+                                                <option value="review">Review</option>
+					</select>';
+    echo " Category: ";
+    echo '<div class="cpgcategorylist" style="display: inline;"></div>';
+    echo " Authors: ";
     wp_dropdown_users(array('name' => 'set_author', 'selected' => get_current_user_id()));
-    echo "<input type='button' class='button-primary' value='Add Campaign' onclick='do_ajax(\"add_campaign\")'>";
+    echo " <input type='button' class='button-primary' value='Add Campaign' onclick='do_ajax(\"add_campaign\")'>";
     echo '
 				</td>
 			</tr>
