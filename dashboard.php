@@ -64,7 +64,7 @@ function shedied_my_panel() {
 		  <div id="tabs-Home">';
 
     echo '<form name="frmPost" method="post">' . PHP_EOL;
-    $year = date("Y");
+    
     echo '<table style="text-align: left; padding: 10px 30px;">
 			<tr valign="top">
 				<th scope="row">News Source</th>
@@ -79,17 +79,16 @@ function shedied_my_panel() {
 			<tr valign="top">
 				<th scope="row">Post Type</th>
 				<td>
-					<select name="bulk_post_type">
+					<select name="bulk_post_type" class="bulkposttype">
 						<option value="post">Posts</option>
 						<option value="page">Pages</option>
+                                                <option value="review">Reviews [case: technoreview.us]</option>
 					</select>
 				</td>						
 
 			</tr>
-			<tr><th>Category</th> <th>';
-    wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'category', 'orderby' => 'name',
-        'selected' => "", 'hierarchical' => true, 'show_option_none' => __('None')));
-    echo "Authors:";
+			<tr><th>Category</th> <th class="categorylist"></th></tr>
+                        <tr><th>Author</th> <th>';
     wp_dropdown_users(array('name' => 'author', 'selected' => get_current_user_id()));
     echo '</th></tr>
 			<tr valign="top">

@@ -5,6 +5,7 @@ namespace SheDied;
 use SheDied\helpers\Dua;
 use SheDied\helpers\Satu;
 use SheDied\helpers\Tiga;
+use SheDied\helpers\Empat;
 
 class SheDieDConfig {
 
@@ -13,7 +14,7 @@ class SheDieDConfig {
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'awesomedecors.us';
+    const SITE_DOMAIN = 'technoreview.us';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 2; //minutes
 
@@ -27,6 +28,8 @@ class SheDieDConfig {
                 self::$sources = Dua::sources();
             elseif (self::SITE_DOMAIN == Tiga::POJOKJOGJA_COM)
                 self::$sources = Tiga::sources();
+            elseif (self::SITE_DOMAIN == Empat::TECHNOREVIEW_US)
+                self::$sources = Empat::sources();
         }
     }
 

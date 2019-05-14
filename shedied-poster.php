@@ -20,6 +20,7 @@ add_filter('wp_head', 'shedied_auto_post');
 add_action('admin_print_scripts-toplevel_page_shedied-poster', 'shedied_action_javascript');
 add_action('admin_print_styles-toplevel_page_shedied-poster', 'shedied_plugin_admin_styles');
 add_action('wp_ajax_shedied_ajax', 'shedied_ajax');
+add_action('wp_ajax_drop_bulkposttype', 'drop_bulkposttype');
 
 function shedied_add_plugin_menu() {
     include("dashboard.php");
@@ -182,6 +183,18 @@ function shedied_ajax() {
         case "load_campaign":
             echo json_encode(shedied_load_campaign());
     }
+    wp_die();
+}
+
+function drop_bulkposttype() {
+
+    if ($_POST['bulkposttype'] == 'review')
+        echo wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'category', 'orderby' => 'name',
+            'selected' => "", 'hierarchical' => true, 'show_option_none' => __('None'), 'taxonomy' => 'review-category', 'echo' => 0));
+    else
+        echo wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'category', 'orderby' => 'name',
+            'selected' => "", 'hierarchical' => true, 'show_option_none' => __('None'), 'echo' => 0));
+    
     wp_die();
 }
 
