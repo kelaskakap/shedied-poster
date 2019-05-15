@@ -74,6 +74,9 @@ class Dua extends Numbers {
     }
 
     public function firstRunURL($Url, $sourceId) {
+        
+        if (empty($this->fr))
+            return $Url;
 
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
         $Page = $t > 1 ? 'page/' . $t : '';

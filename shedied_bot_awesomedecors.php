@@ -7,13 +7,13 @@ function bot_awesomedecors_1() {
 
     $sources = SheDieDConfig::pick_Sources([2, 3, 6, 7], [2, 3, 6, 7]);
 
-    $fr = first_Run('homedesigning');
+    //$fr = first_Run('homedesigning');
     $helper = new Dua();
-    $helper->yesFirstRun($fr);
+    //$helper->yesFirstRun($fr);
 
     shedied_exec_bot($helper, $sources, 20, 'tsnt_awesomedecors_1', false);
 
-    update_first_Run('homedesigning', $helper->arrFirstRun());
+    //update_first_Run('homedesigning', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_1', 'bot_awesomedecors_1');
@@ -66,9 +66,9 @@ add_action('bot_awesomedecors_4', 'bot_awesomedecors_4');
 function bot_awesomedecors_sweeper() {
 
     shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_1', true);
-    //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_5', true);
-    //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_9', true);
-    //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_13', true);
+    shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_5', true);
+    shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_9', true);
+    shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_13', true);
 }
 
 add_action('bot_awesomedecors_sweeper', 'bot_awesomedecors_sweeper');
