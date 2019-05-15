@@ -60,7 +60,7 @@ class SheDieDConfig {
             if ($t) {
 
                 $t['cat'] = $cats[$key];
-                $x[] = $t;
+                $x[$val] = $t;
             }
         }
 
