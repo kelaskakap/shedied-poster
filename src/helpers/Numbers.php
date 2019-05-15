@@ -8,6 +8,7 @@ abstract class Numbers {
 
     protected $parser = '';
     protected $need_gallery = false;
+    protected $fr = [];
 
     public function getParser() {
 
@@ -29,6 +30,20 @@ abstract class Numbers {
     public function enough($links = [], PojokJogjaController $controller) {
 
         return count($links) >= $controller->getCount();
+    }
+
+    public function firstRunURL($url, $sourceId) {
+        
+    }
+
+    public function yesFirstRun($fr) {
+
+        $this->fr = $fr;
+    }
+
+    public function arrFirstRun() {
+
+        return $this->fr;
     }
 
 }
