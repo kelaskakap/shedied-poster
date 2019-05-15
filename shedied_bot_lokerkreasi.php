@@ -15,9 +15,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
             foreach ($sources as $sourceId => $source) {
 
-                $Url = $source['url'];
-                if ($helper->arrFirstRun())
-                    $Url = $helper->firstRunURL($Url, $sourceId);
+                $Url = $helper->firstRunURL($source['url'], $sourceId);
 
                 $controller->setUrl($Url);
                 $controller->setNewsSrc($sourceId);
