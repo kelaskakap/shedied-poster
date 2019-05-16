@@ -2,49 +2,30 @@
 
 use SheDied\SheDieDConfig;
 use SheDied\PojokJogjaController;
-use SheDied\helpers\Satu;
-use SheDied\helpers\Dua;
-use SheDied\helpers\Tiga;
+use SheDied\helpers\Numbers;
 
-function shedied_exec_bot($sources = [], $count = 1, $transient_name = '', $sweeper = false) {
+function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient_name = '', $sweeper = false) {
 
     try {
 
         $post_links = get_transient($transient_name);
         $controller = new PojokJogjaController();
-        $helper = null;
 
-        if (SheDieDConfig::SITE_DOMAIN == Satu::LOKERKREASI_COM)
-            $helper = new Satu ();
-        elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US)
-            $helper = new Dua ();
-        elseif (SheDieDConfig::SITE_DOMAIN == Tiga::POJOKJOGJA_COM)
-            $helper = new Tiga ();
-
-        if (empty($post_links) && !$sweeper && !empty($sources) && $helper) {
-
-            $fr = get_transient('firstRun');
-            if (!$fr)
-                $fr = [];
+        if (empty($post_links) && !$sweeper && !empty($sources)) {
 
             foreach ($sources as $sourceId => $source) {
 
-                $t = isset($fr[$sourceId]) ? (int) $fr[$sourceId] : 50;
-                $Url = $source['url'];
-                $Page = $t > 1 ? 'page/' . $t : '';
+                $Url = $helper->firstRunURL($source['url'], $sourceId);
 
-                $controller->setUrl($Url . $Page);
+                $controller->setUrl($Url);
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
                 $helper->fetchPostLinks($controller);
-
-                $t--;
-                $fr[$sourceId] = $t;                
             }
 
             $post_links = $controller->getPostLinks();
-            set_transient('firstRun', $fr);
             set_transient($transient_name, $post_links, DAY_IN_SECONDS);
+
             syslog(LOG_DEBUG, '[shedied bot] - update transient ' . $transient_name . ' count(' . count($post_links) . ')');
         }
 
@@ -53,7 +34,7 @@ function shedied_exec_bot($sources = [], $count = 1, $transient_name = '', $swee
             $to_run = array_slice($post_links, 0, $count);
             $to_save = array_slice($post_links, $count, count($post_links));
 
-            if (!empty($to_run) && $helper) {
+            if (!empty($to_run)) {
 
                 $controller->setBulkPostType('post')
                         ->setAuthor(SheDieDConfig::AUTHOR_ID) //bot
@@ -72,6 +53,28 @@ function shedied_exec_bot($sources = [], $count = 1, $transient_name = '', $swee
 
         syslog(LOG_ERR, '[shedied bot] - ' . $e->getMessage());
     }
+}
+
+function first_Run($name) {
+
+    $afr = get_transient('afr');
+
+    if (!isset($afr[$name]))
+        return [];
+    else
+        return $afr[$name];
+}
+
+function update_first_Run($name, $fr) {
+
+    $afr = get_transient('afr');
+
+    if (!$afr)
+        $afr = [];
+
+    $afr[$name] = $fr;
+
+    set_transient('afr', $afr);
 }
 
 function bot_lokerkreasi_1() {

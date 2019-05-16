@@ -28,7 +28,7 @@ class Dua extends Numbers {
 
         $postlinks = [];
 
-        if ($controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22) {
+        if ($this->source_HOMEDESIGNING($controller)) {
             #Jobstreet
             foreach (pq('div.heading a') as $a) {
                 $link = pq($a)->attr('href');
@@ -47,12 +47,8 @@ class Dua extends Numbers {
 
     public function switchParsers(PojokJogjaController $controller) {
 
-        switch ($controller->getNewsSrc()) {
-            case $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22:
-                $this->parser = 'SheDied\parser\HomeDesigning';
-            default :
-                break;
-        }
+        if ($this->source_HOMEDESIGNING($controller))
+            $this->parser = 'SheDied\parser\HomeDesigning';
     }
 
     static public function sources() {
@@ -75,6 +71,25 @@ class Dua extends Numbers {
         $sources[21] = ['name' => 'Home Designing: Technology At Home', 'url' => 'http://www.home-designing.com/category/technology-at-home/'];
 
         return $sources;
+    }
+
+    public function firstRunURL($Url, $sourceId) {
+        
+        if (empty($this->fr))
+            return $Url;
+
+        $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
+        $Page = $t > 1 ? 'page/' . $t : '';
+
+        $t--;
+        $this->fr[$sourceId] = $t;
+
+        return $Url . $Page;
+    }
+
+    protected function source_HOMEDESIGNING(PojokJogjaController $controller) {
+
+        return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22;
     }
 
 }
