@@ -15,7 +15,7 @@ class SheDieDConfig {
      */
     const SITE_DOMAIN = 'awesomedecors.us';
     const AUTHOR_ID = 1;
-    const BOT_POST_INVTERVAL = 2; //minutes
+    const BOT_POST_INVTERVAL = 10; //minutes
 
     private static function _sources() {
 
@@ -60,7 +60,7 @@ class SheDieDConfig {
             if ($t) {
 
                 $t['cat'] = $cats[$key];
-                $x[] = $t;
+                $x[$val] = $t;
             }
         }
 
