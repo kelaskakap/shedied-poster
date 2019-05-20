@@ -11,3 +11,4 @@
 !/build/phpunit.xml
 !/build/phpdox.xml
 /composer.lock
+/shedied.log
