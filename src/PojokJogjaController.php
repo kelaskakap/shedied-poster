@@ -232,12 +232,15 @@ class PojokJogjaController extends Controller {
                             WPWrapper::homedesigning_meta($new_draft_id, true, $parser->getHost(), $parser->getUrl());
                         } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
 
-                            WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
-                            WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
-                            WPWrapper::reviews_set_Gadget_Photos($new_draft_id, $parser);
-                            WPWrapper::reviews_set_Tags($new_draft_id, [$parser->getBrand(), $parser->getModel()], true);
-                            WPWrapper::reviews_set_Author_Avg($new_draft_id, $parser);
-                            WPWrapper::reviews_set_default_Scores($new_draft_id, $parser);
+                            if ($this->bulk_post_type == 'review') {
+
+                                WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
+                                WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
+                                WPWrapper::reviews_set_Gadget_Photos($new_draft_id, $parser);
+                                WPWrapper::reviews_set_Tags($new_draft_id, [$parser->getBrand(), $parser->getModel()], true);
+                                WPWrapper::reviews_set_Author_Avg($new_draft_id, $parser);
+                                WPWrapper::reviews_set_default_Scores($new_draft_id, $parser);
+                            }
                         }
 
                         WPWrapper::add_to_yoast_seo($new_draft_id, $parser->getMetaTitle(), $parser->getMetaDescription(), $parser->getMetaKeywords());
