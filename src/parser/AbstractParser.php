@@ -426,4 +426,22 @@ abstract class AbstractParser implements InterfaceParser {
         return \phpQuery::newDocument($html);
     }
 
+    /**
+     * Logging Errors for Debugging
+     * @param mixed $errors string or array
+     */
+    public function logError($errors) {
+
+        $log = __DIR__ . "/../../shedied.log";
+
+        if (is_array($errors)) {
+            
+            $errors = json_encode($errors);
+        }
+
+        $file = fopen($log, "a");
+        echo fwrite($file, "\n" . date('Y-m-d h:i:s') . " :: " . $errors);
+        fclose($file);
+    }
+
 }
