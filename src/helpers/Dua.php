@@ -19,18 +19,16 @@ class Dua extends Numbers {
 
     public function fetchPostLinks(PojokJogjaController $controller) {
 
-        $doc = @file_get_contents($controller->getUrl());
-        if (function_exists('mb_convert_encoding')) {
-            $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
-        }
-
+        $doc = $this->fetchLinks($controller->getUrl());
+        
         \phpQuery::newDocument($doc);
 
         $postlinks = [];
 
         if ($this->source_HOMEDESIGNING($controller)) {
-            #Jobstreet
+            
             foreach (pq('div.heading a') as $a) {
+                
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
@@ -74,7 +72,7 @@ class Dua extends Numbers {
     }
 
     public function firstRunURL($Url, $sourceId) {
-        
+
         if (empty($this->fr))
             return $Url;
 

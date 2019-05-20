@@ -48,7 +48,7 @@ abstract class AbstractParser implements InterfaceParser {
 
         //remove noscript
         $node->find('noscript')->remove();
-        
+
         //clean p from attributs mostly style, class
         $node->find('p')->removeAttr('*');
 
@@ -278,30 +278,41 @@ abstract class AbstractParser implements InterfaceParser {
     }
 
     protected function curlGrabContent() {
+
         try {
-            $ch = curl_init();
-            $parse = parse_url($this->url);
-            $host = $parse['host'];
-            curl_setopt($ch, CURLOPT_URL, $this->url);
-            curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: $host"));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, true);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Fiddler');
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            $output = curl_exec($ch);
 
-            $error = curl_error($ch);
-            if ($error) {
-                throw new \Exception($error);
-            }
-
-            curl_close($ch);
-            return $output;
+            return $this->do_CURL($this->url);
         } catch (\Exception $ex) {
+
             syslog(LOG_DEBUG, '[shedied poster] - gagal grab konten - ' . $ex->getMessage());
         }
+    }
+
+    protected function do_CURL($url) {
+
+        $ch = curl_init();
+        $parse = parse_url($url);
+        $host = $parse['host'];
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: $host"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Fiddler');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $output = curl_exec($ch);
+
+        $error = curl_error($ch);
+
+        if ($error) {
+            throw new \Exception($error);
+        }
+
+        curl_close($ch);
+
+        return $output;
     }
 
     protected function setMetaDescriptionLength($description) {
@@ -398,6 +409,21 @@ abstract class AbstractParser implements InterfaceParser {
 
     public function getDefaultAttachID() {
         return self::DEFAULT_ATTACH_ID;
+    }
+
+    /**
+     * Create DOM \phpQuery
+     * @param string $html
+     * @return \phpQuery
+     */
+    protected function make_DOM($html) {
+
+        if (function_exists('mb_convert_encoding')) {
+
+            $html = mb_convert_encoding($html, "HTML-ENTITIES", "UTF-8");
+        }
+
+        return \phpQuery::newDocument($html);
     }
 
 }

@@ -67,14 +67,10 @@ class CWriter {
         $parser->setContent($new_content);
     }
 
-    static public function generatePostTitle($string) {
+    static public function formatPostTitle($string) {
 
         $title = str_replace("&", "dan", $string);
         $title = ucwords($title);
-
-        if (SheDieDConfig::SITE_DOMAIN == Satu::LOKERKREASI_COM) {
-            $title = 'Lowongan Kerja ' . $title;
-        }
 
         return $title;
     }

@@ -11,6 +11,7 @@ use SheDied\helpers\Numbers;
 use SheDied\helpers\Satu;
 use SheDied\helpers\Dua;
 use SheDied\helpers\Tiga;
+use SheDied\helpers\Empat;
 
 class PojokJogjaController extends Controller {
 
@@ -121,6 +122,11 @@ class PojokJogjaController extends Controller {
         return $this;
     }
 
+    public function auto() {
+
+        return $this->auto;
+    }
+
     public function setPostLinks($links) {
         $this->post_links = $links;
         return $this;
@@ -128,12 +134,7 @@ class PojokJogjaController extends Controller {
 
     public function buildPosts() {
 
-        $helper = null;
-
-        if (SheDieDConfig::SITE_DOMAIN == Satu::LOKERKREASI_COM)
-            $helper = new Satu();
-        elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US)
-            $helper = new Dua();
+        $helper = $this->switchHelper(SheDieDConfig::SITE_DOMAIN);
 
         if ($helper && !$this->hijack && !$this->auto) {
 
@@ -161,7 +162,7 @@ class PojokJogjaController extends Controller {
                 $helper->switchParsers($this);
             }
 
-            $title = CWriter::generatePostTitle($post_link['title']);
+            $title = CWriter::formatPostTitle($post_link['title']);
             $link = $post_link['link'];
 
             if (!WPWrapper::get_page_by_title($title) && $helper->getParser()) {
@@ -229,6 +230,14 @@ class PojokJogjaController extends Controller {
 
                             WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
                             WPWrapper::homedesigning_meta($new_draft_id, true, $parser->getHost(), $parser->getUrl());
+                        } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
+
+                            WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
+                            WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
+                            WPWrapper::reviews_set_Gadget_Photos($new_draft_id, $parser);
+                            WPWrapper::reviews_set_Tags($new_draft_id, [$parser->getBrand(), $parser->getModel()], true);
+                            WPWrapper::reviews_set_Author_Avg($new_draft_id, $parser);
+                            WPWrapper::reviews_set_default_Scores($new_draft_id, $parser);
                         }
 
                         WPWrapper::add_to_yoast_seo($new_draft_id, $parser->getMetaTitle(), $parser->getMetaDescription(), $parser->getMetaKeywords());
@@ -336,8 +345,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'ko9iiik',
-                'link' => 'http://www.home-designing.com/an-eclectic-minimalist-apartment'
+                'title' => 'tyu7rRTE4LLKJtde',
+                'link' => 'https://www.asus.com/Laptops/ASUS-ZenBook-14-UX433FN/'
             ];
         }
 
@@ -352,6 +361,30 @@ class PojokJogjaController extends Controller {
     public function botPosts(Numbers $helper) {
 
         $this->loopPostLinks($helper);
+    }
+
+    protected function switchHelper($active) {
+
+        switch ($active) {
+
+            case Satu::LOKERKREASI_COM:
+                $helper = new Satu();
+                break;
+            case Dua::AWESOMEDECORS_US:
+                $helper = new Dua();
+                break;
+            case Tiga::POJOKJOGJA_COM:
+                $helper = new Tiga();
+                break;
+            case Empat::TECHNOREVIEW_US:
+                $helper = new Empat();
+                break;
+            default :
+                $helper = null;
+                break;
+        }
+
+        return $helper;
     }
 
 }

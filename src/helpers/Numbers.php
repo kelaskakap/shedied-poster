@@ -46,4 +46,14 @@ abstract class Numbers {
         return $this->fr;
     }
 
+    protected function fetchLinks($url) {
+
+        $doc = @file_get_contents($url);
+        if (function_exists('mb_convert_encoding')) {
+            $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
+        }
+
+        return $doc;
+    }
+
 }
