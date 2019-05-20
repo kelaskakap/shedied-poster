@@ -9,6 +9,7 @@ abstract class Numbers {
     protected $parser = '';
     protected $need_gallery = false;
     protected $fr = [];
+    protected $post_type = 'post';
 
     public function getParser() {
 
@@ -33,7 +34,9 @@ abstract class Numbers {
     }
 
     public function firstRunURL($url, $sourceId) {
-        
+
+        if (empty($this->fr))
+            return $url;
     }
 
     public function yesFirstRun($fr) {
@@ -54,6 +57,16 @@ abstract class Numbers {
         }
 
         return $doc;
+    }
+
+    public function setPostType($type) {
+
+        $this->post_type = $type;
+    }
+
+    public function getPostType() {
+
+        return $this->post_type;
     }
 
 }

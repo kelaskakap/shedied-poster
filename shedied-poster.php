@@ -201,3 +201,4 @@ function drop_bulkposttype() {
 require_once 'shedied_widget.php';
 require_once 'shedied_bot_lokerkreasi.php';
 require_once 'shedied_bot_awesomedecors.php';
+require_once 'shedied_bot_technoreview.php';

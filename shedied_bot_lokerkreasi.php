@@ -39,6 +39,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
                 $controller->setBulkPostType('post')
                         ->setAuthor(SheDieDConfig::AUTHOR_ID) //bot
                         ->setBulkPostStatus('publish')
+                        ->setBulkPostType($helper->getPostType())
                         ->setInterval(['value' => SheDieDConfig::BOT_POST_INVTERVAL, 'type' => 'minutes'])
                         ->setCount($count)
                         ->hijack(false)

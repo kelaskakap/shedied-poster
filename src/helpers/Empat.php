@@ -92,9 +92,21 @@ class Empat extends Numbers {
             $url .= '&Filters=&Sort=3&PageNumber=1&PageSize=20';
 
             $controller->setUrl($url);
-        } else {
-            
         }
+    }
+
+    public function firstRunURL($url, $sourceId) {
+
+        parent::firstRunURL($url, $sourceId);
+
+        $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
+
+        $Query = "&Filters=&Sort=3&PageNumber={$page}&PageSize=20";
+
+        $t--;
+        $this->fr[$sourceId] = $t;
+
+        return $url . $Query;
     }
 
 }
