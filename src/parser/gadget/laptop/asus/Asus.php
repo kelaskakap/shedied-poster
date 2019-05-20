@@ -21,7 +21,7 @@ abstract class Asus extends Laptop {
 
     static public function make_Title($title) {
 
-        return $title . ' Reviews, Specs, Price, and Drivers';
+        return $title . ' Reviews Specs Price and Drivers';
     }
 
     static public function make_URL($url) {

@@ -39,6 +39,9 @@ class ZenBook extends Asus {
     public function grab() {
 
         $this->getPostDetail();
+        $this->generateSeoMetaDescription();
+        $this->generateSeoMetaKeywords();
+        $this->generateSeoMetaTitle();
     }
 
     protected function dom_Model() {
@@ -68,7 +71,7 @@ class ZenBook extends Asus {
     protected function try_Specs_1() {
 
         $node = pq('div.insoweTable');
-        
+
         foreach ($node->find('section') as $section) {
 
             $label = trim(pq($section)->find('div.insoweCol1')->text());
@@ -160,6 +163,22 @@ class ZenBook extends Asus {
         }
 
         $this->content = $text;
+    }
+
+    protected function generateSeoMetaDescription() {
+
+        $model = $this->model;
+        $this->meta_description = "{$model} specifications, {$model} price, download driver {$model}, {$model} driver Windows 7, {$model} driver Windows 8.1, {$model} driver Windows 10, {$model} reviews, buy {$model}, where to buy {$model}";
+    }
+
+    protected function generateSeoMetaKeywords() {
+
+        $this->meta_keywords = "{$this->brand},{$this->model},{$this->meta_description}";
+    }
+
+    protected function generateSeoMetaTitle() {
+
+        $this->meta_title = $this->title;
     }
 
 }
