@@ -10,6 +10,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
         $post_links = get_transient($transient_name);
         $controller = new PojokJogjaController();
+        $controller->isAuto(true);
 
         if (empty($post_links) && !$sweeper && !empty($sources)) {
 
@@ -43,7 +44,6 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
                         ->setInterval(['value' => SheDieDConfig::BOT_POST_INVTERVAL, 'type' => 'minutes'])
                         ->setCount($count)
                         ->hijack(false)
-                        ->isAuto(true)
                         ->setPostLinks($to_run)
                         ->botPosts($helper);
             }
