@@ -21,8 +21,11 @@ function bot_technoreview_1() {
 add_action('bot_technoreview_1', 'bot_technoreview_1');
 
 function bot_technoreview_sweeper() {
-
-    shedied_exec_bot(new Empat(), [], 5, 'tsnt_technoreview_1', true);
+    
+    $helper = new Empat();
+    $helper->setPostType('review');
+    
+    shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_1', true);
     //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_5', true);
     //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_9', true);
     //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_13', true);
