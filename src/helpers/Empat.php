@@ -103,8 +103,8 @@ class Empat extends Numbers {
 
         $Query = "&Filters=&Sort=3&PageNumber={$page}&PageSize=20";
 
-        $t--;
-        $this->fr[$sourceId] = $t;
+        $page--;
+        $this->fr[$sourceId] = $page;
 
         return $url . $Query;
     }
