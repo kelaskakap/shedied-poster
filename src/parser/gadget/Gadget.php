@@ -136,4 +136,20 @@ abstract class Gadget extends AbstractParser implements IGadget {
         return $this->scores;
     }
 
+    public function toWordpressPost() {
+        
+        return array(
+            'post_content' => $this->content,
+            'post_status' => $this->status,
+            'post_title' => ucwords($this->title),
+            'post_author' => $this->author_id,
+            'post_type' => $this->type,
+            'post_date' => $this->time,
+            'comment_status' => $this->comment_status,
+            'tax_input' => [
+                'review-category' => [$this->category_id]
+            ]
+        );
+    }
+
 }
