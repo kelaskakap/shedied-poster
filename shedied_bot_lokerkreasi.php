@@ -17,7 +17,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
             foreach ($sources as $sourceId => $source) {
 
                 $Url = $helper->firstRunURL($source['url'], $sourceId);
-
+                syslog(LOG_DEBUG, '-- aku url --' . $Url);
                 $controller->setUrl($Url);
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
