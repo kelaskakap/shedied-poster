@@ -74,7 +74,7 @@ class Empat extends Numbers {
         $sources[14] = ['name' => 'Review - Asus: FX/ZX Series', 'url' => 'https://www.asus.com/OfficialSiteAPI.asmx/GetModelResults?WebsiteId=1&ProductLevel2Id=155&FiltersCategory=17067'];
         $sources[15] = ['name' => 'Review - Asus: ASUS TUF Gaming Series', 'url' => 'https://www.asus.com/OfficialSiteAPI.asmx/GetModelResults?WebsiteId=1&ProductLevel2Id=155&FiltersCategory=32330'];
 
-        return$sources;
+        return $sources;
     }
 
     protected function source_Laptop_ASUS(PojokJogjaController $controller) {

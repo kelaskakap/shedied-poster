@@ -159,6 +159,7 @@ class PojokJogjaController extends Controller {
 
                 $this->news_src = $post_link['src'];
                 $this->category = $post_link['cat'];
+                syslog(LOG_DEBUG, '-- ini aku --' . $this->category);
                 $helper->switchParsers($this);
             }
 
@@ -171,7 +172,7 @@ class PojokJogjaController extends Controller {
                 $parser = new $new;
                 $parser->setTitle($title)
                         ->setSourceCategory($this->news_src)
-                        ->setCategoryId($this->category)
+                        ->addCategoryId($this->category)
                         ->setUrl($link)
                         ->grab();
 

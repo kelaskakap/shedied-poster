@@ -137,7 +137,9 @@ abstract class Gadget extends AbstractParser implements IGadget {
     }
 
     public function toWordpressPost() {
-        
+
+        //review-category is an array :)
+
         return array(
             'post_content' => $this->content,
             'post_status' => $this->status,
@@ -147,7 +149,7 @@ abstract class Gadget extends AbstractParser implements IGadget {
             'post_date' => $this->time,
             'comment_status' => $this->comment_status,
             'tax_input' => [
-                'review-category' => [$this->category_id]
+                'review-category' => $this->category_id
             ]
         );
     }

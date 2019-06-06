@@ -6,10 +6,13 @@ use SheDied\parser\gadget\Gadget;
 
 abstract class Laptop extends Gadget implements ILaptop {
 
+    const LAPTOP_CATEGORY_ID = 154;
+
     public function __construct() {
 
         parent::__construct();
         $this->default_Scores();
+        $this->addCategoryId(self::LAPTOP_CATEGORY_ID);
     }
 
     protected function default_Scores() {

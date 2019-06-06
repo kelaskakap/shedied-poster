@@ -7,7 +7,7 @@ use SheDied\parser\InterfaceParser;
 abstract class AbstractParser implements InterfaceParser {
 
     protected $url;
-    protected $category_id;
+    protected $category_id = [];
     protected $category_name;
     protected $featured_image;
     protected $no_image = false;
@@ -108,6 +108,11 @@ abstract class AbstractParser implements InterfaceParser {
         return $this->url;
     }
 
+    /**
+     * array of category Id
+     * @param array $id
+     * @return $this
+     */
     public function setCategoryId($id) {
         $this->category_id = $id;
         return $this;
@@ -260,11 +265,14 @@ abstract class AbstractParser implements InterfaceParser {
     }
 
     public function toWordpressPost() {
+        
+        //post_category is an array
+        
         return array(
             'post_content' => $this->content,
             'post_status' => $this->status,
             'post_title' => ucwords($this->title),
-            'post_category' => array($this->category_id),
+            'post_category' => $this->category_id,
             'post_author' => $this->author_id,
             'post_type' => $this->type,
             'tags_input' => $this->tags,
@@ -435,13 +443,23 @@ abstract class AbstractParser implements InterfaceParser {
         $log = __DIR__ . "/../../shedied.log";
 
         if (is_array($errors)) {
-            
+
             $errors = json_encode($errors);
         }
 
         $file = fopen($log, "a");
         echo fwrite($file, "\n" . date('Y-m-d h:i:s') . " :: " . $errors);
         fclose($file);
+    }
+
+    /**
+     * append category
+     * @param int $id
+     */
+    public function addCategoryId($id) {
+
+        array_push($this->category_id, $id);
+        return $this;
     }
 
 }
