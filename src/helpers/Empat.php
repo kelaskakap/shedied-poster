@@ -38,7 +38,7 @@ class Empat extends Numbers {
 
                     $postlinks[] = ["title" => Asus::make_Title(trim($item->PDMarketName)), "link" => Asus::make_URL(trim($item->Url)), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory()];
 
-                    if ($this->enough($postlinks, $controller)) {
+                    if ($this->enough($postlinks, $controller) && !$controller->auto()) {
 
                         break;
                     }
@@ -99,7 +99,7 @@ class Empat extends Numbers {
 
         parent::firstRunURL($url, $sourceId);
 
-        $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 2;
+        $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 20;
 
         $Query = "&Filters=&Sort=3&PageNumber={$page}&PageSize=20";
 

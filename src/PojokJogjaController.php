@@ -159,7 +159,6 @@ class PojokJogjaController extends Controller {
 
                 $this->news_src = $post_link['src'];
                 $this->category = $post_link['cat'];
-                syslog(LOG_DEBUG, '-- ini aku --' . $this->category);
                 $helper->switchParsers($this);
             }
 
