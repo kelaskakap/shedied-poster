@@ -99,7 +99,7 @@ class Empat extends Numbers {
 
         parent::firstRunURL($url, $sourceId);
 
-        $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
+        $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 20;
 
         $Query = "&Filters=&Sort=3&PageNumber={$page}&PageSize=20";
 

@@ -5,7 +5,7 @@ use SheDied\helpers\Empat;
 
 function bot_technoreview_1() {
 
-    $sources = SheDieDConfig::pick_Sources([1], [155]);
+    $sources = SheDieDConfig::pick_Sources([1, 2], [155, 155]);
 
     $fr = first_Run('techno_1');
     

@@ -48,11 +48,19 @@ class SheDieDConfig {
             return FALSE;
         }
     }
-
+    
+    /**
+     * Source Category And Post Category
+     * @param array $indexes sources [1, 2, 3]
+     * @param array $cats [10, 12, 13]
+     * Jumlah harus sama
+     * $indexes[0] pairs $cats[0]
+     * @return array
+     */
     static public function pick_Sources(Array $indexes, Array $cats) {
 
         if (count($indexes) != count($cats))
-            return;
+            return [];
 
         $x = [];
 
