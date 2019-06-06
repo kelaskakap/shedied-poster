@@ -26,7 +26,7 @@ class Empat extends Numbers {
         # karena lewat API
         //\phpQuery::newDocument($doc);
 
-        $postlinks = [];
+        $postlinks = $controller->getPostLinks();
 
         if ($this->source_Laptop_ASUS($controller)) {
 
