@@ -165,7 +165,7 @@ class PojokJogjaController extends Controller {
             $title = CWriter::formatPostTitle($post_link['title']);
             $link = $post_link['link'];
 
-            if (!WPWrapper::get_page_by_title($title) && $helper->getParser()) {
+            if (!WPWrapper::get_page_by_title($title, 'OBJECT', $helper->getPostType()) && $helper->getParser()) {
 
                 $new = $helper->getParser();
                 $parser = new $new;
