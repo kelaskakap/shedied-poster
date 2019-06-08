@@ -12,11 +12,11 @@ class ZenBookS extends Asus {
         $html = $this->make_DOM($doc);
 
         $model = $this->dom_Model();
+        $this->setModel(trim($model));
         $this->dom_Content();
 
         $this->_getFeaturedImage();
-
-        $this->setModel(trim($model));
+        
         $this->setProductLink($this->url);
         $this->setProductDesc($this->content);
         $this->dom_Links();

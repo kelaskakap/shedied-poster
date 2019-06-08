@@ -219,7 +219,7 @@ class WPWrapper {
     }
 
     static public function reviews_set_default_Scores($post_id, Gadget $gadget) {
-        file_put_contents('/tmp/rotun.txt', var_export($gadget->getScores(), true));
+        
         foreach ($gadget->getScores() as $point) {
 
             add_post_meta($post_id, 'reviews_score', $point);

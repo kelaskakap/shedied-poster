@@ -128,9 +128,15 @@ abstract class Asus extends Laptop {
 
         foreach ($node->find('section') as $section) {
 
-            $sub_title = trim(pq($section)->find('div.content__title')->text());
-            $sub_info = trim(pq($section)->find('div.content__info')->text());
-            $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            $st = pq($section)->find('div.content__title');
+            $si = pq($section)->find('div.content__info');
+
+            if ($st->count() < 2) {
+
+                $sub_title = trim($st->text());
+                $sub_info = trim($si->text());
+                $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            }
         }
 
         $this->content = $text;
@@ -140,15 +146,20 @@ abstract class Asus extends Laptop {
 
         $node = pq('div#box-productOverview-containter');
         $text = "";
+        $st_s = 'div.slogan, div.subT-big, div.box-word-cent > div.subT';
+        $si_s = 'div.box-intro, div.txt-cent-mid, div.txt-left-mid, div.txt-cent, div.txt-cent-big';
 
         foreach ($node->find('section') as $sec) {
 
-            $st_s = 'div.slogan, div.subT-big, div.box-word-cent > div.subT';
-            $si_s = 'div.box-intro, div.txt-cent-mid, div.txt-left-mid, div.txt-cent, div.txt-cent-big';
+            $st = pq($sec)->find($st_s);
+            $si = pq($sec)->find($si_s);
 
-            $sub_title = trim(pq($sec)->find($st_s)->text());
-            $sub_info = trim(pq($sec)->find($si_s)->text());
-            $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            if ($st->count() < 2) {
+
+                $sub_title = trim($st->text());
+                $sub_info = trim($si->text());
+                $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            }
         }
 
         $this->content = $text;
@@ -224,6 +235,14 @@ abstract class Asus extends Laptop {
                 'source' => $this->url,
                 'message' => 'new pattern?'
             ]);
+        
+        $this->closingContent();
+    }
+
+    protected function closingContent() {
+
+        $text = "<p class=\"gotoofficial\">For more detailed information about {$this->model}, you can visit the official page of this product.<br>Go to {$this->model} <a href=\"{$this->url}\" target=\"_blank\" rel=\"nofollow\">official page</a>.</p>";
+        $this->content .= $text;
     }
 
     protected function dom_Specs() {
