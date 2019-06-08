@@ -16,7 +16,7 @@ class ZenBook extends Asus {
         $this->dom_Content();
 
         $this->_getFeaturedImage();
-        
+
         $this->setProductLink($this->url);
         $this->setProductDesc($this->content);
         $this->dom_Links();
@@ -25,6 +25,15 @@ class ZenBook extends Asus {
         $html = $this->make_DOM($doc);
 
         $this->dom_Specs();
+
+        if (!$this->specs) {
+
+            $url = $this->url . "Tech-Specs/";
+            $doc = $this->do_CURL($url);
+            $html = $this->make_DOM($doc);
+            
+            $this->dom_Specs();
+        }
 
         $doc = $this->do_CURL($this->gallery_link);
         $html = $this->make_DOM($doc);

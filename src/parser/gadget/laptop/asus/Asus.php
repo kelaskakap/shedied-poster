@@ -177,19 +177,6 @@ abstract class Asus extends Laptop {
 
     protected function try_Specs_1() {
 
-        $node = pq('div.insoweTable');
-
-        foreach ($node->find('section') as $section) {
-
-            $label = trim(pq($section)->find('div.insoweCol1')->text());
-            $value = trim(pq($section)->find('div.insoweCol2')->find('p')->removeAttr('*')->html());
-
-            $this->specs[$label] = $value;
-        }
-    }
-
-    protected function try_Specs_2() {
-
         $node = pq('div#spec-area');
 
         foreach ($node->find('li') as $li) {
@@ -199,7 +186,23 @@ abstract class Asus extends Laptop {
             pq($temp)->find('*')->removeAttr('*');
             $value = trim(pq($temp)->html());
 
-            $this->specs[$label] = $value;
+            if ($label && $value)
+                $this->specs[$label] = $value;
+        }
+    }
+
+    protected function try_Specs_2() {
+
+        $node = pq('div.insoweTable');
+
+        foreach ($node->find('section') as $section) {
+            
+            pq($section)->find('strong')->after('<br>')->before('<br>');
+            $label = trim(pq($section)->find('div.insoweCol1')->text());
+            $value = trim(pq($section)->find('div.insoweCol2')->find('p')->removeAttr('*')->html());
+
+            if ($label && $value)
+                $this->specs[$label] = $value;
         }
     }
 
@@ -214,7 +217,8 @@ abstract class Asus extends Laptop {
             pq($temp)->find('*')->removeAttr('*');
             $value = trim(pq($temp)->html());
 
-            $this->specs[$label] = $value;
+            if ($label && $value)
+                $this->specs[$label] = $value;
         }
     }
 
@@ -235,7 +239,7 @@ abstract class Asus extends Laptop {
                 'source' => $this->url,
                 'message' => 'new pattern?'
             ]);
-        
+
         $this->closingContent();
     }
 

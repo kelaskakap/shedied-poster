@@ -90,8 +90,9 @@ abstract class Gadget extends AbstractParser implements IGadget {
 
         $html = "<table class='table gadget-specs'>";
         $html .= "<tbody>";
-
+        
         foreach ($this->specs as $label => $value) {
+            
             $html .= "<tr>";
             $html .= "<td>{$label}<td>";
             $html .= "<td>{$value}</td>";
