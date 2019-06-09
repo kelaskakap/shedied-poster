@@ -95,8 +95,13 @@ abstract class Asus extends Laptop {
     protected function dom_Links() {
 
         $node = pq('div#overview-top-nav');
+
+        $support_link = trim($node->find('li#lisupport > a')->attr('href'));
+        if (!$support_link)
+            $support_link = "/HelpDesk";
+
         $this->spec_link = self::SITE_ADDR . trim($node->find('li#lispecifications > a')->attr('href'));
-        $this->support_link = self::SITE_ADDR . trim($node->find('li#lisupport > a')->attr('href'));
+        $this->support_link = self::SITE_ADDR . $support_link;
         $this->gallery_link = self::SITE_ADDR . trim($node->find('li#ligallery > a')->attr('href'));
     }
 
@@ -196,7 +201,7 @@ abstract class Asus extends Laptop {
         $node = pq('div.insoweTable');
 
         foreach ($node->find('section') as $section) {
-            
+
             pq($section)->find('strong')->after('<br>')->before('<br>');
             $label = trim(pq($section)->find('div.insoweCol1')->text());
             $value = trim(pq($section)->find('div.insoweCol2')->find('p')->removeAttr('*')->html());
