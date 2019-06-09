@@ -47,6 +47,12 @@ abstract class Asus extends Laptop {
             case 3:
                 $parser = 'SheDied\parser\gadget\laptop\asus\ZenBookS';
                 break;
+            case 4:
+                $parser = 'SheDied\parser\gadget\laptop\asus\ZenBookClassic';
+                break;
+            case 5:
+                $parser = 'SheDied\parser\gadget\laptop\asus\VivoBook';
+                break;
             default :
                 $parser = '';
                 break;
@@ -97,7 +103,7 @@ abstract class Asus extends Laptop {
         $node = pq('div#overview-top-nav');
 
         $support_link = trim($node->find('li#lisupport > a')->attr('href'));
-        
+
         if (!$support_link)
             $support_link = $this->url . "HelpDesk";
         else
@@ -167,32 +173,32 @@ abstract class Asus extends Laptop {
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
                 $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+                }
             }
-        }
 
         $this->content = $text;
     }
-    
+
     protected function try_Content_3() {
-        
+
         $node = pq('div#Features');
         $text = "";
         $st_s = "div.desc";
         $si_s = "div.intro > p";
-        
+
         foreach ($node->find('section') as $section) {
-            
+
             $st = pq($section)->find($st_s);
             $si = pq($section)->find($si_s);
-            
+
             if ($st->count() < 2) {
-                
+
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
                 $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
             }
         }
-        
+
         $this->content = $text;
     }
 
@@ -264,9 +270,9 @@ abstract class Asus extends Laptop {
 
         if (!$this->content)
             $this->try_Content_2();
-        
+
         if (!$this->content)
-            $this->try_Content_3 ();
+            $this->try_Content_3();
 
         if (!$this->content)
             $this->logError([

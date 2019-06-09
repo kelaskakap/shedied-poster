@@ -20,6 +20,23 @@ function bot_technoreview_1() {
 
 add_action('bot_technoreview_1', 'bot_technoreview_1');
 
+function bot_technoreview_2() {
+
+    $sources = SheDieDConfig::pick_Sources([4, 5], [155, 155]);
+
+    $fr = first_Run('techno_2');
+    
+    $helper = new Empat();
+    $helper->yesFirstRun($fr);
+    $helper->setPostType('review');
+
+    shedied_exec_bot($helper, $sources, 20, 'tsnt_technoreview_2', false);
+
+    update_first_Run('techno_2', $helper->arrFirstRun());
+}
+
+add_action('bot_technoreview_2', 'bot_technoreview_2');
+
 function bot_technoreview_sweeper() {
     
     $helper = new Empat();
