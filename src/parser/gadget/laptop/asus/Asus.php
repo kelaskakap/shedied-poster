@@ -97,11 +97,14 @@ abstract class Asus extends Laptop {
         $node = pq('div#overview-top-nav');
 
         $support_link = trim($node->find('li#lisupport > a')->attr('href'));
+        
         if (!$support_link)
-            $support_link = "/HelpDesk";
+            $support_link = $this->url . "HelpDesk";
+        else
+            $support_link = self::SITE_ADDR . $support_link;
 
         $this->spec_link = self::SITE_ADDR . trim($node->find('li#lispecifications > a')->attr('href'));
-        $this->support_link = self::SITE_ADDR . $support_link;
+        $this->support_link = $support_link;
         $this->gallery_link = self::SITE_ADDR . trim($node->find('li#ligallery > a')->attr('href'));
     }
 
