@@ -43,7 +43,7 @@ function bot_technoreview_sweeper() {
     $helper->setPostType('review');
     
     //shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_1', true);
-    shedied_exec_bot($helper, [], 5, 'tsnt_awesomedecors_2', true);
+    shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_2', true);
     //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_9', true);
     //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_13', true);
 }
