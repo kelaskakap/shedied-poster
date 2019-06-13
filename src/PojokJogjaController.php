@@ -348,8 +348,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tyu7RETRTFGRTYrH44e',
-                'link' => 'https://www.asus.com/Laptops/ASUS-VivoBook-14-X412FL/'
+                'title' => 'tyu7WQEYGH5TFErH44e',
+                'link' => 'https://www.asus.com/Laptops/ASUS-VivoBook-Pro-17-N705UF/'
             ];
         }
 

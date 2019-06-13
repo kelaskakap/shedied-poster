@@ -53,6 +53,9 @@ abstract class Asus extends Laptop {
             case 5:
                 $parser = 'SheDied\parser\gadget\laptop\asus\VivoBook';
                 break;
+            case 6:
+                $parser = 'SheDied\parser\gadget\laptop\asus\VivoBookPro';
+                break;
             default :
                 $parser = '';
                 break;
@@ -137,13 +140,19 @@ abstract class Asus extends Laptop {
         if (!$node->size()) {
             $node = pq('div#CMD');
         }
+        
+        if (!$node->size()) {
+            $node = pq('div#wrapper');
+        }
 
         $text = "";
+        $st_s = "div.content__title, div.desc";
+        $si_s = "div.content__info, p.content-p:first";
 
         foreach ($node->find('section') as $section) {
 
-            $st = pq($section)->find('div.content__title');
-            $si = pq($section)->find('div.content__info');
+            $st = pq($section)->find($st_s);
+            $si = pq($section)->find($si_s);
 
             if ($st->count() < 2) {
 
@@ -173,8 +182,8 @@ abstract class Asus extends Laptop {
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
                 $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
-                }
             }
+        }
 
         $this->content = $text;
     }
