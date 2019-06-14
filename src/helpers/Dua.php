@@ -89,4 +89,8 @@ class Dua extends Numbers {
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22;
     }
 
+    public function fetchCustomUrls(PojokJogjaController $controller) {
+        ;
+    }
+
 }

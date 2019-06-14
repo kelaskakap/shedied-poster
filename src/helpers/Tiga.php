@@ -28,4 +28,8 @@ class Tiga extends Numbers {
         return $sources;
     }
 
+    public function fetchCustomUrls(PojokJogjaController $controller) {
+        ;
+    }
+
 }

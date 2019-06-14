@@ -94,4 +94,8 @@ class Satu extends Numbers {
         return 'Lowongan Kerja ' . $string;
     }
 
+    public function fetchCustomUrls(PojokJogjaController $controller) {
+        ;
+    }
+
 }
