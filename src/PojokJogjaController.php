@@ -34,6 +34,7 @@ class PojokJogjaController extends Controller {
     protected $hijack = false;
     protected $map_pois = [];
     protected $map_pois_collect = false;
+    protected $do_this_urls = [];
 
     public function __construct() {
 
@@ -136,15 +137,21 @@ class PojokJogjaController extends Controller {
 
         $helper = $this->switchHelper(SheDieDConfig::SITE_DOMAIN);
 
-        if ($helper && !$this->hijack && !$this->auto) {
+        if (!$this->do_this_urls) {
+            
+            if ($helper && !$this->hijack && !$this->auto) {
 
-            $helper->fetchPostLinks($this);
-        }
+                $helper->fetchPostLinks($this);
+            }
 
-        if ($helper) {
+            if ($helper) {
 
-            $helper->switchParsers($this);
-            $this->loopPostLinks($helper);
+                $helper->switchParsers($this);
+                $this->loopPostLinks($helper);
+            }
+        } else {
+            
+            //sek
         }
     }
 
@@ -388,6 +395,28 @@ class PojokJogjaController extends Controller {
         }
 
         return $helper;
+    }
+
+    public function setDoThisURLs($textarea) {
+
+        $urls = explode(PHP_EOL, $textarea);
+
+        foreach ($urls as $url) {
+
+            $url = trim($url);
+
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
+
+                $this->do_this_urls[] = $url;
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCustomUrls() {
+
+        return $this->do_this_urls;
     }
 
 }

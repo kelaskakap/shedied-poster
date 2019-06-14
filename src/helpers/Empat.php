@@ -109,4 +109,19 @@ class Empat extends Numbers {
         return $url . $Query;
     }
 
+    public function fetchCustomUrls(PojokJogjaController $controller) {
+
+        $postlinks = [];
+
+        foreach ($controller->getCustomUrls() as $url) {
+
+            if ($this->source_Laptop_ASUS($controller)) {
+
+                $postlinks[] = ["title" => '', "link" => $url, 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory()];
+            }
+        }
+
+        $controller->setPostLinks($postlinks);
+    }
+
 }

@@ -18,6 +18,8 @@ abstract class Numbers {
 
     abstract public function fetchPostLinks(PojokJogjaController $controller);
 
+    abstract public function fetchCustomUrls(PojokJogjaController $controller);
+
     abstract public function switchParsers(PojokJogjaController $controller);
 
     public function need_Gallery() {

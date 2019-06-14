@@ -20,6 +20,7 @@ function shedied_create_posts() {
                 ->setBulkPostStatus($_POST['bulk_post_status'])
                 ->setInterval($_POST['interval'])
                 ->setUrl($sources[$_POST['news_src']]['url'])
+                ->setDoThisURLs(trim($_POST['do_this']))
                 ->setAction($_POST['action'])
                 ->setCount($_POST['number_of_posts'])
                 ->hijack(false)
@@ -132,6 +133,15 @@ function shedied_my_panel() {
                 <option value="100">100</option>
             </select>&nbsp;
             * Please know your limit.
+        </td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">Scrap URLs</th>
+        <td>
+            <textarea name="do_this" rows="5" cols="50">
+                
+            </textarea><br>
+            * Enter url per line. If urls are valid, bot will execute 'em.
         </td>
     </tr>
     <tr>
