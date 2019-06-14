@@ -140,7 +140,7 @@ abstract class Asus extends Laptop {
         if (!$node->size()) {
             $node = pq('div#CMD');
         }
-        
+
         if (!$node->size()) {
             $node = pq('div#wrapper');
         }
@@ -282,6 +282,9 @@ abstract class Asus extends Laptop {
 
         if (!$this->content)
             $this->try_Content_3();
+        
+        if (!$this->content)
+            $this->try_Content_4 ();
 
         if (!$this->content)
             $this->logError([
@@ -313,6 +316,30 @@ abstract class Asus extends Laptop {
                 'source' => $this->spec_link,
                 'message' => 'new pattern?'
             ]);
+    }
+
+    protected function try_Content_4() {
+
+        $node = pq('div#wrap');
+
+        $text = "";
+        $st_s = "article.text h1";
+        $si_s = "article.text p";
+
+        foreach ($node->find('section') as $section) {
+
+            $st = pq($section)->find($st_s);
+            $si = pq($section)->find($si_s);
+
+            if ($st->count() < 2) {
+
+                $sub_title = trim($st->text());
+                $sub_info = trim($si->text());
+                $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            }
+        }
+
+        $this->content = $text;
     }
 
 }
