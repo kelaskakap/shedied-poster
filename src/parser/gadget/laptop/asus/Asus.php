@@ -56,6 +56,18 @@ abstract class Asus extends Laptop {
             case 6:
                 $parser = 'SheDied\parser\gadget\laptop\asus\VivoBookPro';
                 break;
+            case 7:
+                $parser = 'SheDied\parser\gadget\laptop\asus\VivoBookS';
+                break;
+            case 8:
+                $parser = 'SheDied\parser\gadget\laptop\asus\VivoBookClassic';
+                break;
+            case 9:
+                $parser = 'SheDied\parser\gadget\laptop\asus\StudioBook';
+                break;
+            case 10:
+                $parser = 'SheDied\parser\gadget\laptop\asus\AsusLaptop';
+                break;
             default :
                 $parser = '';
                 break;

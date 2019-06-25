@@ -138,7 +138,7 @@ class PojokJogjaController extends Controller {
         $helper = $this->switchHelper(SheDieDConfig::SITE_DOMAIN);
 
         if (!$this->do_this_urls) {
-            
+
             if ($helper && !$this->hijack && !$this->auto) {
 
                 $helper->fetchPostLinks($this);
@@ -150,7 +150,7 @@ class PojokJogjaController extends Controller {
                 $this->loopPostLinks($helper);
             }
         } else {
-            
+
             //sek
         }
     }
@@ -178,7 +178,7 @@ class PojokJogjaController extends Controller {
                 $parser = new $new;
                 $parser->setTitle($title)
                         ->setSourceCategory($this->news_src)
-                        ->addCategoryId($this->category)
+                        ->addCategoryId((int) $this->category)
                         ->setUrl($link)
                         ->grab();
 
@@ -240,7 +240,8 @@ class PojokJogjaController extends Controller {
                         } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
 
                             if ($this->bulk_post_type == 'review') {
-
+                                
+                                WPWrapper::reviews_CRON_set_Categories($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Photos($new_draft_id, $parser);
@@ -355,8 +356,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tyu7WQEYGH5EFErH44e',
-                'link' => 'https://www.asus.com/Laptops/ASUS-VivoBook-14-X411QA/'
+                'title' => 'tyu7WQRFRFtyutVQYUy54',
+                'link' => 'https://www.asus.com/Laptops/ASUS-Laptop-X570UD/'
             ];
         }
 

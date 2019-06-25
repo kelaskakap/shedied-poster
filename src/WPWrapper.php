@@ -178,6 +178,14 @@ class WPWrapper {
         add_post_meta($post_id, 'review_tabs', $meta_value);
     }
 
+    public static function reviews_CRON_set_Categories($post_id, InterfaceParser $gadget) {
+
+        if (defined('DOING_CRON')) {
+
+            wp_set_object_terms($post_id, $gadget->getCategoryId(), 'review-category');
+        }
+    }
+
     public static function reviews_set_Gadget_Support($post_id, IGadget $gadget) {
 
         $meta_value['review_tab_title'] = 'Support';
@@ -219,7 +227,7 @@ class WPWrapper {
     }
 
     static public function reviews_set_default_Scores($post_id, Gadget $gadget) {
-        
+
         foreach ($gadget->getScores() as $point) {
 
             add_post_meta($post_id, 'reviews_score', $point);
