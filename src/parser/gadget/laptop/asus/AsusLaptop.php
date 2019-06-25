@@ -58,7 +58,7 @@ class AsusLaptop extends Asus {
             $si = pq($wr)->find($si_s);
 
             if ($st->count() < 2) {
-                
+
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
                 $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
@@ -73,6 +73,7 @@ class AsusLaptop extends Asus {
         $node = pq('div#AWD');
 
         if (!$node->size()) {
+
             $node = pq('div#CMD');
         }
 

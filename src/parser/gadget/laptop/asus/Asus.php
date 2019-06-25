@@ -294,9 +294,12 @@ abstract class Asus extends Laptop {
 
         if (!$this->content)
             $this->try_Content_3();
-        
+
         if (!$this->content)
-            $this->try_Content_4 ();
+            $this->try_Content_4();
+
+        if (!$this->content)
+            $this->try_Content_5();
 
         if (!$this->content)
             $this->logError([
@@ -344,6 +347,45 @@ abstract class Asus extends Laptop {
             $si = pq($section)->find($si_s);
 
             if ($st->count() < 2) {
+
+                $sub_title = trim($st->text());
+                $sub_info = trim($si->text());
+                $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            }
+        }
+
+        $this->content = $text;
+    }
+
+    protected function try_Content_5() {
+
+        $node = pq('div.overview-wrapper');
+
+        $text = "";
+        $st_s = "h2.insoweTitle";
+        $si_s = "p.insoweText";
+        $wr_s = "section.insoweSection";
+
+        foreach ($node->find($wr_s) as $section) {
+
+            $st = pq($section)->find($st_s);
+            $si = pq($section)->find($si_s);
+
+            $sub_title = trim($st->text());
+            $sub_info = trim($si->text());
+            $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+        }
+
+        if (!$text) {
+
+            $st_s = "div.text h1";
+            $si_s = "div.text p";
+            $wr_s = "div.page";
+
+            foreach ($node->find($wr_s) as $div) {
+
+                $st = pq($div)->find($st_s);
+                $si = pq($div)->find($si_s);
 
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
