@@ -61,8 +61,8 @@ function bot_technoreview_sweeper() {
     
     //shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_1', true);
     //shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_2', true);
-    shedied_exec_bot($helper, [], 5, 'tsnt_awesomedecors_3', true);
-    //shedied_exec_bot(new Dua(), [], 5, 'tsnt_awesomedecors_13', true);
+    shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_3', true);
+    //shedied_exec_bot(new Dua(), [], 5, 'tsnt_technoreview_4', true);
 }
 
 add_action('bot_technoreview_sweeper', 'bot_technoreview_sweeper');
