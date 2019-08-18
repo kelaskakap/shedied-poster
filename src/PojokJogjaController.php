@@ -356,8 +356,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tyu7W4tVQtt4rtUy54',
-                'link' => 'https://www.asus.com/Laptops/ASUS-Laptop-E402SA/'
+                'title' => 'tyu75bGBNdBhnjgts54',
+                'link' => 'https://www.asus.com/Laptops/ASUS-TUF-Gaming-FX705/'
             ];
         }
 

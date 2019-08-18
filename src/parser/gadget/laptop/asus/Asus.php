@@ -68,6 +68,21 @@ abstract class Asus extends Laptop {
             case 10:
                 $parser = 'SheDied\parser\gadget\laptop\asus\AsusLaptop';
                 break;
+            case 11:
+                $parser = 'SheDied\parser\gadget\laptop\asus\ChromeBook';
+                break;
+            case 12:
+                $parser = 'SheDied\parser\gadget\laptop\asus\AsusPro';
+                break;
+            case 13:
+                $parser = 'SheDied\parser\gadget\laptop\asus\Gaming';
+                break;
+            case 14:
+                $parser = 'SheDied\parser\gadget\laptop\asus\FXorZX';
+                break;
+            case 15:
+                $parser = 'SheDied\parser\gadget\laptop\asus\AsusTufGaming';
+                break;
             default :
                 $parser = '';
                 break;
@@ -206,7 +221,7 @@ abstract class Asus extends Laptop {
         $text = "";
         $st_s = "div.desc";
         $si_s = "div.intro > p";
-
+        
         foreach ($node->find('section') as $section) {
 
             $st = pq($section)->find($st_s);
@@ -336,7 +351,9 @@ abstract class Asus extends Laptop {
     protected function try_Content_4() {
 
         $node = pq('div#wrap');
-
+        
+        $node->find('h1[class*=title]')->remove();
+        
         $text = "";
         $st_s = "article.text h1";
         $si_s = "article.text p";
@@ -362,8 +379,8 @@ abstract class Asus extends Laptop {
         $node = pq('div.overview-wrapper');
 
         $text = "";
-        $st_s = "h2.insoweTitle";
-        $si_s = "p.insoweText";
+        $st_s = "h2.insoweTitle, p.insoweTitle";
+        $si_s = "p.insoweText, p.insoweDec";
         $wr_s = "section.insoweSection";
 
         foreach ($node->find($wr_s) as $section) {
@@ -375,12 +392,49 @@ abstract class Asus extends Laptop {
             $sub_info = trim($si->text());
             $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
         }
+        
+        if (!$text) {
+
+            $st_s = "div.text h1, article.text h1";
+            $si_s = "div.text p, article.text p";
+            $wr_s = "div.page";
+
+            foreach ($node->find($wr_s) as $div) {
+
+                $st = pq($div)->find($st_s);
+                $si = pq($div)->find($si_s);
+
+                $sub_title = trim($st->text());
+                $sub_info = trim($si->text());
+                $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            }
+        }
 
         if (!$text) {
 
-            $st_s = "div.text h1";
-            $si_s = "div.text p";
-            $wr_s = "div.page";
+            $st_s = "div.title";
+            $si_s = "div.text";
+            $wr_s = "div.group";
+
+            foreach ($node->find($wr_s) as $div) {
+
+                $st = pq($div)->find($st_s);
+                $si = pq($div)->find($si_s);
+
+                $sub_title = trim($st->text());
+                $sub_info = trim($si->text());
+                $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
+            }
+        }
+
+        if (!$text) {
+
+            #ASUSPRO
+            $node->find('div[class*=text-mobile]')->remove();
+
+            $st_s = "div.subT, div.slogan-big";
+            $si_s = "div.txt-left, div.txt-left-big";
+            $wr_s = "div[class^=main1-], div[class^=main2-]";
 
             foreach ($node->find($wr_s) as $div) {
 
