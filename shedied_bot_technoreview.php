@@ -86,7 +86,7 @@ function bot_technoreview_5() {
     $helper->yesFirstRun($fr);
     $helper->setPostType('review');
 
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_technoreview_5', false);
+    shedied_exec_bot($helper, $sources, 40, 'tsnt_technoreview_5', false);
     
     update_first_Run('techno_5', $helper->arrFirstRun());
 }
