@@ -139,16 +139,15 @@ class PojokJogjaController extends Controller {
 
         if (!$this->do_this_urls) {
 
-            if ($helper && !$this->hijack && !$this->auto) {
+            $helper->scanURL($this);
+
+            if (!$this->hijack && !$this->auto) {
 
                 $helper->fetchPostLinks($this);
             }
 
-            if ($helper) {
-
-                $helper->switchParsers($this);
-                $this->loopPostLinks($helper);
-            }
+            $helper->switchParsers($this);
+            $this->loopPostLinks($helper);
         } else {
 
             //sek
@@ -240,12 +239,17 @@ class PojokJogjaController extends Controller {
                         } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
 
                             if ($this->bulk_post_type == 'review') {
-                                
+
                                 WPWrapper::reviews_CRON_set_Categories($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
                                 WPWrapper::reviews_set_Gadget_Photos($new_draft_id, $parser);
-                                WPWrapper::reviews_set_Tags($new_draft_id, [$parser->getBrand(), $parser->getModel()], true);
+
+                                $tags = [$parser->getBrand(), $parser->getModel()];
+                                if ($parser->getTags())
+                                    $tags += $parser->getTags();
+                                WPWrapper::reviews_set_Tags($new_draft_id, $tags, true);
+
                                 WPWrapper::reviews_set_Author_Avg($new_draft_id, $parser);
                                 WPWrapper::reviews_set_default_Scores($new_draft_id, $parser);
                             }
@@ -356,8 +360,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tyu75bGBNdBhnjgts54',
-                'link' => 'https://www.asus.com/Laptops/ASUS-TUF-Gaming-FX705/'
+                'title' => 'tyu7AWQGBHJRFCbhYYd54',
+                'link' => 'https://www.gsmarena.com/motorola_moto_z4-9691.php'
             ];
         }
 

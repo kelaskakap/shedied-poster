@@ -43,7 +43,7 @@ class Liputan6Parser extends AbstractParser {
 
     protected function _getTags() {
         if ($this->source_category == 36) {
-            $this->tags = 'Pilkada DKI 2017';
+            $this->tags[] = 'Pilkada DKI 2017';
         }
     }
 

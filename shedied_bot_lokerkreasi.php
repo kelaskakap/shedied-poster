@@ -15,11 +15,12 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
         if (empty($post_links) && !$sweeper && !empty($sources)) {
 
             foreach ($sources as $sourceId => $source) {
-
-                $Url = $helper->firstRunURL($source['url'], $sourceId);
-                $controller->setUrl($Url);
+               
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
+
+                $Url = $helper->firstRunURL($source['url'], $sourceId, $controller);
+                $controller->setUrl($Url);
                 $helper->fetchPostLinks($controller);
             }
 

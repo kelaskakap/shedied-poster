@@ -35,7 +35,7 @@ abstract class Numbers {
         return count($links) >= $controller->getCount();
     }
 
-    public function firstRunURL($url, $sourceId) {
+    public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
 
         if (empty($this->fr))
             return $url;

@@ -16,7 +16,7 @@ abstract class AbstractParser implements InterfaceParser {
     protected $status;
     protected $author_id;
     protected $type;
-    protected $tags;
+    protected $tags = [];
     protected $time;
     protected $source_category;
     protected $host;
