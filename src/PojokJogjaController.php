@@ -360,8 +360,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tyu7AWQGBHJRFCbhYYd54',
-                'link' => 'https://www.gsmarena.com/motorola_moto_z4-9691.php'
+                'title' => 'tyu7AWQGBHTYSCbhYYd54',
+                'link' => 'https://www.gsmarena.com/alcatel_ot_pocket-30.php'
             ];
         }
 

@@ -27,6 +27,8 @@ class GsmArena extends Smartphone {
         //url utama produk gsm arena
         //adalah spek gadget
         $this->dom_Specs();
+        //get photo
+        $this->_getFeaturedImage();
 
         //banyak detil menarik untuk jadi bahan tags
         $this->dom_Tags();
@@ -46,10 +48,17 @@ class GsmArena extends Smartphone {
             $this->dom_Content();
         }
 
-        $doc = $this->do_CURL($this->gallery_link);
-        $html = $this->make_DOM($doc);
+        if ($this->gallery_link) {
 
-        $this->dom_Gallery();
+            $doc = $this->do_CURL($this->gallery_link);
+            $html = $this->make_DOM($doc);
+
+            $this->dom_Gallery();
+            //replace dari galeri
+            //foto lebih bagus
+            //nuts
+            $this->_getFeaturedImage();
+        }
 
         $support = $this->dom_Support();
         $this->setProductSupport($support);
@@ -175,7 +184,6 @@ class GsmArena extends Smartphone {
         $this->setBrand($brand);
         $this->getPostDetail();
         $this->aggregateContent();
-        $this->_getFeaturedImage();
         $this->generateSeoMetaDescription();
         $this->generateSeoMetaKeywords();
         $this->generateSeoMetaTitle();
@@ -201,6 +209,9 @@ class GsmArena extends Smartphone {
     }
 
     protected function _getFeaturedImage() {
+
+        $photo = pq('div.specs-photo-main img')->attr('src');
+        $this->featured_image = trim($photo);
 
         if ($this->photos)
             $this->featured_image = $this->photos[0];
