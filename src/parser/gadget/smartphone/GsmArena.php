@@ -267,6 +267,7 @@ class GsmArena extends Smartphone {
         $text .= "<p>It is easy to see why the {$this->model} has proven to be such a popular handset. The versatility of the {$os} combined with its aesthetic appeal and broad functionality means its future success looks assured.</p>";
 
         $this->content = $text;
+        $this->closingContent();
     }
 
 }
