@@ -94,7 +94,8 @@ class GsmArena extends Smartphone {
 
     protected function closingContent() {
 
-        $text = "<p class=\"gotoofficial\">For more detailed information about {$this->model}, check out the {$this->model} <a href=\"{$this->review_link}\" target=\"_blank\" rel=\"nofollow\">reviews page</a>.</p>";
+        $link = $this->review_link ? $this->review_link: $this->url;
+        $text = "<p class=\"gotoofficial\">For more detailed information about {$this->model}, check out the {$this->model} <a href=\"{$link}\" target=\"_blank\" rel=\"nofollow\">reviews page</a>.</p>";
         $this->content .= $text;
     }
 
