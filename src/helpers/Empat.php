@@ -81,7 +81,7 @@ class Empat extends Numbers {
 
     protected function source_GSMArena(PojokJogjaController $controller) {
 
-        return $controller->getNewsSrc() >= 16 && $controller < 79;
+        return $controller->getNewsSrc() >= 16 && $controller < 80;
     }
 
     protected function Laptop_ASUS_Alter_URL(PojokJogjaController $controller) {
@@ -236,6 +236,7 @@ class Empat extends Numbers {
         $sources[76] = ['name' => 'Review - GSMArena: ZTE', 'url' => 'https://www.gsmarena.com/zte-phones-62.php', 'brand' => Brands::ZTE];
         $sources[77] = ['name' => 'Review - GSMArena: Celkon', 'url' => 'https://www.gsmarena.com/celkon-phones-75.php', 'brand' => Brands::CELKON];
         $sources[78] = ['name' => 'Review - GSMArena: Siemens', 'url' => 'https://www.gsmarena.com/siemens-phones-3.php', 'brand' => Brands::SIEMENS];
+        $sources[79] = ['name' => 'Review - GSMArena: Asus', 'url' => 'https://www.gsmarena.com/asus-phones-46.php', 'brand' => Brands::ASUS];
 
         return $sources;
     }
