@@ -80,18 +80,30 @@ function bot_technoreview_5() {
 
     $sources = SheDieDConfig::pick_Sources([16, 17, 18, 19, 20], [568, 569, 570, 571, 572]);
 
-    $fr = first_Run('techno_5');
-
-    $helper = new Empat();    
-    $helper->yesFirstRun($fr);
+    $helper = new Empat();
     $helper->setPostType('review');
 
     shedied_exec_bot($helper, $sources, 40, 'tsnt_technoreview_5', false);
-    
-    update_first_Run('techno_5', $helper->arrFirstRun());
 }
 
 add_action('bot_technoreview_5', 'bot_technoreview_5');
+
+function bot_technoreview_6() {
+
+    $sources = SheDieDConfig::pick_Sources([21, 22, 23, 24, 25], [573, 574, 575, 576, 577]);
+
+    $fr = first_Run('techno_6');
+
+    $helper = new Empat();
+    $helper->yesFirstRun($fr);
+    $helper->setPostType('review');
+
+    shedied_exec_bot($helper, $sources, 50, 'tsnt_technoreview_6', false);
+
+    update_first_Run('techno_6', $helper->arrFirstRun());
+}
+
+add_action('bot_technoreview_6', 'bot_technoreview_6');
 
 function bot_technoreview_sweeper() {
 
@@ -103,6 +115,7 @@ function bot_technoreview_sweeper() {
     shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_3', true);
     shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_4', true);
     shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_5', true);
+    shedied_exec_bot($helper, [], 5, 'tsnt_technoreview_6', true);
 }
 
 add_action('bot_technoreview_sweeper', 'bot_technoreview_sweeper');
