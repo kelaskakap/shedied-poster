@@ -8,11 +8,9 @@ class GameStationParser extends AbstractParser {
 
     protected function getPostDetail() {
         $doc = $this->curlGrabContent();
-        if (function_exists('mb_convert_encoding')) {
-            $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
-        }
-        $html = \phpQuery::newDocument($doc);
-        #images treatment
+        $html = $this->make_DOM($doc);
+        
+#images treatment
         foreach (pq("#content-anchor-inner img") as $img) {
             $image = pq($img)->attr('data-lazy-src');
             pq($img)->attr('src', trim($image));

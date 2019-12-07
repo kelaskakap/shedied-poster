@@ -7,7 +7,7 @@ use SheDied\parser\InterfaceParser;
 abstract class AbstractParser implements InterfaceParser {
 
     protected $url;
-    protected $category_id;
+    protected $category_id = [];
     protected $category_name;
     protected $featured_image;
     protected $no_image = false;
@@ -16,7 +16,7 @@ abstract class AbstractParser implements InterfaceParser {
     protected $status;
     protected $author_id;
     protected $type;
-    protected $tags;
+    protected $tags = [];
     protected $time;
     protected $source_category;
     protected $host;
@@ -48,7 +48,7 @@ abstract class AbstractParser implements InterfaceParser {
 
         //remove noscript
         $node->find('noscript')->remove();
-        
+
         //clean p from attributs mostly style, class
         $node->find('p')->removeAttr('*');
 
@@ -108,6 +108,11 @@ abstract class AbstractParser implements InterfaceParser {
         return $this->url;
     }
 
+    /**
+     * array of category Id
+     * @param array $id
+     * @return $this
+     */
     public function setCategoryId($id) {
         $this->category_id = $id;
         return $this;
@@ -260,11 +265,14 @@ abstract class AbstractParser implements InterfaceParser {
     }
 
     public function toWordpressPost() {
+        
+        //post_category is an array
+        
         return array(
             'post_content' => $this->content,
             'post_status' => $this->status,
             'post_title' => ucwords($this->title),
-            'post_category' => array($this->category_id),
+            'post_category' => $this->category_id,
             'post_author' => $this->author_id,
             'post_type' => $this->type,
             'tags_input' => $this->tags,
@@ -278,30 +286,41 @@ abstract class AbstractParser implements InterfaceParser {
     }
 
     protected function curlGrabContent() {
+
         try {
-            $ch = curl_init();
-            $parse = parse_url($this->url);
-            $host = $parse['host'];
-            curl_setopt($ch, CURLOPT_URL, $this->url);
-            curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: $host"));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_VERBOSE, true);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Fiddler');
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            $output = curl_exec($ch);
 
-            $error = curl_error($ch);
-            if ($error) {
-                throw new \Exception($error);
-            }
-
-            curl_close($ch);
-            return $output;
+            return $this->do_CURL($this->url);
         } catch (\Exception $ex) {
+
             syslog(LOG_DEBUG, '[shedied poster] - gagal grab konten - ' . $ex->getMessage());
         }
+    }
+
+    protected function do_CURL($url) {
+
+        $ch = curl_init();
+        $parse = parse_url($url);
+        $host = $parse['host'];
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: $host"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Fiddler');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $output = curl_exec($ch);
+
+        $error = curl_error($ch);
+
+        if ($error) {
+            throw new \Exception($error);
+        }
+
+        curl_close($ch);
+
+        return $output;
     }
 
     protected function setMetaDescriptionLength($description) {
@@ -398,6 +417,49 @@ abstract class AbstractParser implements InterfaceParser {
 
     public function getDefaultAttachID() {
         return self::DEFAULT_ATTACH_ID;
+    }
+
+    /**
+     * Create DOM \phpQuery
+     * @param string $html
+     * @return \phpQuery
+     */
+    protected function make_DOM($html) {
+
+        if (function_exists('mb_convert_encoding')) {
+
+            $html = mb_convert_encoding($html, "HTML-ENTITIES", "UTF-8");
+        }
+
+        return \phpQuery::newDocument($html);
+    }
+
+    /**
+     * Logging Errors for Debugging
+     * @param mixed $errors string or array
+     */
+    public function logError($errors) {
+
+        $log = __DIR__ . "/../../shedied.log";
+
+        if (is_array($errors)) {
+
+            $errors = json_encode($errors);
+        }
+
+        $file = fopen($log, "a");
+        echo fwrite($file, "\n" . date('Y-m-d h:i:s') . " :: " . $errors);
+        fclose($file);
+    }
+
+    /**
+     * append category
+     * @param int $id
+     */
+    public function addCategoryId($id) {
+
+        array_push($this->category_id, $id);
+        return $this;
     }
 
 }

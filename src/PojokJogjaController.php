@@ -11,6 +11,7 @@ use SheDied\helpers\Numbers;
 use SheDied\helpers\Satu;
 use SheDied\helpers\Dua;
 use SheDied\helpers\Tiga;
+use SheDied\helpers\Empat;
 
 class PojokJogjaController extends Controller {
 
@@ -33,6 +34,7 @@ class PojokJogjaController extends Controller {
     protected $hijack = false;
     protected $map_pois = [];
     protected $map_pois_collect = false;
+    protected $do_this_urls = [];
 
     public function __construct() {
 
@@ -121,6 +123,11 @@ class PojokJogjaController extends Controller {
         return $this;
     }
 
+    public function auto() {
+
+        return $this->auto;
+    }
+
     public function setPostLinks($links) {
         $this->post_links = $links;
         return $this;
@@ -128,22 +135,22 @@ class PojokJogjaController extends Controller {
 
     public function buildPosts() {
 
-        $helper = null;
+        $helper = $this->switchHelper(SheDieDConfig::SITE_DOMAIN);
 
-        if (SheDieDConfig::SITE_DOMAIN == Satu::LOKERKREASI_COM)
-            $helper = new Satu();
-        elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US)
-            $helper = new Dua();
+        if (!$this->do_this_urls) {
 
-        if ($helper && !$this->hijack && !$this->auto) {
+            $helper->scanURL($this);
 
-            $helper->fetchPostLinks($this);
-        }
+            if (!$this->hijack && !$this->auto) {
 
-        if ($helper) {
+                $helper->fetchPostLinks($this);
+            }
 
             $helper->switchParsers($this);
             $this->loopPostLinks($helper);
+        } else {
+
+            //sek
         }
     }
 
@@ -161,16 +168,16 @@ class PojokJogjaController extends Controller {
                 $helper->switchParsers($this);
             }
 
-            $title = CWriter::generatePostTitle($post_link['title']);
+            $title = CWriter::formatPostTitle($post_link['title']);
             $link = $post_link['link'];
 
-            if (!WPWrapper::get_page_by_title($title) && $helper->getParser()) {
+            if (!WPWrapper::get_page_by_title($title, 'OBJECT', $helper->getPostType()) && $helper->getParser()) {
 
                 $new = $helper->getParser();
                 $parser = new $new;
                 $parser->setTitle($title)
                         ->setSourceCategory($this->news_src)
-                        ->setCategoryId($this->category)
+                        ->addCategoryId((int) $this->category)
                         ->setUrl($link)
                         ->grab();
 
@@ -229,6 +236,23 @@ class PojokJogjaController extends Controller {
 
                             WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
                             WPWrapper::homedesigning_meta($new_draft_id, true, $parser->getHost(), $parser->getUrl());
+                        } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
+
+                            if ($this->bulk_post_type == 'review') {
+
+                                WPWrapper::reviews_CRON_set_Categories($new_draft_id, $parser);
+                                WPWrapper::reviews_set_Gadget_Specs($new_draft_id, $parser);
+                                WPWrapper::reviews_set_Gadget_Support($new_draft_id, $parser);
+                                WPWrapper::reviews_set_Gadget_Photos($new_draft_id, $parser);
+
+                                $tags = [$parser->getBrand(), $parser->getModel()];
+                                if ($parser->getTags())
+                                    $tags += $parser->getTags();
+                                WPWrapper::reviews_set_Tags($new_draft_id, $tags, true);
+
+                                WPWrapper::reviews_set_Author_Avg($new_draft_id, $parser);
+                                WPWrapper::reviews_set_default_Scores($new_draft_id, $parser);
+                            }
                         }
 
                         WPWrapper::add_to_yoast_seo($new_draft_id, $parser->getMetaTitle(), $parser->getMetaDescription(), $parser->getMetaKeywords());
@@ -336,8 +360,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'ko9iiik',
-                'link' => 'http://www.home-designing.com/an-eclectic-minimalist-apartment'
+                'title' => 'tyu7AWQGBHTYSCbhYYd54',
+                'link' => 'https://www.gsmarena.com/alcatel_ot_pocket-30.php'
             ];
         }
 
@@ -352,6 +376,52 @@ class PojokJogjaController extends Controller {
     public function botPosts(Numbers $helper) {
 
         $this->loopPostLinks($helper);
+    }
+
+    protected function switchHelper($active) {
+
+        switch ($active) {
+
+            case Satu::LOKERKREASI_COM:
+                $helper = new Satu();
+                break;
+            case Dua::AWESOMEDECORS_US:
+                $helper = new Dua();
+                break;
+            case Tiga::POJOKJOGJA_COM:
+                $helper = new Tiga();
+                break;
+            case Empat::TECHNOREVIEW_US:
+                $helper = new Empat();
+                break;
+            default :
+                $helper = null;
+                break;
+        }
+
+        return $helper;
+    }
+
+    public function setDoThisURLs($textarea) {
+
+        $urls = explode(PHP_EOL, $textarea);
+
+        foreach ($urls as $url) {
+
+            $url = trim($url);
+
+            if (filter_var($url, FILTER_VALIDATE_URL)) {
+
+                $this->do_this_urls[] = $url;
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCustomUrls() {
+
+        return $this->do_this_urls;
     }
 
 }

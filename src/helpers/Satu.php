@@ -14,21 +14,20 @@ class Satu extends Numbers {
 
     public function fetchPostLinks(PojokJogjaController $controller) {
 
-        $doc = @file_get_contents($controller->getUrl());
-        if (function_exists('mb_convert_encoding')) {
-            $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
-        }
+        $doc = $this->fetchLinks($controller->getUrl());
 
         \phpQuery::newDocument($doc);
 
         $postlinks = [];
 
         if ($controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 100) {
+
             #Jobstreet
             foreach (pq('div.position-title.header-text a') as $a) {
+
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
-                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+                $postlinks[] = array("title" => $this->title(trim($title)), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
                 if ($this->enough($postlinks, $controller)) {
 
@@ -88,6 +87,15 @@ class Satu extends Numbers {
         $sources[10] = ['name' => 'Jobstreet: Yogyakarta', 'url' => 'https://www.jobstreet.co.id/id/job-search/job-vacancy.php?key=&location=32700&specialization=&area=&salary=&ojs=3&src=12'];
 
         return $sources;
+    }
+
+    protected function title($string) {
+
+        return 'Lowongan Kerja ' . $string;
+    }
+
+    public function fetchCustomUrls(PojokJogjaController $controller) {
+        ;
     }
 
 }

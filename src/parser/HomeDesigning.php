@@ -12,13 +12,7 @@ class HomeDesigning extends AbstractParser {
     protected function getPostDetail() {
 
         $doc = $this->curlGrabContent();
-
-        if (function_exists('mb_convert_encoding')) {
-
-            $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
-        }
-
-        $html = \phpQuery::newDocument($doc);
+        $html = $this->make_DOM($doc);
 
         $prologue = pq('div.top_blocks p.first')->text();
         if (!trim($prologue))

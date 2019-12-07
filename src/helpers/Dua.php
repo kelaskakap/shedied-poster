@@ -19,18 +19,16 @@ class Dua extends Numbers {
 
     public function fetchPostLinks(PojokJogjaController $controller) {
 
-        $doc = @file_get_contents($controller->getUrl());
-        if (function_exists('mb_convert_encoding')) {
-            $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
-        }
+        $doc = $this->fetchLinks($controller->getUrl());
 
         \phpQuery::newDocument($doc);
 
         $postlinks = [];
 
         if ($this->source_HOMEDESIGNING($controller)) {
-            #Jobstreet
+
             foreach (pq('div.heading a') as $a) {
+
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
@@ -73,10 +71,9 @@ class Dua extends Numbers {
         return $sources;
     }
 
-    public function firstRunURL($Url, $sourceId) {
-        
-        if (empty($this->fr))
-            return $Url;
+    public function firstRunURL($url, $sourceId) {
+
+        parent::firstRunURL($url, $sourceId);
 
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
         $Page = $t > 1 ? 'page/' . $t : '';
@@ -84,12 +81,16 @@ class Dua extends Numbers {
         $t--;
         $this->fr[$sourceId] = $t;
 
-        return $Url . $Page;
+        return $url . $Page;
     }
 
     protected function source_HOMEDESIGNING(PojokJogjaController $controller) {
 
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22;
+    }
+
+    public function fetchCustomUrls(PojokJogjaController $controller) {
+        ;
     }
 
 }

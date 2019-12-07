@@ -4,6 +4,8 @@ namespace SheDied;
 
 use SheDied\parser\InterfaceParser;
 use SheDied\parser\HomeDesigning;
+use SheDied\parser\gadget\IGadget;
+use SheDied\parser\gadget\Gadget;
 
 class WPWrapper {
 
@@ -132,12 +134,12 @@ class WPWrapper {
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
-        
+
         foreach ($parser->getGallery() as $key => $img) {
-            
+
             //if ($key > 10)
             //    break;
-            
+
             $img = (object) $img;
             #upload image
             $attach_id = media_sideload_image($img->image, $post_id, null, 'id');
@@ -148,11 +150,11 @@ class WPWrapper {
             $content = $img->excerpt;
             if ($content && $img->caption)
                 $content .= " | " . $img->caption . ".";
-            
+
             $array['ID'] = $attach_id;
             $array['post_excerpt'] = $img->caption;
             $array['post_content'] = $content;
-            
+
             wp_update_post($array);
 
             #menampilkan di post. belum perlu.
@@ -166,6 +168,70 @@ class WPWrapper {
         update_post_meta($post_id, '_gmr_sidebar_key', $no_sidebar);
         update_post_meta($post_id, '_source_name', strtoupper($source));
         update_post_meta($post_id, '_source_url', $url_source);
+    }
+
+    public static function reviews_set_Gadget_Specs($post_id, IGadget $gadget) {
+
+        $meta_value['review_tab_title'] = 'Specifications';
+        $meta_value['review_tab_content'] = $gadget->specsTable();
+
+        add_post_meta($post_id, 'review_tabs', $meta_value);
+    }
+
+    public static function reviews_CRON_set_Categories($post_id, InterfaceParser $gadget) {
+
+        if (defined('DOING_CRON')) {
+
+            wp_set_object_terms($post_id, $gadget->getCategoryId(), 'review-category');
+        }
+    }
+
+    public static function reviews_set_Gadget_Support($post_id, IGadget $gadget) {
+
+        $meta_value['review_tab_title'] = 'Support';
+        $meta_value['review_tab_content'] = $gadget->getProductSupport();
+
+        add_post_meta($post_id, 'review_tabs', $meta_value);
+    }
+
+    public static function reviews_set_Gadget_Photos($post_id, IGadget $gadget) {
+
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+        foreach ($gadget->getProductPhotos() as $photo_url) {
+
+            $media_id = media_sideload_image($photo_url, $post_id, null, 'id');
+
+            if (is_numeric($media_id)) {
+
+                add_post_meta($post_id, 'review_images', $media_id);
+            }
+        }
+    }
+
+    static public function reviews_set_Tags($post_id, $tags, $append) {
+
+        return wp_set_post_terms($post_id, $tags, 'review-tag', $append);
+    }
+
+    static public function wp_set_tags($post_id, $tags, $append) {
+
+        return wp_set_post_tags($post_id, $tags, $append);
+    }
+
+    static public function reviews_set_Author_Avg($post_id, Gadget $gadget) {
+
+        add_post_meta($post_id, 'author_average', $gadget->getAuthor_Rate());
+    }
+
+    static public function reviews_set_default_Scores($post_id, Gadget $gadget) {
+
+        foreach ($gadget->getScores() as $point) {
+
+            add_post_meta($post_id, 'reviews_score', $point);
+        }
     }
 
 }

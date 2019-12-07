@@ -10,16 +10,17 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
         $post_links = get_transient($transient_name);
         $controller = new PojokJogjaController();
+        $controller->isAuto(true);
 
         if (empty($post_links) && !$sweeper && !empty($sources)) {
 
             foreach ($sources as $sourceId => $source) {
-
-                $Url = $helper->firstRunURL($source['url'], $sourceId);
-
-                $controller->setUrl($Url);
+               
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
+
+                $Url = $helper->firstRunURL($source['url'], $sourceId, $controller);
+                $controller->setUrl($Url);
                 $helper->fetchPostLinks($controller);
             }
 
@@ -36,13 +37,12 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
             if (!empty($to_run)) {
 
-                $controller->setBulkPostType('post')
-                        ->setAuthor(SheDieDConfig::AUTHOR_ID) //bot
+                $controller->setAuthor(SheDieDConfig::AUTHOR_ID) //bot
                         ->setBulkPostStatus('publish')
+                        ->setBulkPostType($helper->getPostType())
                         ->setInterval(['value' => SheDieDConfig::BOT_POST_INVTERVAL, 'type' => 'minutes'])
                         ->setCount($count)
                         ->hijack(false)
-                        ->isAuto(true)
                         ->setPostLinks($to_run)
                         ->botPosts($helper);
             }

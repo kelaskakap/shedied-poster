@@ -20,6 +20,7 @@ function shedied_create_posts() {
                 ->setBulkPostStatus($_POST['bulk_post_status'])
                 ->setInterval($_POST['interval'])
                 ->setUrl($sources[$_POST['news_src']]['url'])
+                ->setDoThisURLs(trim($_POST['do_this']))
                 ->setAction($_POST['action'])
                 ->setCount($_POST['number_of_posts'])
                 ->hijack(false)
@@ -64,7 +65,7 @@ function shedied_my_panel() {
 		  <div id="tabs-Home">';
 
     echo '<form name="frmPost" method="post">' . PHP_EOL;
-    $year = date("Y");
+    
     echo '<table style="text-align: left; padding: 10px 30px;">
 			<tr valign="top">
 				<th scope="row">News Source</th>
@@ -79,17 +80,16 @@ function shedied_my_panel() {
 			<tr valign="top">
 				<th scope="row">Post Type</th>
 				<td>
-					<select name="bulk_post_type">
+					<select name="bulk_post_type" class="bulkposttype">
 						<option value="post">Posts</option>
 						<option value="page">Pages</option>
+                                                <option value="review">Reviews [case: technoreview.us]</option>
 					</select>
 				</td>						
 
 			</tr>
-			<tr><th>Category</th> <th>';
-    wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'category', 'orderby' => 'name',
-        'selected' => "", 'hierarchical' => true, 'show_option_none' => __('None')));
-    echo "Authors:";
+			<tr><th>Category</th> <th class="categorylist"></th></tr>
+                        <tr><th>Author</th> <th>';
     wp_dropdown_users(array('name' => 'author', 'selected' => get_current_user_id()));
     echo '</th></tr>
 			<tr valign="top">
@@ -133,6 +133,15 @@ function shedied_my_panel() {
                 <option value="100">100</option>
             </select>&nbsp;
             * Please know your limit.
+        </td>
+    </tr>
+    <tr valign="top">
+        <th scope="row">Scrap URLs</th>
+        <td>
+            <textarea name="do_this" rows="5" cols="50">
+                
+            </textarea><br>
+            * Enter url per line. If urls are valid, bot will execute 'em.
         </td>
     </tr>
     <tr>
@@ -261,12 +270,17 @@ function shedied_my_panel() {
 				<td>
 				Source: ';
     echo shedied_gen_news_combo("set_news_src");
-    echo "Category";
-    wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'set_category', 'orderby' => 'name',
-        'selected' => "", 'hierarchical' => true, 'show_option_none' => __('None')));
-    echo "Authors";
+    echo ' Post Type: ';
+    echo '<select name="cpg_bulk_post_type" class="bulkposttype">
+						<option value="post">Posts</option>
+						<option value="page">Pages</option>
+                                                <option value="review">Review</option>
+					</select>';
+    echo " Category: ";
+    echo '<div class="cpgcategorylist" style="display: inline;"></div>';
+    echo " Authors: ";
     wp_dropdown_users(array('name' => 'set_author', 'selected' => get_current_user_id()));
-    echo "<input type='button' class='button-primary' value='Add Campaign' onclick='do_ajax(\"add_campaign\")'>";
+    echo " <input type='button' class='button-primary' value='Add Campaign' onclick='do_ajax(\"add_campaign\")'>";
     echo '
 				</td>
 			</tr>
