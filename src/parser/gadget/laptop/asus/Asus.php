@@ -91,33 +91,6 @@ abstract class Asus extends Laptop {
         return $parser;
     }
 
-    protected function do_CURL($url) {
-
-        $ch = curl_init();
-        $parse = parse_url($url);
-        $host = $parse['host'];
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("Host: $host"));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36');
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        $output = curl_exec($ch);
-
-        $error = curl_error($ch);
-
-        if ($error) {
-            throw new \Exception($error);
-        }
-
-        curl_close($ch);
-
-        return $output;
-    }
-
     protected function _getFeaturedImage() {
 
         $img = pq('meta[property="og:image"]')->attr('content');
@@ -221,7 +194,7 @@ abstract class Asus extends Laptop {
         $text = "";
         $st_s = "div.desc";
         $si_s = "div.intro > p";
-        
+
         foreach ($node->find('section') as $section) {
 
             $st = pq($section)->find($st_s);
@@ -351,9 +324,9 @@ abstract class Asus extends Laptop {
     protected function try_Content_4() {
 
         $node = pq('div#wrap');
-        
+
         $node->find('h1[class*=title]')->remove();
-        
+
         $text = "";
         $st_s = "article.text h1";
         $si_s = "article.text p";
@@ -392,7 +365,7 @@ abstract class Asus extends Laptop {
             $sub_info = trim($si->text());
             $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
         }
-        
+
         if (!$text) {
 
             $st_s = "div.text h1, article.text h1";

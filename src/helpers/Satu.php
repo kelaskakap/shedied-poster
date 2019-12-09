@@ -98,4 +98,8 @@ class Satu extends Numbers {
         ;
     }
 
+    public function scanURL(PojokJogjaController $controller) {
+        ;
+    }
+
 }

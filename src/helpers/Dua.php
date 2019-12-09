@@ -71,7 +71,7 @@ class Dua extends Numbers {
         return $sources;
     }
 
-    public function firstRunURL($url, $sourceId) {
+    public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
 
         parent::firstRunURL($url, $sourceId);
 
@@ -90,6 +90,10 @@ class Dua extends Numbers {
     }
 
     public function fetchCustomUrls(PojokJogjaController $controller) {
+        ;
+    }
+
+    public function scanURL(PojokJogjaController $controller) {
         ;
     }
 
