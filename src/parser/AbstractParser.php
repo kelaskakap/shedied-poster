@@ -308,7 +308,7 @@ abstract class AbstractParser implements InterfaceParser {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Fiddler');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36');
         curl_setopt($ch, CURLOPT_HEADER, false);
         $output = curl_exec($ch);
 

@@ -12,6 +12,7 @@ use SheDied\helpers\Satu;
 use SheDied\helpers\Dua;
 use SheDied\helpers\Tiga;
 use SheDied\helpers\Empat;
+use SheDied\helpers\Lima;
 
 class PojokJogjaController extends Controller {
 
@@ -185,8 +186,7 @@ class PojokJogjaController extends Controller {
                 if ($helper->need_Gallery())
                     if (!$parser->getGallery())
                         $gallery = false;
-
-
+                    
                 if (strlen($parser->getContent()) > 0 && $gallery) {
 
                     CWriter::removeHtmlComments($parser);
@@ -253,6 +253,11 @@ class PojokJogjaController extends Controller {
                                 WPWrapper::reviews_set_Author_Avg($new_draft_id, $parser);
                                 WPWrapper::reviews_set_default_Scores($new_draft_id, $parser);
                             }
+                        } elseif (SheDieDConfig::SITE_DOMAIN == Lima::JOGJA_TRADE) {
+
+                            WPWrapper::wp_set_tags($new_draft_id, $parser->getTags(), true);
+                            WPWrapper::olx_meta($new_draft_id, $parser);
+                            WPWrapper::olx_upload_photos($parser, $new_draft_id);
                         }
 
                         WPWrapper::add_to_yoast_seo($new_draft_id, $parser->getMetaTitle(), $parser->getMetaDescription(), $parser->getMetaKeywords());
@@ -334,11 +339,6 @@ class PojokJogjaController extends Controller {
                     ->setTime($base_date->format('Y-m-d H:i:s'))
                     ->setStatus($this->bulk_post_status);
 
-            if (!empty($parser->getTags())) {
-                //$post_tag = WPWrapper::get_cat_name($parser->getTags());
-                //$parser->setTags($post_tag);
-            }
-
             $post_id = WPWrapper::wp_insert_post($parser);
 
             if ($post_id == 0) {
@@ -360,8 +360,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tyu7AWQGBHTYSCbhYYd54',
-                'link' => 'https://www.gsmarena.com/alcatel_ot_pocket-30.php'
+                'title' => 'tse3RTwzs56hj5sa64',
+                'link' => 'https://www.olx.co.id/item/dijual-lahan-bagus-area-mertoyudan-iid-763843480'
             ];
         }
 
@@ -393,6 +393,9 @@ class PojokJogjaController extends Controller {
                 break;
             case Empat::TECHNOREVIEW_US:
                 $helper = new Empat();
+                break;
+            case Lima::JOGJA_TRADE:
+                $helper = new Lima();
                 break;
             default :
                 $helper = null;

@@ -71,4 +71,5 @@ abstract class Numbers {
         return $this->post_type;
     }
 
+    abstract public function scanURL(PojokJogjaController $controller);
 }

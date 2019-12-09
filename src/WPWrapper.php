@@ -6,6 +6,8 @@ use SheDied\parser\InterfaceParser;
 use SheDied\parser\HomeDesigning;
 use SheDied\parser\gadget\IGadget;
 use SheDied\parser\gadget\Gadget;
+use SheDied\parser\jogja\OLXParser;
+use SheDied\helpers\Lima;
 
 class WPWrapper {
 
@@ -39,12 +41,27 @@ class WPWrapper {
     }
 
     public static function generate_featured_image(InterfaceParser $parser, $post_id) {
+
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
-        $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
-        $attach_id = self::get_attachment_id_from_src($filename, $parser->getDefaultAttachID());
-        return set_post_thumbnail($post_id, $attach_id);
+
+        if (SheDieDConfig::SITE_DOMAIN != Lima::JOGJA_TRADE) {
+
+            $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
+            $attach_id = self::get_attachment_id_from_src($filename, $parser->getDefaultAttachID());
+            return set_post_thumbnail($post_id, $attach_id);
+        } else {
+
+            $content = strtolower($parser->getTitle());
+            $content = str_replace(' ', '-', $content);
+
+            $xf['name'] = "{$content}-feature.jpg";
+            $xf['tmp_name'] = download_url($parser->getFeaturedImage());
+
+            $attach_id = media_handle_sideload($xf, $post_id);
+            return set_post_thumbnail($post_id, $attach_id);
+        }
     }
 
     private static function get_attachment_id_from_src($image_src, $default) {
@@ -232,6 +249,51 @@ class WPWrapper {
 
             add_post_meta($post_id, 'reviews_score', $point);
         }
+    }
+
+    public static function olx_upload_photos(OLXParser $parser, $post_id) {
+
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+        foreach ($parser->getPhotos() as $key => $imgurl) {
+
+            $content = strtolower($parser->getTitle());
+            $content = str_replace(' ', '-', $content);
+            $content = "{$content}-{$key}";
+
+
+            $xf['name'] = "{$content}.jpg";
+            $xf['tmp_name'] = download_url($imgurl);
+
+            $attach_id = media_handle_sideload($xf, $post_id);
+
+            #update meta, jika ada
+            //update_post_meta($attach_id, '_wp_attachment_image_alt', 'My Alt Text');
+            #set caption jika perlu            
+            $content = "{$content}-{$attach_id}";
+
+            $array['ID'] = $attach_id;
+            $array['post_excerpt'] = $content;
+            $array['post_content'] = $content;
+
+            wp_update_post($array);
+
+            #menampilkan di post. belum perlu.
+            //$imghtml = wp_get_attachment_image($attach_id);
+            //$galeri = image_add_caption($imghtml, $attach_id, $img->caption, '', '', '', '');
+        }
+    }
+
+    public static function olx_meta($post_id, OLXParser $parser) {
+
+        $meta_value['price'] = $parser->price;
+        $meta_value['tayang'] = $parser->tayang;
+        $meta_value['seller'] = $parser->seller;
+        $meta_value['source'] = $parser->getUrl();
+
+        add_post_meta($post_id, 'olx_meta', $meta_value);
     }
 
 }

@@ -6,6 +6,7 @@ use SheDied\helpers\Dua;
 use SheDied\helpers\Satu;
 use SheDied\helpers\Tiga;
 use SheDied\helpers\Empat;
+use SheDied\helpers\Lima;
 
 class SheDieDConfig {
 
@@ -14,7 +15,7 @@ class SheDieDConfig {
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'technoreview.us';
+    const SITE_DOMAIN = 'jogja.trade';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
@@ -30,6 +31,8 @@ class SheDieDConfig {
                 self::$sources = Tiga::sources();
             elseif (self::SITE_DOMAIN == Empat::TECHNOREVIEW_US)
                 self::$sources = Empat::sources();
+            elseif (self::SITE_DOMAIN == Lima::JOGJA_TRADE)
+                self::$sources = Lima::sources();
         }
     }
 

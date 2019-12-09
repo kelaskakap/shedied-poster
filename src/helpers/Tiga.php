@@ -32,4 +32,8 @@ class Tiga extends Numbers {
         ;
     }
 
+    public function scanURL(PojokJogjaController $controller) {
+        ;
+    }
+
 }
