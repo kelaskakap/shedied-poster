@@ -4,30 +4,38 @@ use SheDied\SheDieDConfig;
 use SheDied\helpers\Lima;
 
 function bot_olx_jogja_1() {
-
-    $sources = SheDieDConfig::pick_Sources([1, 2, 3], [9, 10, 33]);
+    //3 jam sekali
+    //1 mobil bekas
+    //10 indekos
+    //13 lowongan
+    $sources = SheDieDConfig::pick_Sources([1, 10, 13], [9, 39, 57]);
 
     $helper = new Lima();
 
     shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_1', false);
 }
 
-add_action('bot_olx_jogja_1', 'bot_olx_jogja_1');
-
 function bot_olx_jogja_2() {
-
-    $sources = SheDieDConfig::pick_Sources([4, 5, 6], [34, 35, 36]);
+    //3 jam sekali
+    //9 tanah
+    //8 disewakan rumah
+    //12 disewakan banguna komersil
+    $sources = SheDieDConfig::pick_Sources([9, 8, 12], [38, 37, 41]);
 
     $helper = new Lima();
 
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_2', false);
+    shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_1', false);
 }
 
 add_action('bot_olx_jogja_2', 'bot_olx_jogja_2');
 
 function bot_olx_jogja_3() {
 
-    $sources = SheDieDConfig::pick_Sources([7, 8, 9], [23, 37, 38]);
+    //6 jam sekali
+    //18 handphone
+    //19 laptop
+    //23 hewan peliharaan
+    $sources = SheDieDConfig::pick_Sources([18, 19, 23], [64, 65, 71]);
 
     $helper = new Lima();
 
@@ -38,7 +46,11 @@ add_action('bot_olx_jogja_3', 'bot_olx_jogja_3');
 
 function bot_olx_jogja_4() {
 
-    $sources = SheDieDConfig::pick_Sources([10, 11, 12], [39, 40, 41]);
+    //6 jam sekali
+    //14 jasa
+    //16 perlengkapan usaha
+    //21 mebel
+    $sources = SheDieDConfig::pick_Sources([14, 16, 21], [58, 61, 67]);
 
     $helper = new Lima();
 
@@ -49,7 +61,11 @@ add_action('bot_olx_jogja_4', 'bot_olx_jogja_4');
 
 function bot_olx_jogja_5() {
 
-    $sources = SheDieDConfig::pick_Sources([10, 11, 12], [39, 40, 41]);
+    //12 jam sekali
+    //2 aksesori mobil
+    //3 audio mobil
+    //4 sparepart mobil
+    $sources = SheDieDConfig::pick_Sources([2, 3, 4], [10, 33, 34]);
 
     $helper = new Lima();
 
@@ -60,7 +76,11 @@ add_action('bot_olx_jogja_5', 'bot_olx_jogja_5');
 
 function bot_olx_jogja_6() {
 
-    $sources = SheDieDConfig::pick_Sources([13, 14, 23], [57, 58, 71]);
+    //12 jam sekali
+    //6 truk kendaraan komersil
+    //7 dijual rumah apartemen
+    //11 dijual bangunan komersil
+    $sources = SheDieDConfig::pick_Sources([6, 7, 11], [36, 23, 40]);
 
     $helper = new Lima();
 
@@ -71,7 +91,11 @@ add_action('bot_olx_jogja_6', 'bot_olx_jogja_6');
 
 function bot_olx_jogja_7() {
 
-    $sources = SheDieDConfig::pick_Sources([15, 16, 17], [60, 61, 62]);
+    //24 jam sekali
+    //15 peralatan kantor
+    //17 keperluan industri
+    //20 perlengkapan rumah
+    $sources = SheDieDConfig::pick_Sources([15, 17, 20], [60, 62, 69]);
 
     $helper = new Lima();
 
@@ -82,7 +106,11 @@ add_action('bot_olx_jogja_7', 'bot_olx_jogja_7');
 
 function bot_olx_jogja_8() {
 
-    $sources = SheDieDConfig::pick_Sources([18, 19], [64, 65]);
+    //24 jam sekali
+    //21 mebel
+    //22 dekorasi rumah
+    //5 velg ban
+    $sources = SheDieDConfig::pick_Sources([21, 22, 5], [67, 68, 35]);
 
     $helper = new Lima();
 
@@ -90,17 +118,6 @@ function bot_olx_jogja_8() {
 }
 
 add_action('bot_olx_jogja_8', 'bot_olx_jogja_8');
-
-function bot_olx_jogja_9() {
-
-    $sources = SheDieDConfig::pick_Sources([20, 21, 22], [69, 67, 68]);
-
-    $helper = new Lima();
-
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_9', false);
-}
-
-add_action('bot_olx_jogja_9', 'bot_olx_jogja_9');
 
 function bot_olx_jogja_sweeper() {
 
@@ -114,7 +131,6 @@ function bot_olx_jogja_sweeper() {
     shedied_exec_bot($helper, [], 5, 'tsnt_olx_jogja_6', true);
     shedied_exec_bot($helper, [], 5, 'tsnt_olx_jogja_7', true);
     shedied_exec_bot($helper, [], 5, 'tsnt_olx_jogja_8', true);
-    shedied_exec_bot($helper, [], 5, 'tsnt_olx_jogja_9', true);
 }
 
 add_action('bot_olx_jogja_sweeper', 'bot_olx_jogja_sweeper');
