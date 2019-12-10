@@ -5,7 +5,7 @@ use SheDied\helpers\Lima;
 
 function bot_olx_jogja_1() {
     
-//4 jam sekali
+    //4 jam sekali
     //1 mobil bekas
     //10 indekos
     //13 lowongan
@@ -15,6 +15,8 @@ function bot_olx_jogja_1() {
 
     shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_1', false);
 }
+
+add_action('bot_olx_jogja_1', 'bot_olx_jogja_1');
 
 function bot_olx_jogja_2() {
 
