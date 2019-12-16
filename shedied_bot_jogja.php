@@ -144,12 +144,11 @@ add_action('bot_olx_jogja_9', 'bot_olx_jogja_9');
 
 function bot_olx_jogja_10() {
 
-    //4 jam sekali
-    //9 tanah
+    //2 hari sekali
     //7 rumah dijual
-    //14 rental jasa
+    //12 disewakan bangunan komersil
 
-    $sources = SheDieDConfig::pick_Sources([9, 7, 14], [38, 23, 58]);
+    $sources = SheDieDConfig::pick_Sources([7, 12], [23, 41]);
 
     $helper = new Lima();
 
@@ -157,6 +156,21 @@ function bot_olx_jogja_10() {
 }
 
 add_action('bot_olx_jogja_10', 'bot_olx_jogja_10');
+
+function bot_olx_jogja_11() {
+
+    //3 hari sekali
+    //9 tanah
+    //14 rental jasa
+
+    $sources = SheDieDConfig::pick_Sources([9, 14], [38, 58]);
+
+    $helper = new Lima();
+
+    shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_11', false);
+}
+
+add_action('bot_olx_jogja_11', 'bot_olx_jogja_11');
 
 function bot_olx_jogja_sweeper() {
 
@@ -172,6 +186,7 @@ function bot_olx_jogja_sweeper() {
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_8', true);
     shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_9', true);
     shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_10', true);
+    shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_11', true);
 }
 
 add_action('bot_olx_jogja_sweeper', 'bot_olx_jogja_sweeper');
