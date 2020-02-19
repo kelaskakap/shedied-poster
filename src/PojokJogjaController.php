@@ -235,6 +235,7 @@ class PojokJogjaController extends Controller {
                         } elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US) {
 
                             WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
+                            WPWrapper::homedesigning_update_post_with_gallery($parser, $new_draft_id);
                             WPWrapper::homedesigning_meta($new_draft_id, true, $parser->getHost(), $parser->getUrl());
                         } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
 
@@ -360,8 +361,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tse3RTwzs56hj5sa64',
-                'link' => 'https://www.olx.co.id/item/dijual-lahan-bagus-area-mertoyudan-iid-763843480'
+                'title' => 'tse3RTd64',
+                'link' => 'https://onekindesign.com/2020/02/05/renovated-barn-house/'
             ];
         }
 

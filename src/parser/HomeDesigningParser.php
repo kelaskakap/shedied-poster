@@ -2,11 +2,10 @@
 
 namespace SheDied\parser;
 
-use SheDied\parser\AbstractParser;
+use SheDied\parser\AbstractParserWithGallery;
 
-class HomeDesigning extends AbstractParser {
+class HomeDesigningParser extends AbstractParserWithGallery {
 
-    protected $gallery = [];
     protected $prologue = '';
 
     protected function getPostDetail() {
@@ -26,11 +25,7 @@ class HomeDesigning extends AbstractParser {
             $alt = pq($img)->attr('alt');
             $alt = ucwords(trim($alt));
 
-            $this->gallery[] = [
-                'image' => trim($simg),
-                'excerpt' => $alt,
-                'caption' => $alt
-            ];
+            $this->gallery[] = $this->setPhotoSource($simg, $alt, $alt);
         }
 
         if (!$this->gallery) {
@@ -94,11 +89,6 @@ class HomeDesigning extends AbstractParser {
 
         $meta_keywords = pq('meta[name="keywords"]')->attr('content');
         $this->meta_keywords = trim($meta_keywords);
-    }
-
-    public function getGallery() {
-
-        return $this->gallery;
     }
 
 }
