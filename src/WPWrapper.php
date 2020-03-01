@@ -3,7 +3,7 @@
 namespace SheDied;
 
 use SheDied\parser\InterfaceParser;
-use SheDied\parser\HomeDesigning;
+use SheDied\parser\AbstractParserWithGallery;
 use SheDied\parser\gadget\IGadget;
 use SheDied\parser\gadget\Gadget;
 use SheDied\parser\jogja\OLXParser;
@@ -146,37 +146,43 @@ class WPWrapper {
         return $map->save($post_id);
     }
 
-    public static function homedesigning_upload_gallery(HomeDesigning $parser, $post_id) {
+    public static function homedesigning_upload_gallery(AbstractParserWithGallery $parser, $post_id) {
 
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
 
-        foreach ($parser->getGallery() as $key => $img) {
+        foreach ($parser->getGallery() as $idx => $img) {
 
             //if ($key > 10)
             //    break;
 
-            $img = (object) $img;
+            $oimg = (object) $img;
             #upload image
-            $attach_id = media_sideload_image($img->image, $post_id, null, 'id');
+            $attach_id = media_sideload_image($oimg->image, $post_id, null, 'id');
 
             #update meta, jika ada
             //update_post_meta($attach_id, '_wp_attachment_image_alt', 'My Alt Text');
             #set caption jika perlu
-            $content = $img->excerpt;
-            if ($content && $img->caption)
-                $content .= " | " . $img->caption . ".";
+            $content = $oimg->excerpt;
+            if ($content && $oimg->caption)
+                $content .= " | " . $oimg->caption . ".";
 
             $array['ID'] = $attach_id;
-            $array['post_excerpt'] = $img->caption;
+            $array['post_excerpt'] = $oimg->caption;
             $array['post_content'] = $content;
 
             wp_update_post($array);
 
-            #menampilkan di post. belum perlu.
-            //$imghtml = wp_get_attachment_image($attach_id);
-            //$galeri = image_add_caption($imghtml, $attach_id, $img->caption, '', '', '', '');
+            if ($parser->attach()) {
+
+                //post dengan gallery wokwokwok
+                //update source image
+                $imghtml = wp_get_attachment_image($attach_id, 'full');
+                $img['html'] = $imghtml;
+
+                $parser->updatePhotoSource($idx, $img);
+            }
         }
     }
 
@@ -294,6 +300,19 @@ class WPWrapper {
         $meta_value['source'] = $parser->getUrl();
 
         add_post_meta($post_id, 'olx_meta', $meta_value);
+    }
+
+    static public function homedesigning_update_post_with_gallery(AbstractParserWithGallery $parser, $post_id) {
+
+        if ($parser->attach()) {
+
+            $post_with_imported_images = array(
+                'ID' => $post_id,
+                'post_content' => $parser->buildPostWithGallery(),
+            );
+
+            wp_update_post($post_with_imported_images);
+        }
     }
 
 }
