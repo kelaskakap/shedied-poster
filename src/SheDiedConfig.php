@@ -15,7 +15,7 @@ class SheDieDConfig {
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'awesomedecors.us';
+    const SITE_DOMAIN = 'jogja.trade';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
