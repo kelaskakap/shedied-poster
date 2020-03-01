@@ -176,14 +176,14 @@ function bot_olx_jogja_sweeper() {
 
     $helper = new Lima();
 
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_1', true);
+    /*shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_1', true);
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_2', true);
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_3', true);
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_4', true);
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_5', true);
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_6', true);
     shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_7', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_8', true);
+    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_8', true);*/
     shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_9', true);
     shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_10', true);
     shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_11', true);
