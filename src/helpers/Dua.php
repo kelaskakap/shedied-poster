@@ -54,7 +54,7 @@ class Dua extends Numbers {
                 }
             }
         }
-        
+
         $controller->setPostLinks($postlinks);
     }
 
@@ -94,7 +94,7 @@ class Dua extends Numbers {
 
     protected function source_ONEKINDESIGN(PojokJogjaController $controller) {
 
-        return $controller->getNewsSrc() > 21 && $controller->getNewsSrc() < 50;
+        return $controller->getNewsSrc() > 21 && $controller->getNewsSrc() < 58;
     }
 
     public function fetchCustomUrls(PojokJogjaController $controller) {
@@ -131,6 +131,45 @@ class Dua extends Numbers {
     static protected function sources_onekindesign() {
 
         $sources[22] = ['name' => 'One Kin Design: Barn Homes', 'url' => 'https://onekindesign.com/tag/barn-house/'];
+        $sources[23] = ['name' => 'One Kin Design: Beach House', 'url' => 'https://onekindesign.com/tag/beach-house/'];
+        $sources[24] = ['name' => 'One Kin Design: Cabin', 'url' => 'https://onekindesign.com/tag/cabin/'];
+        $sources[25] = ['name' => 'One Kin Design: Contemporary Homes', 'url' => 'https://onekindesign.com/tag/contemporary/'];
+        $sources[26] = ['name' => 'One Kin Design: Cottage', 'url' => 'https://onekindesign.com/tag/cottage/'];
+        $sources[28] = ['name' => 'One Kin Design: Farm House', 'url' => 'https://onekindesign.com/tag/farm-house/'];
+        $sources[29] = ['name' => 'One Kin Design: Mediterranean Homes', 'url' => 'https://onekindesign.com/tag/mediterranean/'];
+        $sources[30] = ['name' => 'One Kin Design: Mid Century Homes', 'url' => 'https://onekindesign.com/tag/mid-century/'];
+        $sources[31] = ['name' => 'One Kin Design: Modern Homes', 'url' => 'https://onekindesign.com/tag/modern/'];
+        $sources[32] = ['name' => 'One Kin Design: Mountain Homes', 'url' => 'https://onekindesign.com/tag/mountain-home/'];
+        $sources[33] = ['name' => 'One Kin Design: Scandinavian Homes', 'url' => 'https://onekindesign.com/tag/scandinavian/'];
+        $sources[34] = ['name' => 'One Kin Design: Sustainable Homes', 'url' => 'https://onekindesign.com/tag/sustainable/'];
+
+        $sources[35] = ['name' => 'One Kin Design: Loft', 'url' => 'https://onekindesign.com/tag/loft/'];
+        $sources[36] = ['name' => 'One Kin Design: Penthouse', 'url' => 'https://onekindesign.com/tag/penthouse/'];
+        $sources[37] = ['name' => 'One Kin Design: Warehouse', 'url' => 'https://onekindesign.com/tag/warehouse/'];
+
+        $sources[38] = ['name' => 'One Kin Design: Basement Design', 'url' => 'https://onekindesign.com/tag/basement-design/'];
+        $sources[39] = ['name' => 'One Kin Design: Bathroom', 'url' => 'https://onekindesign.com/tag/bathroom/'];
+        $sources[40] = ['name' => 'One Kin Design: Bedroom', 'url' => 'https://onekindesign.com/tag/bedroom/'];
+        $sources[41] = ['name' => 'One Kin Design: Closet', 'url' => 'https://onekindesign.com/tag/closet/'];
+        $sources[42] = ['name' => 'One Kin Design: Dining Room', 'url' => 'https://onekindesign.com/tag/dining/'];
+        $sources[43] = ['name' => 'One Kin Design: Home Bar', 'url' => 'https://onekindesign.com/tag/home-bar/'];
+        $sources[44] = ['name' => 'One Kin Design: Home Office', 'url' => 'https://onekindesign.com/tag/home-office/'];
+
+        $sources[45] = ['name' => 'One Kin Design: Outdoor Inspiration', 'url' => 'https://onekindesign.com/tag/outdoor-inspiration/'];
+        $sources[46] = ['name' => 'One Kin Design: Spring Decor', 'url' => 'https://onekindesign.com/tag/spring-decor/'];
+        $sources[47] = ['name' => 'One Kin Design: Fall Decorating', 'url' => 'https://onekindesign.com/tag/fall-decorating/'];
+        $sources[48] = ['name' => 'One Kin Design: Halloween Decorating Ideas', 'url' => 'https://onekindesign.com/tag/halloween-decorating-ideas/'];
+        $sources[49] = ['name' => 'One Kin Design: Thanksgiving Decor', 'url' => 'https://onekindesign.com/tag/thanksgiving-decor/'];
+        $sources[50] = ['name' => 'One Kin Design: Christmas Inspiration', 'url' => 'https://onekindesign.com/tag/christmas-inspiration/'];
+
+        $sources[51] = ['name' => 'One Kin Design: Furniture', 'url' => 'https://onekindesign.com/category/furniture/'];
+        $sources[52] = ['name' => 'One Kin Design: Garden', 'url' => 'https://onekindesign.com/tag/garden/'];
+        $sources[53] = ['name' => 'One Kin Design: Real Estate', 'url' => 'https://onekindesign.com/category/real-estate-2/'];
+        $sources[54] = ['name' => 'One Kin Design: Readers Homes', 'url' => 'https://onekindesign.com/category/readers-homes/'];
+        $sources[55] = ['name' => 'One Kin Design: Swimming Pool', 'url' => 'https://onekindesign.com/tag/swimming-pool/'];
+        $sources[56] = ['name' => 'One Kin Design: Travel', 'url' => 'https://onekindesign.com/category/travel/'];
+        $sources[57] = ['name' => 'One Kin Design: Vacation Rental', 'url' => 'https://onekindesign.com/tag/vacation-rental/'];
+        
         //$sources[] = ['name' => '', 'url' => ''];
 
         return $sources;
