@@ -132,8 +132,7 @@ function bot_olx_jogja_9() {
     //4 jam sekali
     //8 disewakan rumah
     //10 indekos
-    //13 lowongan
-    $sources = SheDieDConfig::pick_Sources([8, 10, 13], [37, 39, 57]);
+    $sources = SheDieDConfig::pick_Sources([8, 10], [37, 39]);
 
     $helper = new Lima();
 
@@ -160,10 +159,9 @@ add_action('bot_olx_jogja_10', 'bot_olx_jogja_10');
 function bot_olx_jogja_11() {
 
     //3 hari sekali
-    //9 tanah
     //14 rental jasa
 
-    $sources = SheDieDConfig::pick_Sources([9, 14], [38, 58]);
+    $sources = SheDieDConfig::pick_Sources([14], [58]);
 
     $helper = new Lima();
 
@@ -172,21 +170,50 @@ function bot_olx_jogja_11() {
 
 add_action('bot_olx_jogja_11', 'bot_olx_jogja_11');
 
+function bot_olx_jogja_12() {
+
+    //7 hari sekali
+    //9 tanah
+
+    $sources = SheDieDConfig::pick_Sources([9], [38]);
+
+    $helper = new Lima();
+
+    shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_12', false);
+}
+
+add_action('bot_olx_jogja_12', 'bot_olx_jogja_12');
+
+function bot_olx_jogja_13() {
+
+    //24 jam sekali
+    //13 lowongan
+    $sources = SheDieDConfig::pick_Sources([13], [57]);
+
+    $helper = new Lima();
+
+    shedied_exec_bot($helper, $sources, 20, 'tsnt_olx_jogja_13', false);
+}
+
+add_action('bot_olx_jogja_13', 'bot_olx_jogja_13');
+
 function bot_olx_jogja_sweeper() {
 
     $helper = new Lima();
 
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_1', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_2', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_3', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_4', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_5', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_6', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_7', true);
-    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_8', true);
+    /* shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_1', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_2', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_3', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_4', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_5', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_6', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_7', true);
+      shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_8', true); */
     shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_9', true);
-    shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_10', true);
-    shedied_exec_bot($helper, [], 2, 'tsnt_olx_jogja_11', true);
+    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_10', true);
+    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_11', true);
+    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_12', true);
+    shedied_exec_bot($helper, [], 1, 'tsnt_olx_jogja_13', true);
 }
 
 add_action('bot_olx_jogja_sweeper', 'bot_olx_jogja_sweeper');
