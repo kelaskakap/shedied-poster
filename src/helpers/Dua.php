@@ -76,7 +76,7 @@ class Dua extends Numbers {
 
     public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
 
-        parent::firstRunURL($url, $sourceId);
+        parent::firstRunURL($url, $sourceId, $controller);
 
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
         $Page = $t > 1 ? 'page/' . $t : '';
