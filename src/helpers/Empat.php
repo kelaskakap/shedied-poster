@@ -241,12 +241,15 @@ class Empat extends Numbers {
         return $sources;
     }
 
-    public function scanURL(PojokJogjaController $controller) {
-
+    public function scanURL(PojokJogjaController $controller, $params = array()) {
         if ($this->source_Laptop_ASUS($controller)) {
 
             $this->Laptop_ASUS_Alter_URL($controller);
         }
+    }
+
+    public function getIdentity() {
+        return static::TECHNOREVIEW_US;
     }
 
 }

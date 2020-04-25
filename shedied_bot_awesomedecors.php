@@ -71,7 +71,7 @@ function bot_awesomedecors_5() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_21', false);
 
-    update_first_Run('onekindesign_1', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_1', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_5', 'bot_awesomedecors_5');
@@ -86,7 +86,7 @@ function bot_awesomedecors_6() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_22', false);
 
-    update_first_Run('onekindesign_2', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_2', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_6', 'bot_awesomedecors_6');
@@ -101,7 +101,7 @@ function bot_awesomedecors_7() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_23', false);
 
-    update_first_Run('onekindesign_3', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_3', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_7', 'bot_awesomedecors_7');
@@ -116,7 +116,7 @@ function bot_awesomedecors_8() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_24', false);
 
-    update_first_Run('onekindesign_4', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_4', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_8', 'bot_awesomedecors_8');
@@ -131,7 +131,7 @@ function bot_awesomedecors_9() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_25', false);
 
-    update_first_Run('onekindesign_5', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_5', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_9', 'bot_awesomedecors_9');
@@ -146,7 +146,7 @@ function bot_awesomedecors_10() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_26', false);
 
-    update_first_Run('onekindesign_6', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_6', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_10', 'bot_awesomedecors_10');
@@ -161,7 +161,7 @@ function bot_awesomedecors_11() {
 
     shedied_exec_bot($helper, $sources, 10, 'tsnt_awesomedecors_27', false);
 
-    update_first_Run('onekindesign_7', $helper->arrFirstRun());
+    //update_first_Run('onekindesign_7', $helper->arrFirstRun());
 }
 
 add_action('bot_awesomedecors_11', 'bot_awesomedecors_11');

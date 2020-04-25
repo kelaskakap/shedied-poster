@@ -8,6 +8,8 @@ use SheDied\parser\gadget\IGadget;
 use SheDied\parser\gadget\Gadget;
 use SheDied\parser\jogja\OLXParser;
 use SheDied\helpers\Lima;
+use SheDied\SheDieDConfig;
+use SheDied\helpers\Numbers;
 
 class WPWrapper {
 
@@ -312,6 +314,29 @@ class WPWrapper {
             );
 
             wp_update_post($post_with_imported_images);
+        }
+    }
+
+    static public function param_Query_for_Helper(Numbers $h) {
+
+        $params = [];
+
+        if (SheDieDConfig::SITE_DOMAIN == $h->getIdentity()) {
+            //ngemie.com untuk gofood
+            $params = get_transient('gofood_param_query');
+            
+            if ($params)
+                return $params;
+        }
+
+        return $params;
+    }
+
+    static public function update_param_Query_for_Helper(Numbers $h) {
+
+        if (SheDieDConfig::SITE_DOMAIN == $h->getIdentity()) {
+            //ngemie.com untuk gofood
+            $params = set_transient('gofood_param_query', $h);
         }
     }
 
