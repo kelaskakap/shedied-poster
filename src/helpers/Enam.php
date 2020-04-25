@@ -110,7 +110,7 @@ class Enam extends Numbers {
             foreach ($doc->data->cards as $card) {
 
                 $postlinks[] = [
-                    "title" => $card->content->title,
+                    "title" => GofoodParser::make_Title($card->content->title),
                     "link" => GofoodParser::make_URL($card->content->id),
                     'src' => $controller->getNewsSrc(),
                     'cat' => $controller->getCategory(),
