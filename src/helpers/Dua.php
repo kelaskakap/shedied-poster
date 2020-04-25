@@ -76,7 +76,8 @@ class Dua extends Numbers {
 
     public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
 
-        parent::firstRunURL($url, $sourceId, $controller);
+        if (empty($this->fr))
+            return $url;
 
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 50;
         $Page = $t > 1 ? 'page/' . $t : '';
@@ -169,13 +170,15 @@ class Dua extends Numbers {
         $sources[55] = ['name' => 'One Kin Design: Swimming Pool', 'url' => 'https://onekindesign.com/tag/swimming-pool/'];
         $sources[56] = ['name' => 'One Kin Design: Travel', 'url' => 'https://onekindesign.com/category/travel/'];
         $sources[57] = ['name' => 'One Kin Design: Vacation Rental', 'url' => 'https://onekindesign.com/tag/vacation-rental/'];
-        
+
         //$sources[] = ['name' => '', 'url' => ''];
 
         return $sources;
     }
+
     public function getIdentity() {
-        
+
         return static::AWESOMEDECORS_US;
     }
+
 }
