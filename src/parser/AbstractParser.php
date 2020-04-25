@@ -29,6 +29,7 @@ abstract class AbstractParser implements InterfaceParser {
     protected $latitude;
     protected $longitude;
     protected $comment_status = 'open';
+    protected $link_content;
 
     const DEFAULT_ATTACH_ID = 186785; // jogja senja
 
@@ -461,5 +462,9 @@ abstract class AbstractParser implements InterfaceParser {
         array_push($this->category_id, $id);
         return $this;
     }
-
+    public function setLinkContent($param) {
+        
+        $this->link_content = $param;
+        return $this;
+    }
 }

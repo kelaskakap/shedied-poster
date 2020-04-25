@@ -101,7 +101,7 @@ class Dua extends Numbers {
         ;
     }
 
-    public function scanURL(PojokJogjaController $controller) {
+    public function scanURL(PojokJogjaController $controller, $params = array()) {
         ;
     }
 
@@ -174,5 +174,8 @@ class Dua extends Numbers {
 
         return $sources;
     }
-
+    public function getIdentity() {
+        
+        return static::AWESOMEDECORS_US;
+    }
 }
