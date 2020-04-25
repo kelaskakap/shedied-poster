@@ -71,20 +71,19 @@ class Lima extends Numbers {
         $sources[13] = ['name' => 'OLX - Jasa & Lowongan Kerja > Lowongan', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/lowongan_c226?sorting=desc-creation'];
         $sources[14] = ['name' => 'OLX - Jasa & Lowongan Kerja > Jasa', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/jasa_c228?sorting=desc-creation'];
         $sources[15] = ['name' => 'OLX - Kantor & Industri > Peralatan Kantor', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/peralatan-kantor_c203?sorting=desc-creation'];
-         $sources[16] = ['name' => 'OLX - Kantor & Industri > Perlengkapan Usaha', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/perlengkapan-usaha_c5090?sorting=desc-creation'];
-         $sources[17] = ['name' => 'OLX - Kantor & Industri > Mesin & Keperluan Industri', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/mesin-keperluan-industri_c4846?sorting=desc-creation'];
-         $sources[18] = ['name' => 'OLX - Elektronik & Gadget > Handphone', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/handphone_c208?filter=condition_eq_bekas&sorting=desc-creation'];
-         $sources[19] = ['name' => 'OLX - Elektronik & Gadget > Laptop', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/laptop-komputer_c213?filter=condition_eq_bekas%2Ctype_eq_elektronik-gadget-komputer-laptop&sorting=desc-creation'];
-         $sources[20] = ['name' => 'OLX - Rumah Tangga > Perlengkapan Rumah', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/perlengkapan-rumah_c202?sorting=desc-creation'];
-         $sources[21] = ['name' => 'OLX - Rumah Tangga > Mebel', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/mebel_c4835?sorting=desc-creation'];
-         $sources[22] = ['name' => 'OLX - Rumah Tangga > Dekorasi Rumah', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/dekorasi-rumah_c4836?sorting=desc-creation'];
-         $sources[23] = ['name' => 'OLX - Hobi & Olahraga > Hewan Peliharaan', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/hewan-peliharaan_c235?sorting=desc-creation'];
-
+        $sources[16] = ['name' => 'OLX - Kantor & Industri > Perlengkapan Usaha', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/perlengkapan-usaha_c5090?sorting=desc-creation'];
+        $sources[17] = ['name' => 'OLX - Kantor & Industri > Mesin & Keperluan Industri', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/mesin-keperluan-industri_c4846?sorting=desc-creation'];
+        $sources[18] = ['name' => 'OLX - Elektronik & Gadget > Handphone', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/handphone_c208?filter=condition_eq_bekas&sorting=desc-creation'];
+        $sources[19] = ['name' => 'OLX - Elektronik & Gadget > Laptop', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/laptop-komputer_c213?filter=condition_eq_bekas%2Ctype_eq_elektronik-gadget-komputer-laptop&sorting=desc-creation'];
+        $sources[20] = ['name' => 'OLX - Rumah Tangga > Perlengkapan Rumah', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/perlengkapan-rumah_c202?sorting=desc-creation'];
+        $sources[21] = ['name' => 'OLX - Rumah Tangga > Mebel', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/mebel_c4835?sorting=desc-creation'];
+        $sources[22] = ['name' => 'OLX - Rumah Tangga > Dekorasi Rumah', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/dekorasi-rumah_c4836?sorting=desc-creation'];
+        $sources[23] = ['name' => 'OLX - Hobi & Olahraga > Hewan Peliharaan', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/hewan-peliharaan_c235?sorting=desc-creation'];
 
         return $sources;
     }
 
-    public function scanURL(PojokJogjaController $controller) {
+    public function scanURL(PojokJogjaController $controller, $params = array()) {
         ;
     }
 
@@ -108,6 +107,10 @@ class Lima extends Numbers {
     protected function clean_whitespaces($text) {
 
         return preg_replace('/\s+/', ' ', trim($text));
+    }
+
+    public function getIdentity() {
+        return static::JOGJA_TRADE;
     }
 
 }

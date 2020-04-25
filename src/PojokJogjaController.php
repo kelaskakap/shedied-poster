@@ -13,6 +13,7 @@ use SheDied\helpers\Dua;
 use SheDied\helpers\Tiga;
 use SheDied\helpers\Empat;
 use SheDied\helpers\Lima;
+use SheDied\helpers\Enam;
 
 class PojokJogjaController extends Controller {
 
@@ -140,7 +141,8 @@ class PojokJogjaController extends Controller {
 
         if (!$this->do_this_urls) {
 
-            $helper->scanURL($this);
+            $params = WPWrapper::param_Query_for_Helper($helper);
+            $helper->scanURL($this, $params);
 
             if (!$this->hijack && !$this->auto) {
 
@@ -149,6 +151,8 @@ class PojokJogjaController extends Controller {
 
             $helper->switchParsers($this);
             $this->loopPostLinks($helper);
+
+            //WPWrapper::update_param_Query_for_Helper($helper);
         } else {
 
             //sek
@@ -179,14 +183,18 @@ class PojokJogjaController extends Controller {
                 $parser->setTitle($title)
                         ->setSourceCategory($this->news_src)
                         ->addCategoryId((int) $this->category)
-                        ->setUrl($link)
-                        ->grab();
+                        ->setUrl($link);
+
+                if (isset($post_link['content'])) //pre content kasus gofood
+                    $parser->setLinkContent($post_link['content']);
+
+                $parser->grab();
 
                 $gallery = true;
                 if ($helper->need_Gallery())
                     if (!$parser->getGallery())
                         $gallery = false;
-                    
+
                 if (strlen($parser->getContent()) > 0 && $gallery) {
 
                     CWriter::removeHtmlComments($parser);
@@ -397,6 +405,9 @@ class PojokJogjaController extends Controller {
                 break;
             case Lima::JOGJA_TRADE:
                 $helper = new Lima();
+                break;
+            case Enam::NGEMIE_COM:
+                $helper = new Enam();
                 break;
             default :
                 $helper = null;

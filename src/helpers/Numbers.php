@@ -10,6 +10,7 @@ abstract class Numbers {
     protected $need_gallery = false;
     protected $fr = [];
     protected $post_type = 'post';
+    protected $query_param = [];
 
     public function getParser() {
 
@@ -71,5 +72,11 @@ abstract class Numbers {
         return $this->post_type;
     }
 
-    abstract public function scanURL(PojokJogjaController $controller);
+    abstract public function scanURL(PojokJogjaController $controller, $params = []);
+    
+    abstract public function getIdentity();
+    
+    public function getQuery_Param() {
+        return $this->query_param;
+    }
 }

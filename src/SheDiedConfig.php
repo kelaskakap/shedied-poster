@@ -7,6 +7,7 @@ use SheDied\helpers\Satu;
 use SheDied\helpers\Tiga;
 use SheDied\helpers\Empat;
 use SheDied\helpers\Lima;
+use SheDied\helpers\Enam;
 
 class SheDieDConfig {
 
@@ -15,7 +16,7 @@ class SheDieDConfig {
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'awesomedecors.us';
+    const SITE_DOMAIN = 'ngemie.com';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
@@ -33,6 +34,8 @@ class SheDieDConfig {
                 self::$sources = Empat::sources();
             elseif (self::SITE_DOMAIN == Lima::JOGJA_TRADE)
                 self::$sources = Lima::sources();
+            elseif (self::SITE_DOMAIN == Enam::NGEMIE_COM )
+                self::$sources = Enam::sources();
         }
     }
 
