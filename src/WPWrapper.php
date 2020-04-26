@@ -62,7 +62,9 @@ class WPWrapper {
             $xf['tmp_name'] = download_url($parser->getFeaturedImage());
 
             $attach_id = media_handle_sideload($xf, $post_id);
-            return set_post_thumbnail($post_id, $attach_id);
+            $w = set_post_thumbnail($post_id, $attach_id);
+            file_put_contents('/tmp/oni.txt', var_export([$attach_id, $w], true));
+            return $w;
         }
     }
 
