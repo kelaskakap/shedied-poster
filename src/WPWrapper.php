@@ -336,7 +336,7 @@ class WPWrapper {
 
         if (SheDieDConfig::SITE_DOMAIN == $h->getIdentity()) {
             //ngemie.com untuk gofood
-            $params = set_transient('gofood_param_query', $h);
+            $params = set_transient('gofood_param_query', $h->getQuery_Param());
         }
     }
 

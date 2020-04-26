@@ -152,7 +152,7 @@ class PojokJogjaController extends Controller {
             $helper->switchParsers($this);
             $this->loopPostLinks($helper);
 
-            //WPWrapper::update_param_Query_for_Helper($helper);
+            WPWrapper::update_param_Query_for_Helper($helper);
         } else {
 
             //sek
