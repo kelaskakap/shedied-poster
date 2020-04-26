@@ -47,7 +47,7 @@ class WPWrapper {
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
-
+        file_put_contents('/tmp/oni.txt', $parser->getFeaturedImage());
         if (SheDieDConfig::SITE_DOMAIN != Lima::JOGJA_TRADE) {
 
             $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
