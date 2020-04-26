@@ -12,6 +12,8 @@ function bot_gofood_1() {
     shedied_exec_bot($helper, $sources, 20, 'tsnt_gofood_1', false);
 }
 
+add_action('bot_gofood_1', 'bot_gofood_1');
+
 function bot_gofood_2() {
 
     $sources = SheDieDConfig::pick_Sources([3, 4], [6513, 6514]);
@@ -20,6 +22,8 @@ function bot_gofood_2() {
 
     shedied_exec_bot($helper, $sources, 20, 'tsnt_gofood_2', false);
 }
+
+add_action('bot_gofood_2', 'bot_gofood_2');
 
 function bot_gofood_3() {
 
@@ -30,6 +34,8 @@ function bot_gofood_3() {
     shedied_exec_bot($helper, $sources, 20, 'tsnt_gofood_3', false);
 }
 
+add_action('bot_gofood_3', 'bot_gofood_3');
+
 function bot_gofood_4() {
 
     $sources = SheDieDConfig::pick_Sources([7, 8], [6517, 6518]);
@@ -38,6 +44,8 @@ function bot_gofood_4() {
 
     shedied_exec_bot($helper, $sources, 20, 'tsnt_gofood_4', false);
 }
+
+add_action('bot_gofood_4', 'bot_gofood_4');
 
 function bot_gofood_5() {
 
@@ -48,6 +56,8 @@ function bot_gofood_5() {
     shedied_exec_bot($helper, $sources, 20, 'tsnt_gofood_5', false);
 }
 
+add_action('bot_gofood_5', 'bot_gofood_5');
+
 function bot_gofood_6() {
 
     $sources = SheDieDConfig::pick_Sources([11, 12], [6521, 6527]);
@@ -56,6 +66,8 @@ function bot_gofood_6() {
 
     shedied_exec_bot($helper, $sources, 20, 'tsnt_gofood_6', false);
 }
+
+add_action('bot_gofood_6', 'bot_gofood_6');
 
 function bot_ngemie_sweeper() {
 
