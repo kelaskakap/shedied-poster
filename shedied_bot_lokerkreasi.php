@@ -25,7 +25,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
                 //gofood
                 $params = WPWrapper::param_Query_for_Helper($helper);
-                $helper->scanURL($this, $params);               
+                $helper->scanURL($controller, $params);               
                 
                 $helper->fetchPostLinks($controller);
             }
