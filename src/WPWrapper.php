@@ -47,6 +47,7 @@ class WPWrapper {
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
+        require_once(ABSPATH . 'wp-includes/post.php');
         //file_put_contents('/tmp/oni.txt', var_export($parser, true));
         if (SheDieDConfig::SITE_DOMAIN != Lima::JOGJA_TRADE) {
 
