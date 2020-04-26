@@ -52,7 +52,9 @@ class WPWrapper {
 
             $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
             $attach_id = self::get_attachment_id_from_src($filename, $parser->getDefaultAttachID());
-            return set_post_thumbnail($post_id, $attach_id);
+            $w = set_post_thumbnail($post_id, $attach_id);
+            file_put_contents('/tmp/oni.txt', var_export([$filename, $post_id, $attach_id, $w], true));
+            return $w;
         } else {
 
             $content = strtolower($parser->getTitle());
@@ -62,9 +64,7 @@ class WPWrapper {
             $xf['tmp_name'] = download_url($parser->getFeaturedImage());
 
             $attach_id = media_handle_sideload($xf, $post_id);
-            $w = set_post_thumbnail($post_id, $attach_id);
-            file_put_contents('/tmp/oni.txt', var_export([$attach_id, $w], true));
-            return $w;
+            return set_post_thumbnail($post_id, $attach_id);
         }
     }
 
