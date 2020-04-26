@@ -171,7 +171,6 @@ class PojokJogjaController extends Controller {
                 $this->news_src = $post_link['src'];
                 $this->category = $post_link['cat'];
                 $helper->switchParsers($this);
-                //file_put_contents('/tmp/oni.txt', var_export($helper, true));
             }
 
             $title = CWriter::formatPostTitle($post_link['title']);

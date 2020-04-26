@@ -47,15 +47,13 @@ class WPWrapper {
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
-        require_once(ABSPATH . 'wp-includes/post.php');
-        //file_put_contents('/tmp/oni.txt', var_export($parser, true));
+
         if (SheDieDConfig::SITE_DOMAIN != Lima::JOGJA_TRADE) {
 
             $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
             $attach_id = self::get_attachment_id_from_src($filename, $parser->getDefaultAttachID());
-            $w = set_post_thumbnail($post_id, $attach_id);
-            file_put_contents('/tmp/oni.txt', var_export([$filename, $post_id, $attach_id, $w], true));
-            return $w;
+            
+            return set_post_thumbnail($post_id, $attach_id);
         } else {
 
             $content = strtolower($parser->getTitle());
@@ -327,7 +325,7 @@ class WPWrapper {
         if (SheDieDConfig::SITE_DOMAIN == $h->getIdentity()) {
             //ngemie.com untuk gofood
             $params = get_transient('gofood_param_query');
-            
+
             if ($params)
                 return $params;
         }
