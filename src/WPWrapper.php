@@ -50,9 +50,8 @@ class WPWrapper {
 
         if (SheDieDConfig::SITE_DOMAIN != Lima::JOGJA_TRADE) {
 
-            $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
-            $attach_id = self::get_attachment_id_from_src($filename, $parser->getDefaultAttachID());
-            
+            $attach_id = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'id');
+
             return set_post_thumbnail($post_id, $attach_id);
         } else {
 
