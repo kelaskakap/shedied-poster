@@ -13,6 +13,7 @@ class GofoodParser extends AbstractParser {
     protected $partner;
     protected $operations = [];
     protected $rating;
+    protected $longlat;
 
     protected function getPostDetail() {
 
@@ -20,6 +21,7 @@ class GofoodParser extends AbstractParser {
         $this->phone = $this->link_content->phone_number;
         $this->partner = $this->link_content->partner;
         $this->rating = $this->link_content->rating->text;
+        $this->longlat = $this->link_content->location;
 
         foreach ($this->link_content->multi_operational_hours as $h) {
 
@@ -68,12 +70,22 @@ class GofoodParser extends AbstractParser {
         //address + phone
         $html .= '<div class="gf-address row">';
         $html .= '<div class="col-md-8 address">';
-        $html .= 'Alamat :<br>';
+        $html .= '<div class="alamat">';
+        $html .= 'Alamat :';
+        $html .= '</div>';
+        $html .= '<div class="isialamat">';
         $html .= $this->address;
         $html .= '</div>';
+        if ($this->longlat)
+            $html .= '<a href="https://maps.google.com/?q=' . $this->longlat . '" target="_blank" rel="noopener noreferrer" class="location">Lihat peta</a>';
+        $html .= '</div>';
         $html .= '<div class="col-md-4 phone">';
-        $html .= 'Nomor telepon :<br>';
+        $html .= '<div class="telepon">';
+        $html .= 'Nomor telepon :';
+        $html .= '</div>';
+        $html .= '<div class="isitelepon">';
         $html .= $this->phone;
+        $html .= '</div>';
         $html .= '</div>';
         $html .= '</div>';
         //end address
@@ -81,7 +93,7 @@ class GofoodParser extends AbstractParser {
         //
         //
         // jam buka
-        $html .= '<div class="gf-operations"><ul>';
+        $html .= '<div class="gf-operations"><h3>Jam Operasional</h3><ul>';
         foreach ($this->operations as $day => $time) {
 
             $html .= '<li>' . $day . ' : ' . $time->open_time . ' - ' . $time->close_time . '</li>';
@@ -93,13 +105,13 @@ class GofoodParser extends AbstractParser {
         // 
         // sources
         $html .= '<div class="gf-sources">';
-        $html .= '<div class="row">';
+        $html .= '<div class="row satu">';
         $html .= '<div class="col-md-12 head">';
         $html .= '<p class="head-1">Makanan favorit dan hasil kulineran baru kamu cus langsung dianter</p>';
         $html .= '<p class="head-2">Download Gojek dan buka GoFood buat nikmatin layanannya.</p>';
         $html .= '</div>';
         $html .= '</div>';
-        $html .= '<div class="row">';
+        $html .= '<div class="row dua">';
         $html .= '<div class="col-md-4 linksource">';
         $html .= '<ul class="galepro-core-socialicon-share">
 <li class="whatsapp"><a class="galepro-sharebtn galepro-whatsapp" href="' . $this->url . '" target="_blank" rel="noopener noreferrer">Sumber Iklan : Gofood.co.id</a></li>
@@ -159,6 +171,11 @@ class GofoodParser extends AbstractParser {
     static public function make_URL($id) {
 
         return self::GOFOOD_ADDR . '/jakarta/restaurant/' . $id;
+    }
+
+    static public function make_Title($title) {
+
+        return "Kuliner {$title}";
     }
 
 }

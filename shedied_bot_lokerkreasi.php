@@ -3,6 +3,7 @@
 use SheDied\SheDieDConfig;
 use SheDied\PojokJogjaController;
 use SheDied\helpers\Numbers;
+use SheDied\WPWrapper;
 
 function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient_name = '', $sweeper = false) {
 
@@ -15,12 +16,17 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
         if (empty($post_links) && !$sweeper && !empty($sources)) {
 
             foreach ($sources as $sourceId => $source) {
-               
+
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
 
                 $Url = $helper->firstRunURL($source['url'], $sourceId, $controller);
                 $controller->setUrl($Url);
+
+                //gofood
+                $params = WPWrapper::param_Query_for_Helper($helper);
+                $helper->scanURL($controller, $params);               
+                
                 $helper->fetchPostLinks($controller);
             }
 

@@ -82,13 +82,14 @@ class Enam extends Numbers {
         $sources[9] = ['name' => 'Gofood > Palembang', 'url' => 'https://gofood.co.id/gofood/web/v1/restaurants?location=-2.990934,104.756554'];
         $sources[10] = ['name' => 'Gofood > Pontianak', 'url' => 'https://gofood.co.id/gofood/web/v1/restaurants?location=0.000000,109.333336'];
         $sources[11] = ['name' => 'Gofood > Malang', 'url' => 'https://gofood.co.id/gofood/web/v1/restaurants?location=-7.830759,112.697098'];
+        $sources[12] = ['name' => 'Gofood > Batam', 'url' => 'https://gofood.co.id/gofood/web/v1/restaurants?location=1.045626,104.030457'];
 
         return $sources;
     }
 
     protected function source_Gofood(PojokJogjaController $ctrl) {
 
-        return $ctrl->getNewsSrc() >= 1 && $ctrl->getNewsSrc() < 12;
+        return $ctrl->getNewsSrc() >= 1 && $ctrl->getNewsSrc() < 13;
     }
 
     public function getIdentity() {
@@ -100,17 +101,10 @@ class Enam extends Numbers {
 
         if ((bool) $doc->success) {
 
-            if ($doc->next_page) {
-
-                //parse next page
-                $b = parse_url($doc->next_page, PHP_URL_QUERY);
-                parse_str($b, $param);
-            }
-
             foreach ($doc->data->cards as $card) {
 
                 $postlinks[] = [
-                    "title" => $card->content->title,
+                    "title" => GofoodParser::make_Title($card->content->title),
                     "link" => GofoodParser::make_URL($card->content->id),
                     'src' => $controller->getNewsSrc(),
                     'cat' => $controller->getCategory(),
@@ -122,6 +116,23 @@ class Enam extends Numbers {
                     break;
                 }
             }
+
+            if ($doc->next_page) {
+
+                //parse next page
+                $b = parse_url($doc->next_page, PHP_URL_QUERY);
+                parse_str($b, $param);
+
+                $this->gofood_param['page'] = $param['page'];
+                if ($this->gofood_param['search_id'] != $param['search_id'])
+                    $this->gofood_param['search_id'] = $param['search_id']; // kalo ga sama mending pake yg baru
+            } else {
+                //next page = null brati sudah habis. restart lagi ke halaman 1
+                $this->gofood_param['page'] = 1;
+                $this->gofood_param['search_id'] = '';
+            }
+
+            $this->query_param[$controller->getNewsSrc()] = $this->gofood_param;
 
             $controller->setPostLinks($postlinks);
         }

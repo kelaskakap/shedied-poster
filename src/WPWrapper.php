@@ -52,6 +52,7 @@ class WPWrapper {
 
             $filename = media_sideload_image($parser->getFeaturedImage(), $post_id, null, 'src');
             $attach_id = self::get_attachment_id_from_src($filename, $parser->getDefaultAttachID());
+            
             return set_post_thumbnail($post_id, $attach_id);
         } else {
 
@@ -324,7 +325,7 @@ class WPWrapper {
         if (SheDieDConfig::SITE_DOMAIN == $h->getIdentity()) {
             //ngemie.com untuk gofood
             $params = get_transient('gofood_param_query');
-            
+
             if ($params)
                 return $params;
         }
@@ -336,7 +337,7 @@ class WPWrapper {
 
         if (SheDieDConfig::SITE_DOMAIN == $h->getIdentity()) {
             //ngemie.com untuk gofood
-            $params = set_transient('gofood_param_query', $h);
+            $params = set_transient('gofood_param_query', $h->getQuery_Param());
         }
     }
 
