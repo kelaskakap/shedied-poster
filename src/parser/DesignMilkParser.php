@@ -58,9 +58,11 @@ class DesignMilkParser extends AbstractParserWithGallery {
     protected function _getFeaturedImage() {
 
         if ($this->gallery) {
-
-            $idx = self::idx . "0";
-            $this->featured_image = $this->gallery[$idx]['image'];
+            
+            //ternyata tidak selalu 0 ferguso
+            //$idx = self::idx . "0";
+            //pake reset
+            $this->featured_image = reset($this->gallery)['image'];
         }
     }
 
