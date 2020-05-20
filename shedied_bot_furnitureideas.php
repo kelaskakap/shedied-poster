@@ -65,6 +65,8 @@ function bot_furnitureideas_4() {
     update_first_Run('milkdesign_13', $helper->arrFirstRun());
 }
 
+add_action('bot_furnitureideas_4', 'bot_furnitureideas_4');
+
 function bot_furnitureideas_sweeper() {
 
     //milkdesign
