@@ -8,6 +8,7 @@ use SheDied\helpers\Tiga;
 use SheDied\helpers\Empat;
 use SheDied\helpers\Lima;
 use SheDied\helpers\Enam;
+use SheDied\helpers\Tujuh;
 
 class SheDieDConfig {
 
@@ -16,7 +17,7 @@ class SheDieDConfig {
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'ngemie.com';
+    const SITE_DOMAIN = 'furnitureideas.us';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
@@ -36,6 +37,8 @@ class SheDieDConfig {
                 self::$sources = Lima::sources();
             elseif (self::SITE_DOMAIN == Enam::NGEMIE_COM )
                 self::$sources = Enam::sources();
+            elseif (self::SITE_DOMAIN == Tujuh::FURNITUREIDEAS_US)
+                self::$sources = Tujuh::sources ();
         }
     }
 

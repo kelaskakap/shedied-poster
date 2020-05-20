@@ -14,6 +14,7 @@ use SheDied\helpers\Tiga;
 use SheDied\helpers\Empat;
 use SheDied\helpers\Lima;
 use SheDied\helpers\Enam;
+use SheDied\helpers\Tujuh;
 
 class PojokJogjaController extends Controller {
 
@@ -240,7 +241,8 @@ class PojokJogjaController extends Controller {
 
                                 WPWrapper::pojokjogja_set_source($new_draft_id, $parser->getHost(), $parser->getUrl());
                             }
-                        } elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US) {
+                        } elseif (SheDieDConfig::SITE_DOMAIN == Dua::AWESOMEDECORS_US
+                                OR SheDieDConfig::SITE_DOMAIN == Tujuh::FURNITUREIDEAS_US) {
 
                             WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
                             WPWrapper::homedesigning_update_post_with_gallery($parser, $new_draft_id);
@@ -369,8 +371,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tse3RTd64',
-                'link' => 'https://onekindesign.com/2020/02/05/renovated-barn-house/'
+                'title' => 'tse3RTd64eYQFa',
+                'link' => 'https://design-milk.com/studiofours-latest-design-utilizes-a-dramatic-slope-to-enhance-privacy/'
             ];
         }
 
@@ -408,6 +410,9 @@ class PojokJogjaController extends Controller {
                 break;
             case Enam::NGEMIE_COM:
                 $helper = new Enam();
+                break;
+            case Tujuh::FURNITUREIDEAS_US:
+                $helper = new Tujuh();
                 break;
             default :
                 $helper = null;

@@ -204,3 +204,4 @@ require_once 'shedied_bot_awesomedecors.php';
 require_once 'shedied_bot_technoreview.php';
 require_once 'shedied_bot_jogja.php';
 require_once 'shedied_bot_ngemie.php';
+require_once 'shedied_bot_furnitureideas.php';
