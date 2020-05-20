@@ -307,7 +307,7 @@ class WPWrapper {
     static public function homedesigning_update_post_with_gallery(AbstractParserWithGallery $parser, $post_id) {
 
         if ($parser->attach()) {
-            file_put_contents('/tmp/oni.txt', var_export([$parser->getGallery(), $parser->getParagraph()], true));
+            
             $post_with_imported_images = array(
                 'ID' => $post_id,
                 'post_content' => $parser->buildPostWithGallery(),

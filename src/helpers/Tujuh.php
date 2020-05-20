@@ -39,7 +39,7 @@ class Tujuh extends Numbers {
                 }
             }
         }
-        file_put_contents('/tmp/oni.txt', var_export($postlinks, true));
+        
         $controller->setPostLinks($postlinks);
     }
 
@@ -58,9 +58,6 @@ class Tujuh extends Numbers {
     }
 
     public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
-
-        if (empty($this->fr))
-            return $url;
 
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 100;
         $Page = $t > 1 ? 'page/' . $t : '';
