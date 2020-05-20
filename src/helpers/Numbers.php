@@ -8,7 +8,8 @@ abstract class Numbers {
 
     protected $parser = '';
     protected $need_gallery = false;
-    protected $fr = [];
+    protected $fr = []; // array first run
+    protected $isfr = FALSE; //is first run
     protected $post_type = 'post';
     protected $query_param = [];
 
@@ -45,6 +46,7 @@ abstract class Numbers {
     public function yesFirstRun($fr) {
 
         $this->fr = $fr;
+        $this->isfr = TRUE;
     }
 
     public function arrFirstRun() {

@@ -59,6 +59,9 @@ class Tujuh extends Numbers {
 
     public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
 
+        if (empty($this->fr) && !$this->isfr)
+            return $url;
+        
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 100;
         $Page = $t > 1 ? 'page/' . $t : '';
 
