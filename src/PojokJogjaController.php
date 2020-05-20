@@ -371,8 +371,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tse3RTd64eYQFa',
-                'link' => 'https://design-milk.com/studiofours-latest-design-utilizes-a-dramatic-slope-to-enhance-privacy/'
+                'title' => 'tsBswsse64eYQFa',
+                'link' => 'https://design-milk.com/adell-an-indoor-outdoor-lounge-chair-for-commercial-or-residential-spaces/'
             ];
         }
 

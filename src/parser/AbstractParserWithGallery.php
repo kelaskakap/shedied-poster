@@ -57,4 +57,9 @@ abstract class AbstractParserWithGallery extends AbstractParser {
         return $content;
     }
 
+    public function getParagraph() {
+
+        return $this->p;
+    }
+
 }
