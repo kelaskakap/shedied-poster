@@ -4,23 +4,27 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParser;
 
-abstract class AbstractParserWithGallery extends AbstractParser {
+abstract class AbstractParserWithGallery extends AbstractParser
+{
 
     protected $gallery = [];
     protected $p = [];
     protected $attach = FALSE;
 
-    public function getGallery() {
+    public function getGallery()
+    {
 
         return $this->gallery;
     }
 
-    public function attach() {
+    public function attach()
+    {
 
         return $this->attach;
     }
 
-    public function setPhotoSource($img, $excerpt, $caption) {
+    public function setPhotoSource($img, $excerpt, $caption)
+    {
 
         return [
             'image' => $img,
@@ -29,24 +33,29 @@ abstract class AbstractParserWithGallery extends AbstractParser {
         ];
     }
 
-    public function updatePhotoSource($idx, $photosource) {
+    public function updatePhotoSource($idx, $photosource)
+    {
 
         if (isset($this->gallery[$idx]))
             $this->gallery[$idx] = $photosource;
     }
 
-    public function buildPostWithGallery() {
+    public function buildPostWithGallery()
+    {
 
         $content = '';
-        foreach ($this->p as $idx => $p) {
+        foreach ($this->p as $idx => $p)
+        {
 
-            if (isset($this->gallery[$idx])) {
+            if (isset($this->gallery[$idx]))
+            {
 
                 $img = $this->gallery[$idx];
                 $content .= '<p>';
                 $content .= $img['html'];
                 $content .= '</p>';
-            } else {
+            } else
+            {
 
                 $content .= '<p>';
                 $content .= $p;
@@ -55,6 +64,12 @@ abstract class AbstractParserWithGallery extends AbstractParser {
         }
 
         return $content;
+    }
+
+    public function getParagraph()
+    {
+
+        return $this->p;
     }
 
 }

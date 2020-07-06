@@ -4,9 +4,11 @@ namespace SheDied\parser\gadget\laptop\asus;
 
 use SheDied\parser\gadget\laptop\asus\Asus;
 
-class VivoBookS extends Asus {
+class VivoBookS extends Asus
+{
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
@@ -36,7 +38,8 @@ class VivoBookS extends Asus {
         $this->setProductSupport($support);
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $this->getPostDetail();
         $this->generateSeoMetaDescription();
@@ -44,7 +47,8 @@ class VivoBookS extends Asus {
         $this->generateSeoMetaTitle();
     }
 
-    protected function try_Content_2() {
+    protected function try_Content_2()
+    {
 
         $node = pq('div#box-productOverview-containter');
         $text = "";
@@ -52,13 +56,15 @@ class VivoBookS extends Asus {
         $si_s = 'div.box-intro, div.txt-cent-mid, div.txt-left-mid, div.txt-cent, div.txt-cent-big, div.txt-left';
         $wr_s = "div.box-word-left, div.box-word-cent, div.wrap-wording-container, div.box-port-wording";
 
-        foreach ($node->find($wr_s) as $wr) {
+        foreach ($node->find($wr_s) as $wr)
+        {
 
             $st = pq($wr)->find($st_s);
             $si = pq($wr)->find($si_s);
 
-            if ($st->count() < 2) {
-                
+            if ($st->count() < 2)
+            {
+
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
                 $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
@@ -68,11 +74,13 @@ class VivoBookS extends Asus {
         $this->content = $text;
     }
 
-    protected function try_Content_1() {
+    protected function try_Content_1()
+    {
 
         $node = pq('div#AWD');
 
-        if (!$node->size()) {
+        if (!$node->size())
+        {
             $node = pq('div#CMD');
         }
 
@@ -81,7 +89,8 @@ class VivoBookS extends Asus {
         $si_s = 'div.content__info';
         $wr_s = "div.wd__content";
 
-        foreach ($node->find($wr_s) as $wr) {
+        foreach ($node->find($wr_s) as $wr)
+        {
 
             $st = pq($wr)->find($st_s);
             $si = pq($wr)->find($si_s);

@@ -2,6 +2,7 @@
 
 namespace SheDied\parser\gadget\smartphone;
 
-interface ISmartphone {
+interface ISmartphone
+{
     
 }

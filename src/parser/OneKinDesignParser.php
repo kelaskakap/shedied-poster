@@ -4,27 +4,32 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParserWithGallery;
 
-class OneKinDesignParser extends AbstractParserWithGallery {
+class OneKinDesignParser extends AbstractParserWithGallery
+{
 
     const idx = "index-";
 
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->attach = TRUE;
     }
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
         $node = pq('div.entry-content');
 
-        foreach (pq($node)->find('p') as $i => $p) {
+        foreach (pq($node)->find('p') as $i => $p)
+        {
 
             $index = self::idx . $i;
             $img = pq($p)->find('img');
 
-            if ($img->length) {
+            if ($img->length)
+            {
 
                 $photo = trim($img->attr('data-lazy-src'));
                 $alt = trim($img->attr('alt'));
@@ -32,7 +37,8 @@ class OneKinDesignParser extends AbstractParserWithGallery {
 
                 $this->gallery[$index] = $image;
                 $this->p[$index] = $image;
-            } else {
+            } else
+            {
 
                 $this->p[$index] = pq($p)->text();
             }
@@ -42,7 +48,8 @@ class OneKinDesignParser extends AbstractParserWithGallery {
         $this->content = "Lorem ipsum";
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $this->getPostDetail();
         $this->_getFeaturedImage();
@@ -50,16 +57,19 @@ class OneKinDesignParser extends AbstractParserWithGallery {
         $this->generateSeoMetaDescription();
     }
 
-    protected function _getFeaturedImage() {
+    protected function _getFeaturedImage()
+    {
 
-        if ($this->gallery) {
+        if ($this->gallery)
+        {
 
             $idx = self::idx . "0";
             $this->featured_image = $this->gallery[$idx]['image'];
         }
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
 
         $meta_description = pq('meta[name="description"]')->attr('content');
         $this->meta_description = trim($meta_description);

@@ -4,19 +4,22 @@ namespace SheDied\parser\gadget\smartphone;
 
 use SheDied\SheDieDConfig;
 
-class GsmArena extends Smartphone {
+class GsmArena extends Smartphone
+{
 
     const GSMARENA_ADDR = 'https://www.gsmarena.com';
 
     protected $gallery_link;
     protected $review_link;
 
-    public function __construct() {
+    public function __construct()
+    {
 
         parent::__construct();
     }
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
@@ -36,10 +39,12 @@ class GsmArena extends Smartphone {
         $this->dom_Links();
         $this->setProductLink($this->url);
 
-        if (!$this->review_link) {
+        if (!$this->review_link)
+        {
 
             $this->dom_Content_render();
-        } else {
+        } else
+        {
 
             //get review if any
             $doc = $this->do_CURL($this->review_link);
@@ -48,7 +53,8 @@ class GsmArena extends Smartphone {
             $this->dom_Content();
         }
 
-        if ($this->gallery_link) {
+        if ($this->gallery_link)
+        {
 
             $doc = $this->do_CURL($this->gallery_link);
             $html = $this->make_DOM($doc);
@@ -64,10 +70,12 @@ class GsmArena extends Smartphone {
         $this->setProductSupport($support);
     }
 
-    protected function dom_Content() {
+    protected function dom_Content()
+    {
 
         $node = pq('div#review-body');
-        \phpQuery::each(pq($node)->children(), function($index, $element) {
+        \phpQuery::each(pq($node)->children(), function($index, $element)
+        {
             if (!pq($element)->is('img'))
                 pq($element)->removeAttr('*');
             else
@@ -92,18 +100,21 @@ class GsmArena extends Smartphone {
         $this->closingContent();
     }
 
-    protected function closingContent() {
+    protected function closingContent()
+    {
 
-        $link = $this->review_link ? $this->review_link: $this->url;
+        $link = $this->review_link ? $this->review_link : $this->url;
         $text = "<p class=\"gotoofficial\">For more detailed information about {$this->model}, check out the {$this->model} <a href=\"{$link}\" target=\"_blank\" rel=\"nofollow\">reviews page</a>.</p>";
         $this->content .= $text;
     }
 
-    protected function dom_Gallery() {
+    protected function dom_Gallery()
+    {
 
         $node = pq('div#pictures-list');
 
-        foreach ($node->find('img') as $img) {
+        foreach ($node->find('img') as $img)
+        {
 
             $src = pq($img)->attr('src');
             $this->photos[] = trim($src);
@@ -116,14 +127,17 @@ class GsmArena extends Smartphone {
             ]);
     }
 
-    protected function dom_Model() {
+    protected function dom_Model()
+    {
 
         return pq('h1.specs-phone-name-title')->text();
     }
 
-    protected function dom_Links() {
+    protected function dom_Links()
+    {
 
-        foreach (pq('li.article-info-meta-link') as $li) {
+        foreach (pq('li.article-info-meta-link') as $li)
+        {
 
             if (!$this->gallery_link && trim(pq($li)->text()) == 'Pictures')
                 $this->gallery_link = self::GSMARENA_ADDR . '/' . trim(pq($li)->find('a')->attr('href'));
@@ -133,20 +147,24 @@ class GsmArena extends Smartphone {
         }
     }
 
-    protected function dom_Support() {
+    protected function dom_Support()
+    {
 
         $info = "<p>There no support yet available for the {$this->model} model.</p>";
         return $info;
     }
 
-    protected function dom_Specs() {
+    protected function dom_Specs()
+    {
 
         $node = pq('div#specs-list');
 
-        foreach ($node->find('table') as $table) {
+        foreach ($node->find('table') as $table)
+        {
 
             $th_text = '';
-            foreach (pq($table)->find('tr') as $tr) {
+            foreach (pq($table)->find('tr') as $tr)
+            {
 
                 $th = pq($tr)->find('th');
                 $ttl = pq($tr)->find('td.ttl');
@@ -169,17 +187,20 @@ class GsmArena extends Smartphone {
             ]);
     }
 
-    static public function make_Title($title) {
+    static public function make_Title($title)
+    {
 
         return $title . ' Reviews Specs and Price';
     }
 
-    static public function make_URL($url) {
+    static public function make_URL($url)
+    {
 
         return self::GSMARENA_ADDR . '/' . $url;
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $brand = SheDieDConfig::getSource($this->getSourceCategory())['brand'];
         $this->setBrand($brand);
@@ -190,16 +211,19 @@ class GsmArena extends Smartphone {
         $this->generateSeoMetaTitle();
     }
 
-    protected function dom_Tags() {
+    protected function dom_Tags()
+    {
 
         $node = pq('div.specs-accent');
 
-        foreach ($node->find('span.specs-brief-accent') as $s1) {
+        foreach ($node->find('span.specs-brief-accent') as $s1)
+        {
 
             $this->tags[] = trim(pq($s1)->text());
         }
 
-        foreach ($node->find('li.help.accented') as $li) {
+        foreach ($node->find('li.help.accented') as $li)
+        {
 
             $accent = pq($li)->find('strong')->text();
             $hl = pq($li)->find('div')->text();
@@ -209,7 +233,8 @@ class GsmArena extends Smartphone {
         }
     }
 
-    protected function _getFeaturedImage() {
+    protected function _getFeaturedImage()
+    {
 
         $photo = pq('div.specs-photo-main img')->attr('src');
         $this->featured_image = trim($photo);
@@ -218,12 +243,14 @@ class GsmArena extends Smartphone {
             $this->featured_image = $this->photos[0];
     }
 
-    public function specsTable() {
+    public function specsTable()
+    {
 
         $html = "<table class='table gadget-specs'>";
         $html .= "<tbody>";
 
-        foreach ($this->specs as $feature => $list) {
+        foreach ($this->specs as $feature => $list)
+        {
 
             $html .= "<tr>";
             $html .= "<th colspan='2'>";
@@ -231,7 +258,8 @@ class GsmArena extends Smartphone {
             $html .= "</th>";
             $html .= "</tr>";
 
-            foreach ($list as $label => $value) {
+            foreach ($list as $label => $value)
+            {
 
                 $html .= "<tr>";
                 $html .= "<td>{$label}</td>";
@@ -246,7 +274,8 @@ class GsmArena extends Smartphone {
         return $html;
     }
 
-    protected function dom_Content_render() {
+    protected function dom_Content_render()
+    {
 
         $released = trim(pq('span[data-spec="released-hl"]')->text());
         $screensize = trim(pq('span[data-spec="displaysize-hl"]')->text());

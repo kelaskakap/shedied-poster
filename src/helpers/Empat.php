@@ -11,26 +11,32 @@ use SheDied\parser\gadget\Brands;
 /**
  * technoreview.us
  */
-class Empat extends Numbers {
+class Empat extends Numbers
+{
 
     const TECHNOREVIEW_US = 'technoreview.us';
 
-    public function fetchPostLinks(PojokJogjaController $controller) {
+    public function fetchPostLinks(PojokJogjaController $controller)
+    {
 
         $doc = $this->fetchLinks($controller->getUrl());
         $postlinks = $controller->getPostLinks();
 
-        if ($this->source_Laptop_ASUS($controller)) {
+        if ($this->source_Laptop_ASUS($controller))
+        {
 
             $doc = json_decode($doc);
 
-            if (!empty($doc->Result->Obj)) {
+            if (!empty($doc->Result->Obj))
+            {
 
-                foreach ($doc->Result->Obj as $item) {
+                foreach ($doc->Result->Obj as $item)
+                {
 
                     $postlinks[] = ["title" => Asus::make_Title(trim($item->PDMarketName)), "link" => Asus::make_URL(trim($item->Url)), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory()];
 
-                    if ($this->enough($postlinks, $controller) && !$controller->auto()) {
+                    if ($this->enough($postlinks, $controller) && !$controller->auto())
+                    {
 
                         break;
                     }
@@ -38,17 +44,20 @@ class Empat extends Numbers {
             }
         }
 
-        if ($this->source_GSMArena($controller)) {
+        if ($this->source_GSMArena($controller))
+        {
 
             \phpQuery::newDocument($doc);
 
-            foreach (pq('div.makers > ul > li a') as $a) {
+            foreach (pq('div.makers > ul > li a') as $a)
+            {
 
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => GsmArena::make_Title(trim($title)), "link" => GsmArena::make_URL(trim($link)), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-                if ($this->enough($postlinks, $controller) && !$controller->auto()) {
+                if ($this->enough($postlinks, $controller) && !$controller->auto())
+                {
 
                     break;
                 }
@@ -58,7 +67,8 @@ class Empat extends Numbers {
         $controller->setPostLinks($postlinks);
     }
 
-    public function switchParsers(PojokJogjaController $controller) {
+    public function switchParsers(PojokJogjaController $controller)
+    {
 
         if ($this->source_Laptop_ASUS($controller))
             $this->parser = Asus::switch_Parser($controller->getNewsSrc());
@@ -66,7 +76,8 @@ class Empat extends Numbers {
             $this->parser = 'SheDied\parser\gadget\smartphone\GsmArena';
     }
 
-    static public function sources() {
+    static public function sources()
+    {
 
         $sources = self::sources_asus();
         $sources += self::sources_gsmarena();
@@ -74,19 +85,23 @@ class Empat extends Numbers {
         return $sources;
     }
 
-    protected function source_Laptop_ASUS(PojokJogjaController $controller) {
+    protected function source_Laptop_ASUS(PojokJogjaController $controller)
+    {
 
         return $controller->getNewsSrc() >= 1 && $controller->getNewsSrc() < 16;
     }
 
-    protected function source_GSMArena(PojokJogjaController $controller) {
+    protected function source_GSMArena(PojokJogjaController $controller)
+    {
 
         return $controller->getNewsSrc() >= 16 && $controller < 80;
     }
 
-    protected function Laptop_ASUS_Alter_URL(PojokJogjaController $controller) {
+    protected function Laptop_ASUS_Alter_URL(PojokJogjaController $controller)
+    {
 
-        if (!$controller->auto()) {
+        if (!$controller->auto())
+        {
 
             $url = $controller->getUrl();
 
@@ -97,20 +112,23 @@ class Empat extends Numbers {
         }
     }
 
-    public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
+    public function firstRunURL($url, $sourceId, PojokJogjaController $controller)
+    {
 
         parent::firstRunURL($url, $sourceId, $controller);
 
         $runURL = $url;
 
-        if ($this->source_Laptop_ASUS($controller)) {
+        if ($this->source_Laptop_ASUS($controller))
+        {
 
             $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 20;
 
             $Query = "&Filters=&Sort=3&PageNumber={$page}&PageSize=20";
 
             $runURL = $url . $Query;
-        } elseif ($this->source_GSMArena($controller)) {
+        } elseif ($this->source_GSMArena($controller))
+        {
 
             $page = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 20;
 
@@ -124,7 +142,8 @@ class Empat extends Numbers {
         return $runURL;
     }
 
-    protected function firstRunURL_GSMArena($url, $page) {
+    protected function firstRunURL_GSMArena($url, $page)
+    {
 
         $url = substr_replace($url, "-0-p{$page}", -4, 0);
 
@@ -134,13 +153,16 @@ class Empat extends Numbers {
         return substr_replace($url, 'phones' . $insert, $p, strlen('phones'));
     }
 
-    public function fetchCustomUrls(PojokJogjaController $controller) {
+    public function fetchCustomUrls(PojokJogjaController $controller)
+    {
 
         $postlinks = [];
 
-        foreach ($controller->getCustomUrls() as $url) {
+        foreach ($controller->getCustomUrls() as $url)
+        {
 
-            if ($this->source_Laptop_ASUS($controller)) {
+            if ($this->source_Laptop_ASUS($controller))
+            {
 
                 $postlinks[] = ["title" => '', "link" => $url, 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory()];
             }
@@ -149,7 +171,8 @@ class Empat extends Numbers {
         $controller->setPostLinks($postlinks);
     }
 
-    protected static function sources_asus() {
+    protected static function sources_asus()
+    {
 
         #asus
         $sources[1] = ['name' => 'Review - Asus: ZenBook Series', 'url' => 'https://www.asus.com/OfficialSiteAPI.asmx/GetModelResults?WebsiteId=1&ProductLevel2Id=155&FiltersCategory=35305'];
@@ -171,7 +194,8 @@ class Empat extends Numbers {
         return $sources;
     }
 
-    protected static function sources_gsmarena() {
+    protected static function sources_gsmarena()
+    {
 
         $sources[16] = ['name' => 'Review - GSMArena: Acer', 'url' => 'https://www.gsmarena.com/acer-phones-59.php', 'brand' => Brands::ACER];
         $sources[17] = ['name' => 'Review - GSMArena: Alcatel', 'url' => 'https://www.gsmarena.com/alcatel-phones-5.php', 'brand' => Brands::ALCATEL];
@@ -241,14 +265,17 @@ class Empat extends Numbers {
         return $sources;
     }
 
-    public function scanURL(PojokJogjaController $controller, $params = array()) {
-        if ($this->source_Laptop_ASUS($controller)) {
+    public function scanURL(PojokJogjaController $controller, $params = array())
+    {
+        if ($this->source_Laptop_ASUS($controller))
+        {
 
             $this->Laptop_ASUS_Alter_URL($controller);
         }
     }
 
-    public function getIdentity() {
+    public function getIdentity()
+    {
         return static::TECHNOREVIEW_US;
     }
 

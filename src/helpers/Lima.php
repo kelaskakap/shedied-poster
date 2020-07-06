@@ -6,27 +6,32 @@ use SheDied\helpers\Numbers;
 use SheDied\PojokJogjaController;
 use SheDied\parser\jogja\OLXParser;
 
-class Lima extends Numbers {
+class Lima extends Numbers
+{
 
     const JOGJA_TRADE = 'jogja.trade';
 
-    public function fetchCustomUrls(PojokJogjaController $controller) {
+    public function fetchCustomUrls(PojokJogjaController $controller)
+    {
         ;
     }
 
-    public function switchParsers(PojokJogjaController $controller) {
+    public function switchParsers(PojokJogjaController $controller)
+    {
 
         $this->parser = 'SheDied\parser\jogja\OLXParser';
     }
 
-    public function fetchPostLinks(PojokJogjaController $controller) {
+    public function fetchPostLinks(PojokJogjaController $controller)
+    {
 
         $doc = $this->fetchLinks($controller->getUrl());
         $postlinks = $controller->getPostLinks();
 
         $node = \phpQuery::newDocument($doc);
 
-        foreach ($node->find('li.EIR5N a') as $a) {
+        foreach ($node->find('li.EIR5N a') as $a)
+        {
 
             $link = pq($a)->attr('href');
             $title = pq($a)->find('span[data-aut-id="itemTitle"]')->text();
@@ -38,7 +43,8 @@ class Lima extends Numbers {
 
             $postlinks[] = array("title" => $linktitle, "link" => OLXParser::make_URL(trim($link)), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-            if ($this->enough($postlinks, $controller) && !$controller->auto()) {
+            if ($this->enough($postlinks, $controller) && !$controller->auto())
+            {
 
                 break;
             }
@@ -47,13 +53,15 @@ class Lima extends Numbers {
         $controller->setPostLinks($postlinks);
     }
 
-    static public function sources() {
+    static public function sources()
+    {
 
         $sources = self::sources_olx();
         return $sources;
     }
 
-    protected static function sources_olx() {
+    protected static function sources_olx()
+    {
 
         #asus
         $sources[1] = ['name' => 'OLX - Mobil > Mobil Bekas', 'url' => 'https://www.olx.co.id/yogyakarta-di_g2000032/mobil-bekas_c198?sorting=desc-creation'];
@@ -83,11 +91,13 @@ class Lima extends Numbers {
         return $sources;
     }
 
-    public function scanURL(PojokJogjaController $controller, $params = array()) {
+    public function scanURL(PojokJogjaController $controller, $params = array())
+    {
         ;
     }
 
-    protected function fetchLinks($url) {
+    protected function fetchLinks($url)
+    {
 
         $context = stream_context_create(
                 array(
@@ -97,19 +107,22 @@ class Lima extends Numbers {
                 )
         );
         $doc = @file_get_contents($url, false, $context);
-        if (function_exists('mb_convert_encoding')) {
+        if (function_exists('mb_convert_encoding'))
+        {
             $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
         }
 
         return $doc;
     }
 
-    protected function clean_whitespaces($text) {
+    protected function clean_whitespaces($text)
+    {
 
         return preg_replace('/\s+/', ' ', trim($text));
     }
 
-    public function getIdentity() {
+    public function getIdentity()
+    {
         return static::JOGJA_TRADE;
     }
 

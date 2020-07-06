@@ -2,7 +2,8 @@
 
 namespace SheDied\parser;
 
-interface InterfaceParser {
+interface InterfaceParser
+{
 
     public function setUrl($url);
 

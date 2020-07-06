@@ -4,14 +4,17 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParser;
 
-class GameStationParser extends AbstractParser {
+class GameStationParser extends AbstractParser
+{
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
-        
+
 #images treatment
-        foreach (pq("#content-anchor-inner img") as $img) {
+        foreach (pq("#content-anchor-inner img") as $img)
+        {
             $image = pq($img)->attr('data-lazy-src');
             pq($img)->attr('src', trim($image));
             pq($img)->attr('class', 'aligncenter size-full');
@@ -28,7 +31,8 @@ class GameStationParser extends AbstractParser {
         $this->content = $node->html();
     }
 
-    public function grab() {
+    public function grab()
+    {
         $this->getPostDetail();
         $this->_getFeaturedImage();
         $this->_getTags();
@@ -40,13 +44,16 @@ class GameStationParser extends AbstractParser {
         $this->generateSeoMetaKeywords();
     }
 
-    protected function _getFeaturedImage() {
-        if (!$this->no_image) {
+    protected function _getFeaturedImage()
+    {
+        if (!$this->no_image)
+        {
             $this->featured_image = pq('div.featured-image-inner a')->attr('href');
         }
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
         $first_paragraph = substr($this->content, 0, strpos($this->content, '</p>') + 4);
         $first_paragraph = strip_tags($first_paragraph);
         $description = $this->setMetaDescriptionLength($first_paragraph);
