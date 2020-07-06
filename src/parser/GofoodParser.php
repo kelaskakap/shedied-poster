@@ -4,7 +4,8 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParser;
 
-class GofoodParser extends AbstractParser {
+class GofoodParser extends AbstractParser
+{
 
     const GOFOOD_ADDR = 'https://gofood.co.id';
 
@@ -15,7 +16,8 @@ class GofoodParser extends AbstractParser {
     protected $rating;
     protected $longlat;
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $this->address = $this->link_content->address;
         $this->phone = $this->link_content->phone_number;
@@ -23,14 +25,16 @@ class GofoodParser extends AbstractParser {
         $this->rating = $this->link_content->rating->text;
         $this->longlat = $this->link_content->location;
 
-        foreach ($this->link_content->multi_operational_hours as $h) {
+        foreach ($this->link_content->multi_operational_hours as $h)
+        {
 
             $day = $this->dayOfWeek($h->day_of_week);
             $this->operations[$day] = $h->timings[0];
         }
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $this->getPostDetail();
         $this->_getFeaturedImage();
@@ -40,12 +44,14 @@ class GofoodParser extends AbstractParser {
         $this->renderHtml();
     }
 
-    protected function _getFeaturedImage() {
+    protected function _getFeaturedImage()
+    {
 
         $this->featured_image = $this->link_content->image_url;
     }
 
-    protected function renderHtml() {
+    protected function renderHtml()
+    {
 
         $html = '<div class="gofood">';
 
@@ -94,7 +100,8 @@ class GofoodParser extends AbstractParser {
         //
         // jam buka
         $html .= '<div class="gf-operations"><h3>Jam Operasional</h3><ul>';
-        foreach ($this->operations as $day => $time) {
+        foreach ($this->operations as $day => $time)
+        {
 
             $html .= '<li>' . $day . ' : ' . $time->open_time . ' - ' . $time->close_time . '</li>';
         }
@@ -130,25 +137,30 @@ class GofoodParser extends AbstractParser {
         $this->content = $html;
     }
 
-    protected function _getTags() {
+    protected function _getTags()
+    {
 
-        foreach ($this->link_content->cuisines as $c) {
+        foreach ($this->link_content->cuisines as $c)
+        {
 
             $this->tags[] = $c->text;
         }
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
 
         $this->meta_description = "{$this->title}. {$this->address}. Phone: {$this->phone}";
     }
 
-    protected function generateSeoMetaTitle() {
+    protected function generateSeoMetaTitle()
+    {
 
         $this->meta_title = "{$this->title} - {$this->phone}";
     }
 
-    protected function dayOfWeek($day) {
+    protected function dayOfWeek($day)
+    {
 
         if ($day == 1)
             return 'Senin';
@@ -168,12 +180,14 @@ class GofoodParser extends AbstractParser {
         return $day;
     }
 
-    static public function make_URL($id) {
+    static public function make_URL($id)
+    {
 
         return self::GOFOOD_ADDR . '/jakarta/restaurant/' . $id;
     }
 
-    static public function make_Title($title) {
+    static public function make_Title($title)
+    {
 
         return "Kuliner {$title}";
     }

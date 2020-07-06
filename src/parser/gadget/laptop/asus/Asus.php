@@ -5,7 +5,8 @@ namespace SheDied\parser\gadget\laptop\asus;
 use SheDied\parser\gadget\laptop\Laptop;
 use SheDied\parser\gadget\Brands;
 
-abstract class Asus extends Laptop {
+abstract class Asus extends Laptop
+{
 
     protected $spec_link;
     protected $support_link;
@@ -13,18 +14,21 @@ abstract class Asus extends Laptop {
 
     const SITE_ADDR = 'https://www.asus.com';
 
-    public function __construct() {
+    public function __construct()
+    {
 
         parent::__construct();
         $this->setBrand(Brands::ASUS);
     }
 
-    static public function make_Title($title) {
+    static public function make_Title($title)
+    {
 
         return $title . ' Reviews Specs Price and Drivers';
     }
 
-    static public function make_URL($url) {
+    static public function make_URL($url)
+    {
 
         return 'https:' . $url;
     }
@@ -34,9 +38,11 @@ abstract class Asus extends Laptop {
      * @param mixed $param array index
      * @return string Parser
      */
-    static public function switch_Parser($param) {
+    static public function switch_Parser($param)
+    {
 
-        switch ((int) $param) {
+        switch ((int) $param)
+        {
 
             case 1:
                 $parser = 'SheDied\parser\gadget\laptop\asus\ZenBook';
@@ -91,7 +97,8 @@ abstract class Asus extends Laptop {
         return $parser;
     }
 
-    protected function _getFeaturedImage() {
+    protected function _getFeaturedImage()
+    {
 
         $img = pq('meta[property="og:image"]')->attr('content');
         $this->featured_image = trim($img);
@@ -101,7 +108,8 @@ abstract class Asus extends Laptop {
      * Get Links of related page of Product
      * Specs, gallery, support
      */
-    protected function dom_Links() {
+    protected function dom_Links()
+    {
 
         $node = pq('div#overview-top-nav');
 
@@ -117,11 +125,13 @@ abstract class Asus extends Laptop {
         $this->gallery_link = self::SITE_ADDR . trim($node->find('li#ligallery > a')->attr('href'));
     }
 
-    protected function dom_Gallery() {
+    protected function dom_Gallery()
+    {
 
         $node = pq('ul.gallery-list');
 
-        foreach ($node->find('img') as $img) {
+        foreach ($node->find('img') as $img)
+        {
 
             $this->photos[] = Asus::SITE_ADDR . trim(pq($img)->attr('src'));
         }
@@ -133,15 +143,18 @@ abstract class Asus extends Laptop {
             ]);
     }
 
-    protected function try_Content_1() {
+    protected function try_Content_1()
+    {
 
         $node = pq('div#AWD');
 
-        if (!$node->size()) {
+        if (!$node->size())
+        {
             $node = pq('div#CMD');
         }
 
-        if (!$node->size()) {
+        if (!$node->size())
+        {
             $node = pq('div#wrapper');
         }
 
@@ -149,12 +162,14 @@ abstract class Asus extends Laptop {
         $st_s = "div.content__title, div.desc";
         $si_s = "div.content__info, p.content-p:first";
 
-        foreach ($node->find('section') as $section) {
+        foreach ($node->find('section') as $section)
+        {
 
             $st = pq($section)->find($st_s);
             $si = pq($section)->find($si_s);
 
-            if ($st->count() < 2) {
+            if ($st->count() < 2)
+            {
 
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
@@ -165,19 +180,22 @@ abstract class Asus extends Laptop {
         $this->content = $text;
     }
 
-    protected function try_Content_2() {
+    protected function try_Content_2()
+    {
 
         $node = pq('div#box-productOverview-containter');
         $text = "";
         $st_s = 'div.slogan, div.subT-big, div.box-word-cent > div.subT';
         $si_s = 'div.box-intro, div.txt-cent-mid, div.txt-left-mid, div.txt-cent, div.txt-cent-big';
 
-        foreach ($node->find('section') as $sec) {
+        foreach ($node->find('section') as $sec)
+        {
 
             $st = pq($sec)->find($st_s);
             $si = pq($sec)->find($si_s);
 
-            if ($st->count() < 2) {
+            if ($st->count() < 2)
+            {
 
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
@@ -188,19 +206,22 @@ abstract class Asus extends Laptop {
         $this->content = $text;
     }
 
-    protected function try_Content_3() {
+    protected function try_Content_3()
+    {
 
         $node = pq('div#Features');
         $text = "";
         $st_s = "div.desc";
         $si_s = "div.intro > p";
 
-        foreach ($node->find('section') as $section) {
+        foreach ($node->find('section') as $section)
+        {
 
             $st = pq($section)->find($st_s);
             $si = pq($section)->find($si_s);
 
-            if ($st->count() < 2) {
+            if ($st->count() < 2)
+            {
 
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
@@ -211,7 +232,8 @@ abstract class Asus extends Laptop {
         $this->content = $text;
     }
 
-    protected function dom_Support() {
+    protected function dom_Support()
+    {
 
         $info = "<p>Get more detailed information such as Driver Utility, FAQ, Manual & Document, Warranty Information of {$this->model}.</p>";
         $info .= "<p>";
@@ -221,11 +243,13 @@ abstract class Asus extends Laptop {
         return $info;
     }
 
-    protected function try_Specs_1() {
+    protected function try_Specs_1()
+    {
 
         $node = pq('div#spec-area');
 
-        foreach ($node->find('li') as $li) {
+        foreach ($node->find('li') as $li)
+        {
 
             $label = trim(pq($li)->find('span.spec-item')->text());
             $temp = pq($li)->find('div.spec-data');
@@ -237,11 +261,13 @@ abstract class Asus extends Laptop {
         }
     }
 
-    protected function try_Specs_2() {
+    protected function try_Specs_2()
+    {
 
         $node = pq('div.insoweTable');
 
-        foreach ($node->find('section') as $section) {
+        foreach ($node->find('section') as $section)
+        {
 
             pq($section)->find('strong')->after('<br>')->before('<br>');
             $label = trim(pq($section)->find('div.insoweCol1')->text());
@@ -252,11 +278,13 @@ abstract class Asus extends Laptop {
         }
     }
 
-    protected function try_Specs_3() {
+    protected function try_Specs_3()
+    {
 
         $node = pq('div.spec__container');
 
-        foreach ($node->find('div.spec__content') as $div) {
+        foreach ($node->find('div.spec__content') as $div)
+        {
 
             $label = trim(pq($div)->find('div.spec-key')->text());
             $temp = pq($div)->find('div.item-right');
@@ -268,12 +296,14 @@ abstract class Asus extends Laptop {
         }
     }
 
-    protected function dom_Model() {
+    protected function dom_Model()
+    {
 
         return pq('#ctl00_ContentPlaceHolder1_ctl00_span_model_name')->text();
     }
 
-    protected function dom_Content() {
+    protected function dom_Content()
+    {
 
         $this->try_Content_1();
 
@@ -298,13 +328,15 @@ abstract class Asus extends Laptop {
         $this->closingContent();
     }
 
-    protected function closingContent() {
+    protected function closingContent()
+    {
 
         $text = "<p class=\"gotoofficial\">For more detailed information about {$this->model}, you can visit the official page of this product.<br>Go to {$this->model} <a href=\"{$this->url}\" target=\"_blank\" rel=\"nofollow\">official page</a>.</p>";
         $this->content .= $text;
     }
 
-    protected function dom_Specs() {
+    protected function dom_Specs()
+    {
 
         $this->try_Specs_1();
 
@@ -321,7 +353,8 @@ abstract class Asus extends Laptop {
             ]);
     }
 
-    protected function try_Content_4() {
+    protected function try_Content_4()
+    {
 
         $node = pq('div#wrap');
 
@@ -331,12 +364,14 @@ abstract class Asus extends Laptop {
         $st_s = "article.text h1";
         $si_s = "article.text p";
 
-        foreach ($node->find('section') as $section) {
+        foreach ($node->find('section') as $section)
+        {
 
             $st = pq($section)->find($st_s);
             $si = pq($section)->find($si_s);
 
-            if ($st->count() < 2) {
+            if ($st->count() < 2)
+            {
 
                 $sub_title = trim($st->text());
                 $sub_info = trim($si->text());
@@ -347,7 +382,8 @@ abstract class Asus extends Laptop {
         $this->content = $text;
     }
 
-    protected function try_Content_5() {
+    protected function try_Content_5()
+    {
 
         $node = pq('div.overview-wrapper');
 
@@ -356,7 +392,8 @@ abstract class Asus extends Laptop {
         $si_s = "p.insoweText, p.insoweDec";
         $wr_s = "section.insoweSection";
 
-        foreach ($node->find($wr_s) as $section) {
+        foreach ($node->find($wr_s) as $section)
+        {
 
             $st = pq($section)->find($st_s);
             $si = pq($section)->find($si_s);
@@ -366,13 +403,15 @@ abstract class Asus extends Laptop {
             $text .= "<h2 class=\"sell-point\">{$sub_title}</h2><p>{$sub_info}</p>";
         }
 
-        if (!$text) {
+        if (!$text)
+        {
 
             $st_s = "div.text h1, article.text h1";
             $si_s = "div.text p, article.text p";
             $wr_s = "div.page";
 
-            foreach ($node->find($wr_s) as $div) {
+            foreach ($node->find($wr_s) as $div)
+            {
 
                 $st = pq($div)->find($st_s);
                 $si = pq($div)->find($si_s);
@@ -383,13 +422,15 @@ abstract class Asus extends Laptop {
             }
         }
 
-        if (!$text) {
+        if (!$text)
+        {
 
             $st_s = "div.title";
             $si_s = "div.text";
             $wr_s = "div.group";
 
-            foreach ($node->find($wr_s) as $div) {
+            foreach ($node->find($wr_s) as $div)
+            {
 
                 $st = pq($div)->find($st_s);
                 $si = pq($div)->find($si_s);
@@ -400,7 +441,8 @@ abstract class Asus extends Laptop {
             }
         }
 
-        if (!$text) {
+        if (!$text)
+        {
 
             #ASUSPRO
             $node->find('div[class*=text-mobile]')->remove();
@@ -409,7 +451,8 @@ abstract class Asus extends Laptop {
             $si_s = "div.txt-left, div.txt-left-big";
             $wr_s = "div[class^=main1-], div[class^=main2-]";
 
-            foreach ($node->find($wr_s) as $div) {
+            foreach ($node->find($wr_s) as $div)
+            {
 
                 $st = pq($div)->find($st_s);
                 $si = pq($div)->find($si_s);

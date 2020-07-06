@@ -5,7 +5,8 @@ namespace SheDied\parser\gadget;
 use SheDied\parser\AbstractParser;
 use SheDied\parser\gadget\IGadget;
 
-abstract class Gadget extends AbstractParser implements IGadget {
+abstract class Gadget extends AbstractParser implements IGadget
+{
 
     const DEFAULT_RATE = 3;
 
@@ -31,68 +32,80 @@ abstract class Gadget extends AbstractParser implements IGadget {
 
     abstract protected function default_Scores();
 
-    public function getBrand() {
+    public function getBrand()
+    {
 
         return $this->brand;
     }
 
-    public function getModel() {
+    public function getModel()
+    {
 
         return $this->model;
     }
 
-    public function getProductLink() {
+    public function getProductLink()
+    {
 
         return $this->plink;
     }
 
-    public function getProductPhotos() {
+    public function getProductPhotos()
+    {
 
         return $this->photos;
     }
 
-    public function getProductSpecs() {
+    public function getProductSpecs()
+    {
 
         return $this->specs;
     }
 
-    public function setBrand($brand) {
+    public function setBrand($brand)
+    {
 
         $this->brand = $brand;
         return $this;
     }
 
-    public function setModel($model) {
+    public function setModel($model)
+    {
 
         $this->model = $model;
         return $this;
     }
 
-    public function setProductLink($plink) {
+    public function setProductLink($plink)
+    {
 
         $this->plink = $plink;
         return $this;
     }
 
-    public function setProductPhotos($photos) {
+    public function setProductPhotos($photos)
+    {
 
         $this->photos = $photos;
         return $this;
     }
 
-    public function setProductSpecs($specs) {
+    public function setProductSpecs($specs)
+    {
 
         $this->specs = $specs;
         return $this;
     }
 
-    public function specsTable() {
+    public function specsTable()
+    {
 
         $html = "<table class='table gadget-specs'>";
         $html .= "<tbody>";
-        
-        foreach ($this->specs as $label => $value) {
-            
+
+        foreach ($this->specs as $label => $value)
+        {
+
             $html .= "<tr>";
             $html .= "<td>{$label}<td>";
             $html .= "<td>{$value}</td>";
@@ -105,39 +118,46 @@ abstract class Gadget extends AbstractParser implements IGadget {
         return $html;
     }
 
-    public function setProductDesc($desc) {
+    public function setProductDesc($desc)
+    {
 
         $this->desc = $desc;
         return $this;
     }
 
-    public function getProductDesc() {
+    public function getProductDesc()
+    {
 
         return $this->desc;
     }
 
-    public function setProductSupport($param) {
+    public function setProductSupport($param)
+    {
 
         $this->support = $param;
         return $this;
     }
 
-    public function getProductSupport() {
+    public function getProductSupport()
+    {
 
         return $this->support;
     }
 
-    public function getAuthor_Rate() {
+    public function getAuthor_Rate()
+    {
 
         return $this->author_rate;
     }
 
-    public function getScores() {
+    public function getScores()
+    {
 
         return $this->scores;
     }
 
-    public function toWordpressPost() {
+    public function toWordpressPost()
+    {
 
         //review-category is an array :)
 

@@ -4,29 +4,34 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParserWithGallery;
 
-class DesignMilkParser extends AbstractParserWithGallery {
+class DesignMilkParser extends AbstractParserWithGallery
+{
 
     const idx = "index-";
 
     protected $bedotag = FALSE;
 
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->attach = TRUE;
     }
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
         $node = pq('div.content-column');
 
-        foreach (pq($node)->find('p') as $i => $p) {
+        foreach (pq($node)->find('p') as $i => $p)
+        {
 
             $index = self::idx . $i;
             $img = pq($p)->find('img');
 
-            if ($img->length) {
+            if ($img->length)
+            {
 
                 $srcs = trim($img->attr('srcset'));
                 $arr = explode(',', $srcs);
@@ -39,23 +44,27 @@ class DesignMilkParser extends AbstractParserWithGallery {
 
                 $this->gallery[$index] = $image;
                 $this->p[$index] = $image;
-            } else {
+            } else
+            {
 
                 $this->p[$index] = pq($p)->text();
             }
         }
 
-        if (!$this->gallery) {
+        if (!$this->gallery)
+        {
 
             //bedo tag. asem nganggo div
             $this->bedotag = TRUE;
 
-            foreach (pq($node)->find('div[id^=attachment_]') as $i => $div) {
+            foreach (pq($node)->find('div[id^=attachment_]') as $i => $div)
+            {
 
                 $index = self::idx . $i;
                 $img = pq($div)->find('img');
 
-                if ($img->length) {
+                if ($img->length)
+                {
 
                     $srcs = trim($img->attr('srcset'));
                     $arr = explode(',', $srcs);
@@ -75,7 +84,8 @@ class DesignMilkParser extends AbstractParserWithGallery {
         $this->content = "Lorem ipsum";
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $this->getPostDetail();
         $this->_getFeaturedImage();
@@ -83,9 +93,11 @@ class DesignMilkParser extends AbstractParserWithGallery {
         $this->generateSeoMetaDescription();
     }
 
-    protected function _getFeaturedImage() {
+    protected function _getFeaturedImage()
+    {
 
-        if ($this->gallery) {
+        if ($this->gallery)
+        {
 
             //ternyata tidak selalu 0 ferguso
             //$idx = self::idx . "0";
@@ -94,60 +106,71 @@ class DesignMilkParser extends AbstractParserWithGallery {
         }
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
 
         $meta_description = pq('meta[name="description"]')->attr('content');
         $this->meta_description = trim($meta_description);
     }
 
-    public function buildPostWithGallery() {
+    public function buildPostWithGallery()
+    {
 
         $content = '';
 
-        if (!$this->bedotag) {
+        if (!$this->bedotag)
+        {
 
-            foreach ($this->p as $idx => $p) {
+            foreach ($this->p as $idx => $p)
+            {
 
-                if (isset($this->gallery[$idx])) {
+                if (isset($this->gallery[$idx]))
+                {
 
                     $img = $this->gallery[$idx];
                     $content .= '<p>';
                     $content .= $img['html'];
                     $content .= '</p>';
-                } else {
+                } else
+                {
 
                     $content .= '<p>';
                     $content .= $p;
                     $content .= '</p>';
                 }
             }
-        } else {
+        } else
+        {
 
             $gallery = $this->gallery;
 
-            foreach ($this->p as $idx => $p) {
+            foreach ($this->p as $idx => $p)
+            {
 
                 $content .= '<p>';
                 $content .= $p;
                 $content .= '</p>';
 
-                if (isset($gallery[$idx])) {
+                if (isset($gallery[$idx]))
+                {
 
                     $img = $gallery[$idx];
                     $content .= '<p>';
                     $content .= $img['html'];
                     $content .= '</p>';
-                    
-                     // dihapus
+
+                    // dihapus
                     unset($gallery[$idx]);
                 }
             }
-            
-            if ($gallery) {
-                
+
+            if ($gallery)
+            {
+
                 //turahane di-looping dab. eman le nyolong
-                foreach ($gallery as $g) {
-                    
+                foreach ($gallery as $g)
+                {
+
                     $content .= '<p>';
                     $content .= $g['html'];
                     $content .= '</p>';

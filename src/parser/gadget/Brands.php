@@ -2,7 +2,8 @@
 
 namespace SheDied\parser\gadget;
 
-class Brands {
+class Brands
+{
 
     const ASUS = 'ASUS';
     const ACER = 'ACER';

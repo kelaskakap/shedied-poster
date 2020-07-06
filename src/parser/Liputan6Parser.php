@@ -4,11 +4,14 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParser;
 
-class Liputan6Parser extends AbstractParser {
+class Liputan6Parser extends AbstractParser
+{
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
         $doc = $this->curlGrabContent();
-        if (function_exists('mb_convert_encoding')) {
+        if (function_exists('mb_convert_encoding'))
+        {
             $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
         }
         $html = \phpQuery::newDocument($doc);
@@ -23,7 +26,8 @@ class Liputan6Parser extends AbstractParser {
         $this->content = $node->html();
     }
 
-    public function grab() {
+    public function grab()
+    {
         $this->getPostDetail();
         $this->_getFeaturedImage();
         $this->_getTags();
@@ -35,33 +39,41 @@ class Liputan6Parser extends AbstractParser {
         $this->generateSeoMetaKeywords();
     }
 
-    protected function _getFeaturedImage() {
-        if (!$this->no_image) {
+    protected function _getFeaturedImage()
+    {
+        if (!$this->no_image)
+        {
             $this->featured_image = pq('meta[property="og:image"]')->attr('content');
         }
     }
 
-    protected function _getTags() {
-        if ($this->source_category == 36) {
+    protected function _getTags()
+    {
+        if ($this->source_category == 36)
+        {
             $this->tags[] = 'Pilkada DKI 2017';
         }
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
         $this->meta_description = pq('meta[name="description"]')->attr('content');
     }
 
-    protected function generateSeoMetaKeywords() {
+    protected function generateSeoMetaKeywords()
+    {
         $this->meta_keywords = pq('meta[name="news_keywords"]')->attr('content');
     }
 
-    protected function cleanUp() {
+    protected function cleanUp()
+    {
         parent::cleanUp();
         $this->alterBlockQuote();
         $this->removeContentSuggestions();
     }
 
-    private function removeContentSuggestions() {
+    private function removeContentSuggestions()
+    {
         $content = preg_replace('/<p>Selanjutnya\sbaca\sdi\ssini.*?<\/p>/s', '', $this->content);
         $this->content = $content;
     }

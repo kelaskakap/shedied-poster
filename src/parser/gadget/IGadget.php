@@ -2,7 +2,8 @@
 
 namespace SheDied\parser\gadget;
 
-interface IGadget {
+interface IGadget
+{
 
     public function getBrand();
 

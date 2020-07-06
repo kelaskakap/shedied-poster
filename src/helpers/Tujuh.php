@@ -39,7 +39,22 @@ class Tujuh extends Numbers {
                 }
             }
         }
-        
+
+        if ($this->source_INSPIREDBYTHIS($controller)) {
+
+            foreach (pq('div.imglist div.imgtxtbox a') as $a) {
+
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller)) {
+
+                    break;
+                }
+            }
+        }
+
         $controller->setPostLinks($postlinks);
     }
 
@@ -47,12 +62,14 @@ class Tujuh extends Numbers {
 
         if ($this->source_DESIGNMILK($controller))
             $this->parser = 'SheDied\parser\DesignMilkParser';
+        elseif ($this->source_INSPIREDBYTHIS($controller))
+            $this->parser = 'SheDied\parser\InspiredByThisParser';
     }
 
     static public function sources() {
 
         $sources = self::sources_designmilk();
-        //$sources += self::sources_onekindesign();
+        $sources += self::sources_inspiredbythis();
 
         return $sources;
     }
@@ -61,7 +78,7 @@ class Tujuh extends Numbers {
 
         if (empty($this->fr) && !$this->isfr)
             return $url;
-        
+
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 100;
         $Page = $t > 1 ? 'page/' . $t : '';
 
@@ -74,6 +91,11 @@ class Tujuh extends Numbers {
     protected function source_DESIGNMILK(PojokJogjaController $controller) {
 
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 13;
+    }
+
+    protected function source_INSPIREDBYTHIS(PojokJogjaController $controller) {
+
+        return $controller->getNewsSrc() > 12 && $controller->getNewsSrc() < 32;
     }
 
     public function fetchCustomUrls(PojokJogjaController $controller) {
@@ -95,6 +117,30 @@ class Tujuh extends Numbers {
         $sources[11] = ['name' => 'Design Milk: At the Office', 'url' => 'https://design-milk.com/column/at-the-office/'];
         $sources[12] = ['name' => 'Design Milk: Destination Design', 'url' => 'https://design-milk.com/column/destination-design/'];
         //$sources[] = ['name' => '', 'url' => ''];
+
+        return $sources;
+    }
+
+    static protected function sources_inspiredbythis() {
+        $sources[13] = ['name' => 'Inspired By This: Wedding Plan', 'url' => 'http://www.inspiredbythis.com/category/wed/planning/'];
+        $sources[14] = ['name' => 'Inspired By This: Wedding Celebrate', 'url' => 'http://www.inspiredbythis.com/category/wed/wedding-celebrations/'];
+        $sources[15] = ['name' => 'Inspired By This: Wedding Engagements', 'url' => 'http://www.inspiredbythis.com/category/wed/engagements/'];
+        $sources[16] = ['name' => 'Inspired By This: Wedding The Weddings', 'url' => 'http://www.inspiredbythis.com/category/wed/real-weddings/'];
+        $sources[17] = ['name' => 'Inspired By This: Wedding Fashion', 'url' => 'http://www.inspiredbythis.com/category/wed/wedding-fashion/'];
+        $sources[18] = ['name' => 'Inspired By This: Style', 'url' => 'http://www.inspiredbythis.com/category/style/'];
+        $sources[19] = ['name' => 'Inspired By This: Entertaining', 'url' => 'http://www.inspiredbythis.com/category/dwell/home-entertaining-dwell/'];
+        $sources[20] = ['name' => 'Inspired By This: Decor', 'url' => 'http://www.inspiredbythis.com/category/dwell/home-decor/'];
+        $sources[21] = ['name' => 'Inspired By This: Home Tours', 'url' => 'http://www.inspiredbythis.com/category/dwell/home-tours/'];
+        $sources[22] = ['name' => 'Inspired By This: Baby Showers', 'url' => 'http://www.inspiredbythis.com/category/grow/baby-showers/'];
+        $sources[23] = ['name' => 'Inspired By This: Birthday Parties', 'url' => 'http://www.inspiredbythis.com/category/grow/birthday-parties/'];
+        $sources[24] = ['name' => 'Inspired By This: Baby & Kid', 'url' => 'http://www.inspiredbythis.com/category/grow/baby-and-kid/'];
+        $sources[25] = ['name' => 'Inspired By This: Motherhood', 'url' => 'http://www.inspiredbythis.com/category/grow/motherhood/'];
+        $sources[26] = ['name' => 'Inspired By This: Office Tours', 'url' => 'http://www.inspiredbythis.com/category/business/office-tours/'];
+        $sources[27] = ['name' => 'Inspired By This: A Girl Boss', 'url' => 'http://www.inspiredbythis.com/category/business/business-tips/'];
+        $sources[28] = ['name' => 'Inspired By This: Office Life', 'url' => 'http://www.inspiredbythis.com/category/business/office-life/'];
+        $sources[29] = ['name' => 'Inspired By This: Travel Where To Stay', 'url' => 'http://www.inspiredbythis.com/category/travel-3/travel-destinations/'];
+        $sources[30] = ['name' => 'Inspired By This: Travel Where To Eat', 'url' => 'http://www.inspiredbythis.com/category/travel-3/travel-eats/'];
+        $sources[31] = ['name' => 'Inspired By This: Wallness', 'url' => 'http://www.inspiredbythis.com/category/wellness/health-tips/'];
 
         return $sources;
     }

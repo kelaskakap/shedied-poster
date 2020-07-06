@@ -2,13 +2,16 @@
 
 namespace SheDied\parser;
 
-class Controller {
+class Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return get_object_vars($this);
     }
 

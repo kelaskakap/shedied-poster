@@ -4,7 +4,8 @@ namespace SheDied\parser\jogja;
 
 use SheDied\parser\AbstractParser;
 
-class OLXParser extends AbstractParser {
+class OLXParser extends AbstractParser
+{
 
     const OLX_ADDR = 'https://www.olx.co.id';
 
@@ -17,18 +18,21 @@ class OLXParser extends AbstractParser {
     protected $start;
     protected $end;
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
     }
 
-    static public function make_URL($url) {
+    static public function make_URL($url)
+    {
 
         return self::OLX_ADDR . $url;
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $this->getPostDetail();
         $this->specs();
@@ -44,14 +48,17 @@ class OLXParser extends AbstractParser {
         $this->renderHtml();
     }
 
-    protected function _getFeaturedImage() {
+    protected function _getFeaturedImage()
+    {
 
         $this->featured_image = pq('meta[property="og:image"]')->attr('content');
     }
 
-    protected function specs() {
+    protected function specs()
+    {
 
-        foreach (pq('div._3_knn') as $div) {
+        foreach (pq('div._3_knn') as $div)
+        {
 
             $label = pq($div)->find('span._25oXN')->text();
             $value = pq($div)->find('span._2vNpt')->text();
@@ -60,23 +67,27 @@ class OLXParser extends AbstractParser {
         }
     }
 
-    protected function desc() {
+    protected function desc()
+    {
 
         $desc = pq('div[data-aut-id="itemDescriptionContent"]');
 
-        \phpQuery::each(pq($desc)->children(), function($index, $element) {
+        \phpQuery::each(pq($desc)->children(), function($index, $element)
+        {
             pq($element)->removeAttr('*');
         });
 
         $this->desc = trim($desc->html());
     }
 
-    protected function price() {
+    protected function price()
+    {
 
         $this->price = trim(pq('span[data-aut-id="itemPrice"]')->text());
     }
 
-    protected function seller() {
+    protected function seller()
+    {
 
         $x = pq('div._224W6 a');
         $link = pq($x)->attr('href');
@@ -86,14 +97,17 @@ class OLXParser extends AbstractParser {
         $this->seller['link'] = self::OLX_ADDR . trim($link);
     }
 
-    protected function photos() {
+    protected function photos()
+    {
 
         $hell = pq('div._2f8d4');
 
-        foreach (pq($hell)->find('button._3SDvS') as $btn) {
+        foreach (pq($hell)->find('button._3SDvS') as $btn)
+        {
 
             $style = pq($btn)->attr('style');
-            if (preg_match('/\((.*?)\)/', $style, $matches)) {
+            if (preg_match('/\((.*?)\)/', $style, $matches))
+            {
 
                 $bg = $matches[1];
                 $bgx = explode(';', $bg);
@@ -104,18 +118,21 @@ class OLXParser extends AbstractParser {
         }
     }
 
-    protected function renderHtml() {
+    protected function renderHtml()
+    {
 
         $html = '';
 
         if ($this->price)
             $html .= '<div class="priceproduct">' . $this->price . '</div>';
 
-        if ($this->specs) {
+        if ($this->specs)
+        {
 
             $html .= '<div class="specsproduct"><ul class="list-group row">';
 
-            foreach ($this->specs as $label => $value) {
+            foreach ($this->specs as $label => $value)
+            {
 
                 $html .= '<li class="list-group-item col-md-6">';
                 $html .= '<span class="col-md-6 speclabel">' . $label . '</span>';
@@ -139,7 +156,8 @@ class OLXParser extends AbstractParser {
         $html .= '</div>';
         $html .= '</div>';
 
-        if ($this->desc) {
+        if ($this->desc)
+        {
 
             $html .= '<div class="descproduct">';
             $html .= $this->desc;
@@ -149,29 +167,34 @@ class OLXParser extends AbstractParser {
         $this->content = $html;
     }
 
-    protected function _getTags() {
+    protected function _getTags()
+    {
 
         $this->tags = array_values($this->specs);
     }
 
-    public function getPhotos() {
+    public function getPhotos()
+    {
 
         return $this->photos;
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
 
         $specs = implode(',', array_values($this->specs));
         $specs = rtrim(ucwords($specs), ',');
         $this->meta_description = "{$this->title} {$specs}.";
     }
 
-    protected function generateSeoMetaTitle() {
+    protected function generateSeoMetaTitle()
+    {
 
         $this->meta_title = $this->title;
     }
 
-    protected function tayang() {
+    protected function tayang()
+    {
 
         $mts = [
             'jan' => 'Jan',
@@ -194,17 +217,21 @@ class OLXParser extends AbstractParser {
         $tz = new \DateTimeZone(get_option('timezone_string'));
         $this->start = new \DateTime(current_time('mysql'), $tz);
 
-        if ($dv == 'hari ini') {
+        if ($dv == 'hari ini')
+        {
             
-        } elseif ($dv == 'kemarin') {
+        } elseif ($dv == 'kemarin')
+        {
 
             $int = 1;
             $this->start->modify("-{$int} day");
-        } elseif (preg_match('/(.*?)hari\syang\slalu/', $dv, $m)) {
+        } elseif (preg_match('/(.*?)hari\syang\slalu/', $dv, $m))
+        {
 
             $int = trim($m[1]);
             $this->start->modify("-{$int} day");
-        } elseif (preg_match('/(.*?)(jan|feb|mar|apr|mei|jun|jul|aug|sep|okt|nov|des)/', $dv, $mt)) {
+        } elseif (preg_match('/(.*?)(jan|feb|mar|apr|mei|jun|jul|aug|sep|okt|nov|des)/', $dv, $mt))
+        {
 
             $dt = trim($mt[1]);
             $mo = trim($mt[2]);

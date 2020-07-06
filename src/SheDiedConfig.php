@@ -35,10 +35,10 @@ class SheDieDConfig {
                 self::$sources = Empat::sources();
             elseif (self::SITE_DOMAIN == Lima::JOGJA_TRADE)
                 self::$sources = Lima::sources();
-            elseif (self::SITE_DOMAIN == Enam::NGEMIE_COM )
+            elseif (self::SITE_DOMAIN == Enam::NGEMIE_COM)
                 self::$sources = Enam::sources();
             elseif (self::SITE_DOMAIN == Tujuh::FURNITUREIDEAS_US)
-                self::$sources = Tujuh::sources ();
+                self::$sources = Tujuh::sources();
         }
     }
 
@@ -57,7 +57,7 @@ class SheDieDConfig {
             return FALSE;
         }
     }
-    
+
     /**
      * Source Category And Post Category
      * @param array $indexes sources [1, 2, 3]

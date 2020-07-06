@@ -8,16 +8,19 @@ use SheDied\PojokJogjaController;
 /**
  * awesomedecors.us
  */
-class Dua extends Numbers {
+class Dua extends Numbers
+{
 
     const AWESOMEDECORS_US = 'awesomedecors.us';
 
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->set_Need_Gallery(true);
     }
 
-    public function fetchPostLinks(PojokJogjaController $controller) {
+    public function fetchPostLinks(PojokJogjaController $controller)
+    {
 
         $doc = $this->fetchLinks($controller->getUrl());
 
@@ -25,30 +28,36 @@ class Dua extends Numbers {
 
         $postlinks = [];
 
-        if ($this->source_HOMEDESIGNING($controller)) {
+        if ($this->source_HOMEDESIGNING($controller))
+        {
 
-            foreach (pq('div.heading a') as $a) {
+            foreach (pq('div.heading a') as $a)
+            {
 
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-                if ($this->enough($postlinks, $controller)) {
+                if ($this->enough($postlinks, $controller))
+                {
 
                     break;
                 }
             }
         }
 
-        if ($this->source_ONEKINDESIGN($controller)) {
+        if ($this->source_ONEKINDESIGN($controller))
+        {
 
-            foreach (pq('article.single-post > h2 a') as $a) {
+            foreach (pq('article.single-post > h2 a') as $a)
+            {
 
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-                if ($this->enough($postlinks, $controller)) {
+                if ($this->enough($postlinks, $controller))
+                {
 
                     break;
                 }
@@ -58,7 +67,8 @@ class Dua extends Numbers {
         $controller->setPostLinks($postlinks);
     }
 
-    public function switchParsers(PojokJogjaController $controller) {
+    public function switchParsers(PojokJogjaController $controller)
+    {
 
         if ($this->source_HOMEDESIGNING($controller))
             $this->parser = 'SheDied\parser\HomeDesigningParser';
@@ -66,7 +76,8 @@ class Dua extends Numbers {
             $this->parser = 'SheDied\parser\OneKinDesignParser';
     }
 
-    static public function sources() {
+    static public function sources()
+    {
 
         $sources = self::sources_homedesign();
         $sources += self::sources_onekindesign();
@@ -74,7 +85,8 @@ class Dua extends Numbers {
         return $sources;
     }
 
-    public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
+    public function firstRunURL($url, $sourceId, PojokJogjaController $controller)
+    {
 
         if (empty($this->fr) && !$this->isfr)
             return $url;
@@ -88,25 +100,30 @@ class Dua extends Numbers {
         return $url . $Page;
     }
 
-    protected function source_HOMEDESIGNING(PojokJogjaController $controller) {
+    protected function source_HOMEDESIGNING(PojokJogjaController $controller)
+    {
 
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22;
     }
 
-    protected function source_ONEKINDESIGN(PojokJogjaController $controller) {
+    protected function source_ONEKINDESIGN(PojokJogjaController $controller)
+    {
 
         return $controller->getNewsSrc() > 21 && $controller->getNewsSrc() < 58;
     }
 
-    public function fetchCustomUrls(PojokJogjaController $controller) {
+    public function fetchCustomUrls(PojokJogjaController $controller)
+    {
         ;
     }
 
-    public function scanURL(PojokJogjaController $controller, $params = array()) {
+    public function scanURL(PojokJogjaController $controller, $params = array())
+    {
         ;
     }
 
-    protected static function sources_homedesign() {
+    protected static function sources_homedesign()
+    {
 
         $sources[2] = ['name' => 'Home Designing: Living Room Designs', 'url' => 'http://www.home-designing.com/category/living-room-design/'];
         $sources[3] = ['name' => 'Home Designing: Bedroom Designs', 'url' => 'http://www.home-designing.com/category/bedroom-designs/'];
@@ -129,7 +146,8 @@ class Dua extends Numbers {
         return $sources;
     }
 
-    static protected function sources_onekindesign() {
+    static protected function sources_onekindesign()
+    {
 
         $sources[22] = ['name' => 'One Kin Design: Barn Homes', 'url' => 'https://onekindesign.com/tag/barn-house/'];
         $sources[23] = ['name' => 'One Kin Design: Beach House', 'url' => 'https://onekindesign.com/tag/beach-house/'];
@@ -176,7 +194,8 @@ class Dua extends Numbers {
         return $sources;
     }
 
-    public function getIdentity() {
+    public function getIdentity()
+    {
 
         return static::AWESOMEDECORS_US;
     }

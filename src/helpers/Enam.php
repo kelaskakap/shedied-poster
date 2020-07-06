@@ -6,26 +6,31 @@ use SheDied\helpers\Numbers;
 use SheDied\PojokJogjaController;
 use SheDied\parser\GofoodParser;
 
-class Enam extends Numbers {
+class Enam extends Numbers
+{
 
     const NGEMIE_COM = 'ngemie.com';
 
     protected $gofood_param = [];
 
-    public function fetchCustomUrls(PojokJogjaController $controller) {
+    public function fetchCustomUrls(PojokJogjaController $controller)
+    {
         ;
     }
 
-    public function scanURL(PojokJogjaController $controller, $params = array()) {
+    public function scanURL(PojokJogjaController $controller, $params = array())
+    {
 
         $this->query_param = $params;
 
-        if ($this->source_Gofood($controller)) {
+        if ($this->source_Gofood($controller))
+        {
             $this->Gofood_ParamQuery($controller);
         }
     }
 
-    protected function Gofood_ParamQuery(PojokJogjaController $controller) {
+    protected function Gofood_ParamQuery(PojokJogjaController $controller)
+    {
 
         if (isset($this->query_param[$controller->getNewsSrc()]))
             $this->gofood_param = $this->query_param[$controller->getNewsSrc()];
@@ -44,18 +49,21 @@ class Enam extends Numbers {
         $controller->setUrl($url);
     }
 
-    public function switchParsers(PojokJogjaController $controller) {
+    public function switchParsers(PojokJogjaController $controller)
+    {
 
         if ($this->source_Gofood($controller))
             $this->parser = 'SheDied\parser\GofoodParser';
     }
 
-    public function fetchPostLinks(PojokJogjaController $controller) {
+    public function fetchPostLinks(PojokJogjaController $controller)
+    {
 
         $doc = $this->fetchLinks($controller->getUrl());
         $postlinks = $controller->getPostLinks();
 
-        if ($this->source_Gofood($controller)) {
+        if ($this->source_Gofood($controller))
+        {
 
             $doc = json_decode($doc);
 
@@ -63,13 +71,15 @@ class Enam extends Numbers {
         }
     }
 
-    static public function sources() {
+    static public function sources()
+    {
 
         $sources = self::sources_gofood();
         return $sources;
     }
 
-    static protected function sources_gofood() {
+    static protected function sources_gofood()
+    {
 
         $sources[1] = ['name' => 'Gofood > Yogyakarta', 'url' => 'https://gofood.co.id/gofood/web/v1/restaurants?location=-7.797068,110.370529'];
         $sources[2] = ['name' => 'Gofood > Surabaya', 'url' => 'https://gofood.co.id/gofood/web/v1/restaurants?location=-7.250445,112.768845'];
@@ -87,21 +97,26 @@ class Enam extends Numbers {
         return $sources;
     }
 
-    protected function source_Gofood(PojokJogjaController $ctrl) {
+    protected function source_Gofood(PojokJogjaController $ctrl)
+    {
 
         return $ctrl->getNewsSrc() >= 1 && $ctrl->getNewsSrc() < 13;
     }
 
-    public function getIdentity() {
+    public function getIdentity()
+    {
 
         return static::NGEMIE_COM;
     }
 
-    protected function parseGoofod_Api_Response($doc, PojokJogjaController $controller, $postlinks) {
+    protected function parseGoofod_Api_Response($doc, PojokJogjaController $controller, $postlinks)
+    {
 
-        if ((bool) $doc->success) {
+        if ((bool) $doc->success)
+        {
 
-            foreach ($doc->data->cards as $card) {
+            foreach ($doc->data->cards as $card)
+            {
 
                 $postlinks[] = [
                     "title" => GofoodParser::make_Title($card->content->title),
@@ -111,13 +126,15 @@ class Enam extends Numbers {
                     'content' => $card->content
                 ];
 
-                if ($this->enough($postlinks, $controller) && !$controller->auto()) {
+                if ($this->enough($postlinks, $controller) && !$controller->auto())
+                {
 
                     break;
                 }
             }
 
-            if ($doc->next_page) {
+            if ($doc->next_page)
+            {
 
                 //parse next page
                 $b = parse_url($doc->next_page, PHP_URL_QUERY);
@@ -126,7 +143,8 @@ class Enam extends Numbers {
                 $this->gofood_param['page'] = $param['page'];
                 if ($this->gofood_param['search_id'] != $param['search_id'])
                     $this->gofood_param['search_id'] = $param['search_id']; // kalo ga sama mending pake yg baru
-            } else {
+            } else
+            {
                 //next page = null brati sudah habis. restart lagi ke halaman 1
                 $this->gofood_param['page'] = 1;
                 $this->gofood_param['search_id'] = '';

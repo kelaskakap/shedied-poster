@@ -4,9 +4,11 @@ namespace SheDied\parser\gadget\laptop\asus;
 
 use SheDied\parser\gadget\laptop\asus\Asus;
 
-class ZenBook extends Asus {
+class ZenBook extends Asus
+{
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
 
         $doc = $this->curlGrabContent();
         $html = $this->make_DOM($doc);
@@ -26,12 +28,13 @@ class ZenBook extends Asus {
 
         $this->dom_Specs();
 
-        if (!$this->specs) {
+        if (!$this->specs)
+        {
 
             $url = $this->url . "Tech-Specs/";
             $doc = $this->do_CURL($url);
             $html = $this->make_DOM($doc);
-            
+
             $this->dom_Specs();
         }
 
@@ -45,7 +48,8 @@ class ZenBook extends Asus {
         $this->setProductSupport($support);
     }
 
-    public function grab() {
+    public function grab()
+    {
 
         $this->getPostDetail();
         $this->generateSeoMetaDescription();

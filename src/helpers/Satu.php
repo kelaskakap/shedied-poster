@@ -8,11 +8,13 @@ use SheDied\PojokJogjaController;
 /**
  * Lokerkreasi.com
  */
-class Satu extends Numbers {
+class Satu extends Numbers
+{
 
     const LOKERKREASI_COM = 'lokerkreasi.com';
 
-    public function fetchPostLinks(PojokJogjaController $controller) {
+    public function fetchPostLinks(PojokJogjaController $controller)
+    {
 
         $doc = $this->fetchLinks($controller->getUrl());
 
@@ -20,16 +22,19 @@ class Satu extends Numbers {
 
         $postlinks = [];
 
-        if ($controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 100) {
+        if ($controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 100)
+        {
 
             #Jobstreet
-            foreach (pq('div.position-title.header-text a') as $a) {
+            foreach (pq('div.position-title.header-text a') as $a)
+            {
 
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => $this->title(trim($title)), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-                if ($this->enough($postlinks, $controller)) {
+                if ($this->enough($postlinks, $controller))
+                {
 
                     break;
                 }
@@ -39,9 +44,11 @@ class Satu extends Numbers {
         $controller->setPostLinks($postlinks);
     }
 
-    public function switchParsers(PojokJogjaController $controller) {
+    public function switchParsers(PojokJogjaController $controller)
+    {
 
-        switch ($controller->getNewsSrc()) {
+        switch ($controller->getNewsSrc())
+        {
             case $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 100:
                 $this->parser = 'SheDied\parser\JobstreetParser';
             default :
@@ -49,7 +56,8 @@ class Satu extends Numbers {
         }
     }
 
-    static public function sources() {
+    static public function sources()
+    {
 
         $sources[11] = ['name' => 'Jobstreet: Aceh', 'url' => 'https://www.jobstreet.co.id/id/job-search/job-vacancy.php?key=&location=30100&specialization=&area=&salary=&ojs=3&src=12'];
         $sources[12] = ['name' => 'Jobstreet: Bali', 'url' => 'https://www.jobstreet.co.id/id/job-search/job-vacancy.php?key=&location=30200&specialization=&area=&salary=&ojs=3&src=12'];
@@ -89,19 +97,25 @@ class Satu extends Numbers {
         return $sources;
     }
 
-    protected function title($string) {
+    protected function title($string)
+    {
 
         return 'Lowongan Kerja ' . $string;
     }
 
-    public function fetchCustomUrls(PojokJogjaController $controller) {
+    public function fetchCustomUrls(PojokJogjaController $controller)
+    {
         ;
     }
 
-    public function scanURL(PojokJogjaController $controller, $params = array()) {
+    public function scanURL(PojokJogjaController $controller, $params = array())
+    {
         ;
     }
-    public function getIdentity() {
+
+    public function getIdentity()
+    {
         return static::LOKERKREASI_COM;
     }
+
 }

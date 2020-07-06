@@ -4,7 +4,8 @@ namespace SheDied\parser;
 
 use SheDied\parser\AbstractParser;
 
-class JobstreetParser extends AbstractParser {
+class JobstreetParser extends AbstractParser
+{
 
     protected $posisi_job;
     protected $perusahaan;
@@ -30,13 +31,16 @@ class JobstreetParser extends AbstractParser {
     const FI_ID_1 = 99;
     const FI_ID_2 = 100;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->feature_image_id = time() % 2 == 0 ? self::FI_ID_1 : self::FI_ID_2;
     }
 
-    protected function getPostDetail() {
+    protected function getPostDetail()
+    {
         $doc = $this->curlGrabContent();
-        if (function_exists('mb_convert_encoding')) {
+        if (function_exists('mb_convert_encoding'))
+        {
             $doc = mb_convert_encoding($doc, "HTML-ENTITIES", "UTF-8");
         }
         $html = \phpQuery::newDocument($doc);
@@ -50,10 +54,13 @@ class JobstreetParser extends AbstractParser {
         $lokasi = $this->node->find('p.single_work_location')->text();
         $experience = $this->node->find('span[itemprop="experienceRequirements"]')->text();
         $lokasi_kerja = $this->node->find('p.add-detail-p')->text();
-        if (!trim($lokasi_kerja)) {
-            if ($lokasi) {
+        if (!trim($lokasi_kerja))
+        {
+            if ($lokasi)
+            {
                 $lokasi_kerja = trim($lokasi);
-            } else {
+            } else
+            {
                 $lokasi_kerja = '-';
             }
         }
@@ -67,19 +74,25 @@ class JobstreetParser extends AbstractParser {
         $fanpage = $this->node->find('a[id="company_facebook"]')->attr('href');
         $telepon = trim($this->node->find('p[itemprop="telephone"]')->text());
         $telepon_2 = trim($this->node->find('p[id="company_contact"]')->text());
-        if ($telepon_2) {
-            if ($telepon) {
+        if ($telepon_2)
+        {
+            if ($telepon)
+            {
                 $telepon = $telepon . ', ' . $telepon_2;
-            } else {
+            } else
+            {
                 $telepon = $telepon_2;
             }
         }
         $ukuran_perusahaan = $this->node->find('p[itemprop="numberOfEmployees"]')->text();
         $ukuran_perusahaan_2 = $this->node->find('p[id="company_size"]')->text();
-        if ($ukuran_perusahaan_2) {
-            if ($ukuran_perusahaan) {
+        if ($ukuran_perusahaan_2)
+        {
+            if ($ukuran_perusahaan)
+            {
                 $ukuran_perusahaan = $ukuran_perusahaan . ', ' . $ukuran_perusahaan_2;
-            } else {
+            } else
+            {
                 $ukuran_perusahaan = $ukuran_perusahaan_2;
             }
         }
@@ -118,7 +131,8 @@ class JobstreetParser extends AbstractParser {
         $this->mengapa_bergabung = $why_join->html();
     }
 
-    public function grab() {
+    public function grab()
+    {
         $this->getPostDetail();
         $this->_setContent();
         $this->aggregateContent();
@@ -132,7 +146,8 @@ class JobstreetParser extends AbstractParser {
         $this->_setTags();
     }
 
-    protected function _setContent() {
+    protected function _setContent()
+    {
         $content = '';
         $content .= '<h2>Informasi Perusahaan</h2>';
         $content .= (!empty($this->informasi_perusahaan)) ? $this->informasi_perusahaan : '<p>tidak ada deskripsi</p>';
@@ -161,27 +176,33 @@ class JobstreetParser extends AbstractParser {
         $this->content = $content;
     }
 
-    public function getNamaPerusahaan() {
+    public function getNamaPerusahaan()
+    {
         return $this->perusahaan;
     }
 
-    protected function generateSeoMetaDescription() {
+    protected function generateSeoMetaDescription()
+    {
         $meta_description = 'Lowongan kerja Perusahaan ' . $this->perusahaan . ', Posisi ' . $this->posisi_job . ', Lokasi ' . $this->lokasi_kerja;
         $this->meta_description = $meta_description;
     }
 
-    protected function generateSeoMetaKeywords() {
+    protected function generateSeoMetaKeywords()
+    {
         $meta_keywords = $this->perusahaan . ',' . $this->posisi_job . ',' . $this->lokasi_kerja;
         $this->meta_keywords = $meta_keywords;
     }
 
-    protected function generateSeoMetaTitle() {
+    protected function generateSeoMetaTitle()
+    {
         $title = 'Lowongan kerja ' . $this->title;
         $this->meta_title = $title;
     }
 
-    protected function _getFeaturedImage() {
-        if (!$this->no_image) {
+    protected function _getFeaturedImage()
+    {
+        if (!$this->no_image)
+        {
             $this->featured_image = $this->node->find('img[id="company_banner"]')->attr('data-original');
         }
     }
@@ -189,15 +210,18 @@ class JobstreetParser extends AbstractParser {
     /**
      * set tags untuk loker berdasar kategori source
      */
-    protected function _setTags() {
+    protected function _setTags()
+    {
         $this->tags = [(int) $this->source_category];
     }
 
-    public function getDefaultAttachID() {
+    public function getDefaultAttachID()
+    {
         return $this->feature_image_id;
     }
 
-    public function getExpDate() {
+    public function getExpDate()
+    {
         return $this->expdate;
     }
 

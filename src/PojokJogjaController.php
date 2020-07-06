@@ -246,7 +246,7 @@ class PojokJogjaController extends Controller {
 
                             WPWrapper::homedesigning_upload_gallery($parser, $new_draft_id);
                             WPWrapper::homedesigning_update_post_with_gallery($parser, $new_draft_id);
-                            WPWrapper::homedesigning_meta($new_draft_id, true, $parser->getHost(), $parser->getUrl());
+                            WPWrapper::homedesigning_meta($new_draft_id, false, $parser->getHost(), $parser->getUrl());
                         } elseif (SheDieDConfig::SITE_DOMAIN == Empat::TECHNOREVIEW_US) {
 
                             if ($this->bulk_post_type == 'review') {
@@ -371,8 +371,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tsBswsse64eYQFa',
-                'link' => 'https://design-milk.com/adell-an-indoor-outdoor-lounge-chair-for-commercial-or-residential-spaces/'
+                'title' => 'tsBswg64dfewQFa',
+                'link' => 'http://www.inspiredbythis.com/wellness/healthy-additions-to-your-morning-cup-of-coffee/'
             ];
         }
 
