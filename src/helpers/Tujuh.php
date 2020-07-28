@@ -8,48 +8,64 @@ use SheDied\PojokJogjaController;
 /**
  * furnitureideas.us
  */
-class Tujuh extends Numbers {
+class Tujuh extends Numbers
+{
 
     const FURNITUREIDEAS_US = 'furnitureideas.us';
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->set_Need_Gallery(true);
     }
 
-    public function fetchPostLinks(PojokJogjaController $controller) {
-
+    public function fetchPostLinks(PojokJogjaController $controller)
+    {
         $doc = $this->fetchLinks($controller->getUrl());
 
         \phpQuery::newDocument($doc);
 
         $postlinks = [];
 
-        if ($this->source_DESIGNMILK($controller)) {
-
-            foreach (pq('div.article-content h3 a') as $a) {
-
+        if ($this->source_DESIGNMILK($controller))
+        {
+            foreach (pq('div.article-content h3 a') as $a)
+            {
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-                if ($this->enough($postlinks, $controller)) {
-
+                if ($this->enough($postlinks, $controller))
+                {
                     break;
                 }
             }
         }
 
-        if ($this->source_INSPIREDBYTHIS($controller)) {
-
-            foreach (pq('div.imglist div.imgtxtbox a') as $a) {
-
+        if ($this->source_INSPIREDBYTHIS($controller))
+        {
+            foreach (pq('div.imglist div.imgtxtbox a') as $a)
+            {
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
-                if ($this->enough($postlinks, $controller)) {
+                if ($this->enough($postlinks, $controller))
+                {
+                    break;
+                }
+            }
+        }
 
+        if ($this->source_CONTEMPORIST($controller))
+        {
+            foreach (pq('article > h2.title a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller))
+                {
                     break;
                 }
             }
@@ -58,24 +74,27 @@ class Tujuh extends Numbers {
         $controller->setPostLinks($postlinks);
     }
 
-    public function switchParsers(PojokJogjaController $controller) {
-
+    public function switchParsers(PojokJogjaController $controller)
+    {
         if ($this->source_DESIGNMILK($controller))
             $this->parser = 'SheDied\parser\DesignMilkParser';
         elseif ($this->source_INSPIREDBYTHIS($controller))
             $this->parser = 'SheDied\parser\InspiredByThisParser';
+        elseif ($this->source_CONTEMPORIST($controller))
+            $this->parser = 'SheDied\parser\ContemporistParser';
     }
 
-    static public function sources() {
-
+    static public function sources()
+    {
         $sources = self::sources_designmilk();
         $sources += self::sources_inspiredbythis();
+        $sources += self::sources_contemporist();
 
         return $sources;
     }
 
-    public function firstRunURL($url, $sourceId, PojokJogjaController $controller) {
-
+    public function firstRunURL($url, $sourceId, PojokJogjaController $controller)
+    {
         if (empty($this->fr) && !$this->isfr)
             return $url;
 
@@ -88,26 +107,33 @@ class Tujuh extends Numbers {
         return $url . $Page;
     }
 
-    protected function source_DESIGNMILK(PojokJogjaController $controller) {
-
+    protected function source_DESIGNMILK(PojokJogjaController $controller)
+    {
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 13;
     }
 
-    protected function source_INSPIREDBYTHIS(PojokJogjaController $controller) {
-
+    protected function source_INSPIREDBYTHIS(PojokJogjaController $controller)
+    {
         return $controller->getNewsSrc() > 12 && $controller->getNewsSrc() < 32;
     }
 
-    public function fetchCustomUrls(PojokJogjaController $controller) {
+    protected function source_CONTEMPORIST(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 32 && $controller->getNewsSrc() < 37;
+    }
+
+    public function fetchCustomUrls(PojokJogjaController $controller)
+    {
         ;
     }
 
-    public function scanURL(PojokJogjaController $controller, $params = array()) {
+    public function scanURL(PojokJogjaController $controller, $params = array())
+    {
         ;
     }
 
-    protected static function sources_designmilk() {
-
+    protected static function sources_designmilk()
+    {
         $sources[2] = ['name' => 'Design Milk: Architecture', 'url' => 'https://design-milk.com/category/architecture/'];
         $sources[3] = ['name' => 'Design Milk: Home Furnishing', 'url' => 'https://design-milk.com/category/home-furnishings/'];
         $sources[6] = ['name' => 'Design Milk: Interior Designs', 'url' => 'https://design-milk.com/category/interior-design/'];
@@ -121,7 +147,8 @@ class Tujuh extends Numbers {
         return $sources;
     }
 
-    static protected function sources_inspiredbythis() {
+    static protected function sources_inspiredbythis()
+    {
         $sources[13] = ['name' => 'Inspired By This: Wedding Plan', 'url' => 'http://www.inspiredbythis.com/category/wed/planning/'];
         $sources[14] = ['name' => 'Inspired By This: Wedding Celebrate', 'url' => 'http://www.inspiredbythis.com/category/wed/wedding-celebrations/'];
         $sources[15] = ['name' => 'Inspired By This: Wedding Engagements', 'url' => 'http://www.inspiredbythis.com/category/wed/engagements/'];
@@ -145,8 +172,19 @@ class Tujuh extends Numbers {
         return $sources;
     }
 
-    public function getIdentity() {
+    static protected function sources_contemporist()
+    {
+        $sources[32] = ['name' => 'Contemporist : Architecture', 'url' => 'https://www.contemporist.com/category/architecture/'];
+        $sources[33] = ['name' => 'Contemporist : Interiors', 'url' => 'https://www.contemporist.com/category/interiors/'];
+        $sources[34] = ['name' => 'Contemporist : Design', 'url' => 'https://www.contemporist.com/category/design/'];
+        $sources[35] = ['name' => 'Contemporist : Art', 'url' => 'https://www.contemporist.com/category/art/'];
+        $sources[36] = ['name' => 'Contemporist : Travel', 'url' => 'https://www.contemporist.com/category/travel/'];
 
+        return $sources;
+    }
+
+    public function getIdentity()
+    {
         return static::FURNITUREIDEAS_US;
     }
 

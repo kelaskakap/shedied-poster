@@ -3,86 +3,92 @@
 use SheDied\SheDieDConfig;
 use SheDied\helpers\Tujuh;
 
-function bot_furnitureideas_1() {
+function bot_furnitureideas_sweeper()
+{
+    $count = 0;
+    $max = 1;
+    $start = 2;
+    $end = 36;
+    $current = (int) get_transient('furnitureideas_next_sweep');
+    $mapping = furnitureideas_mapping();
 
-    //Architecture, Home Furnishing
-    $sources = SheDieDConfig::pick_Sources([2, 3], [2106, 2]);
+    if ($current < $start AND $current > $end)
+        $current = $start;
 
-    $fr = first_Run('milkdesign_1');
-    $helper = new Tujuh();
-    $helper->yesFirstRun($fr);
+    foreach ($mapping as $source => $category)
+    {
+        if ($current != $source)
+        {
+            next($mapping);
+            continue;
+        }
 
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_furnitureideas_1', false);
+        $count++;
+        $transient = "tsnt_furnitureideas_{$source}";
 
-    update_first_Run('milkdesign_1', $helper->arrFirstRun());
-}
+        shedied_exec_bot(new Tujuh(), [], 1, $transient, true);
 
-add_action('bot_furnitureideas_1', 'bot_furnitureideas_1');
+        next($mapping);
+        set_transient('furnitureideas_next_sweep', key($mapping));
 
-function bot_furnitureideas_2() {
-
-    //Interior Designs, Art
-    $sources = SheDieDConfig::pick_Sources([6, 7], [2, 2107]);
-
-    $fr = first_Run('milkdesign_5');
-    $helper = new Tujuh();
-    $helper->yesFirstRun($fr);
-
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_furnitureideas_5', false);
-
-    update_first_Run('milkdesign_5', $helper->arrFirstRun());
-}
-
-add_action('bot_furnitureideas_2', 'bot_furnitureideas_2');
-
-function bot_furnitureideas_3() {
-
-    //Lifestyle, Pets
-    $sources = SheDieDConfig::pick_Sources([9, 10], [1, 1]);
-
-    $fr = first_Run('milkdesign_9');
-    $helper = new Tujuh();
-    $helper->yesFirstRun($fr);
-
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_furnitureideas_9', false);
-
-    update_first_Run('milkdesign_9', $helper->arrFirstRun());
-}
-
-add_action('bot_furnitureideas_3', 'bot_furnitureideas_3');
-
-function bot_furnitureideas_4() {
-
-    //At the Office, Destination Design
-    $sources = SheDieDConfig::pick_Sources([11, 12], [2108, 1]);
-
-    $fr = first_Run('milkdesign_13');
-    $helper = new Tujuh();
-    $helper->yesFirstRun($fr);
-
-    shedied_exec_bot($helper, $sources, 20, 'tsnt_furnitureideas_13', false);
-
-    update_first_Run('milkdesign_13', $helper->arrFirstRun());
-}
-
-add_action('bot_furnitureideas_4', 'bot_furnitureideas_4');
-
-function bot_furnitureideas_sweeper() {
-
-    //milkdesign
-    $now = (int) date('H');
-
-    if ($now < 13) {
-
-        //siang
-        shedied_exec_bot(new Tujuh(), [], 1, 'tsnt_furnitureideas_1', true);
-        shedied_exec_bot(new Tujuh(), [], 1, 'tsnt_furnitureideas_5', true);
-    } else {
-        //malam
-        shedied_exec_bot(new Tujuh(), [], 1, 'tsnt_furnitureideas_9', true);
-        shedied_exec_bot(new Tujuh(), [], 1, 'tsnt_furnitureideas_13', true);
+        if ($count >= $max)
+            break;
     }
 }
 
 add_action('bot_furnitureideas_sweeper', 'bot_furnitureideas_sweeper');
 
+/**
+ * [
+ *    [$source => category]
+ * ]
+ * @return array
+ */
+function furnitureideas_mapping()
+{
+    return [
+        2 => 2,
+        3 => 1
+    ];
+}
+
+function bot_furnitureideas_run()
+{
+    $count = 0;
+    $max = 1;
+    $start = 2;
+    $end = 36;
+    $current = (int) get_transient('furnitureideas_next_run');
+    $mapping = furnitureideas_mapping();
+
+    if ($current < $start AND $current > $end)
+        $current = $start;
+
+    foreach ($mapping as $source => $category)
+    {
+        if ($current != $source)
+        {
+            next($mapping);
+            continue;
+        }
+
+        $count++;
+        $transient = "tsnt_furnitureideas_{$source}";
+        $frArrayName = "source_{$source}";
+        $sources = SheDieDConfig::pick_Sources([$source], [$category]);
+
+        $fr = first_Run($frArrayName);
+        $helper = new Tujuh();
+        $helper->yesFirstRun($fr);
+
+        shedied_exec_bot($helper, $sources, 20, $transient, false);
+
+        next($mapping);
+        set_transient('furnitureideas_next_run', key($mapping));
+
+        if ($count >= $max)
+            break;
+    }
+}
+
+add_action('bot_furnitureideas_run', 'bot_furnitureideas_run');

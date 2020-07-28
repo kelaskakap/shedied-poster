@@ -371,8 +371,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tsBswg64dfewQFa',
-                'link' => 'http://www.inspiredbythis.com/wellness/healthy-additions-to-your-morning-cup-of-coffee/'
+                'title' => 'tsBswgsrs6bh14hujsa',
+                'link' => 'https://www.contemporist.com/two-murphy-beds-hidden-in-the-walls-of-this-small-apartment/'
             ];
         }
 
