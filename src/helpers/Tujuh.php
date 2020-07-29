@@ -98,7 +98,12 @@ class Tujuh extends Numbers
         if (empty($this->fr) && !$this->isfr)
             return $url;
 
-        $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : 100;
+        if ($this->source_CONTEMPORIST($controller))
+            $default = 2000;
+        else
+            $default = 100;
+
+        $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : $default;
         $Page = $t > 1 ? 'page/' . $t : '';
 
         $t--;
