@@ -31,7 +31,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
             }
 
             $post_links = $controller->getPostLinks();
-            set_transient($transient_name, $post_links, DAY_IN_SECONDS);
+            set_transient($transient_name, $post_links);
 
             syslog(LOG_DEBUG, '[shedied bot] - update transient ' . $transient_name . ' count(' . count($post_links) . ')');
         }
@@ -53,7 +53,7 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
                         ->botPosts($helper);
             }
 
-            set_transient($transient_name, $to_save, DAY_IN_SECONDS);
+            set_transient($transient_name, $to_save);
         }
     } catch (\Exception $e) {
 

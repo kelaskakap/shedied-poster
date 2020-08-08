@@ -12,7 +12,7 @@ function bot_furnitureideas_sweeper()
     $current = (int) get_transient('furnitureideas_next_sweep');
     $mapping = furnitureideas_mapping();
 
-    if ($current < $start AND $current > $end)
+    if ($current < $start OR $current > $end)
         $current = $start;
 
     foreach ($mapping as $source => $category)
@@ -112,6 +112,7 @@ function bot_furnitureideas_run()
         $helper->yesFirstRun($fr);
 
         shedied_exec_bot($helper, $sources, 20, $transient, false);
+        update_first_Run($frArrayName, $helper->arrFirstRun());
 
         next($mapping);
         set_transient('furnitureideas_next_run', key($mapping));
