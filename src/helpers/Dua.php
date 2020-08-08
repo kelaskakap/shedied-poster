@@ -15,13 +15,11 @@ class Dua extends Numbers
 
     public function __construct()
     {
-
         $this->set_Need_Gallery(true);
     }
 
     public function fetchPostLinks(PojokJogjaController $controller)
     {
-
         $doc = $this->fetchLinks($controller->getUrl());
 
         \phpQuery::newDocument($doc);
@@ -30,17 +28,14 @@ class Dua extends Numbers
 
         if ($this->source_HOMEDESIGNING($controller))
         {
-
             foreach (pq('div.heading a') as $a)
             {
-
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
                 if ($this->enough($postlinks, $controller))
                 {
-
                     break;
                 }
             }
@@ -48,17 +43,14 @@ class Dua extends Numbers
 
         if ($this->source_ONEKINDESIGN($controller))
         {
-
             foreach (pq('article.single-post > h2 a') as $a)
             {
-
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
                 if ($this->enough($postlinks, $controller))
                 {
-
                     break;
                 }
             }
@@ -69,7 +61,6 @@ class Dua extends Numbers
 
     public function switchParsers(PojokJogjaController $controller)
     {
-
         if ($this->source_HOMEDESIGNING($controller))
             $this->parser = 'SheDied\parser\HomeDesigningParser';
         elseif ($this->source_ONEKINDESIGN($controller))
@@ -78,7 +69,6 @@ class Dua extends Numbers
 
     static public function sources()
     {
-
         $sources = self::sources_homedesign();
         $sources += self::sources_onekindesign();
 
@@ -87,7 +77,6 @@ class Dua extends Numbers
 
     public function firstRunURL($url, $sourceId, PojokJogjaController $controller)
     {
-
         if (empty($this->fr) && !$this->isfr)
             return $url;
 
@@ -102,13 +91,11 @@ class Dua extends Numbers
 
     protected function source_HOMEDESIGNING(PojokJogjaController $controller)
     {
-
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22;
     }
 
     protected function source_ONEKINDESIGN(PojokJogjaController $controller)
     {
-
         return $controller->getNewsSrc() > 21 && $controller->getNewsSrc() < 58;
     }
 
@@ -124,7 +111,6 @@ class Dua extends Numbers
 
     protected static function sources_homedesign()
     {
-
         $sources[2] = ['name' => 'Home Designing: Living Room Designs', 'url' => 'http://www.home-designing.com/category/living-room-design/'];
         $sources[3] = ['name' => 'Home Designing: Bedroom Designs', 'url' => 'http://www.home-designing.com/category/bedroom-designs/'];
         $sources[6] = ['name' => 'Home Designing: Bathroom Designs', 'url' => 'http://www.home-designing.com/category/bathroom-designs/'];
@@ -148,7 +134,6 @@ class Dua extends Numbers
 
     static protected function sources_onekindesign()
     {
-
         $sources[22] = ['name' => 'One Kin Design: Barn Homes', 'url' => 'https://onekindesign.com/tag/barn-house/'];
         $sources[23] = ['name' => 'One Kin Design: Beach House', 'url' => 'https://onekindesign.com/tag/beach-house/'];
         $sources[24] = ['name' => 'One Kin Design: Cabin', 'url' => 'https://onekindesign.com/tag/cabin/'];
@@ -196,7 +181,6 @@ class Dua extends Numbers
 
     public function getIdentity()
     {
-
         return static::AWESOMEDECORS_US;
     }
 
