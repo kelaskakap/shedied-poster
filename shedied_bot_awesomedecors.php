@@ -13,7 +13,8 @@ function bot_awesomedecors_sweeper()
     $mapping = array_reverse(awesomedecors_mapping(), TRUE);
 
     if ($current < $start OR $current > $end)
-        $current = $start;
+        //$current = $start; // mapping gak di-reverse
+        $current = $end; // mapping di-reverse
 
     foreach ($mapping as $source => $category)
     {
@@ -120,7 +121,8 @@ function bot_awesomedecors_run()
     $mapping = array_reverse(awesomedecors_mapping(), TRUE);
 
     if ($current < $start OR $current > $end)
-        $current = $start;
+        //$current = $start; // mapping gak di-reverse
+        $current = $end; // mapping di-reverse
 
     foreach ($mapping as $source => $category)
     {
