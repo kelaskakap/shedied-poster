@@ -149,7 +149,7 @@ class PojokJogjaController extends Controller {
 
                 $helper->fetchPostLinks($this);
             }
-
+            
             $helper->switchParsers($this);
             $this->loopPostLinks($helper);
 
@@ -371,8 +371,8 @@ class PojokJogjaController extends Controller {
         if ($this->hijack) {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tsBswgsrs6bh14hujsa',
-                'link' => 'https://www.contemporist.com/two-murphy-beds-hidden-in-the-walls-of-this-small-apartment/'
+                'title' => 'tsBswJANCcvujsa',
+                'link' => 'https://myblessedlife.net/2015/12/christmas-living-room-2015.html'
             ];
         }
 

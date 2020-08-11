@@ -56,6 +56,21 @@ class Dua extends Numbers
             }
         }
 
+        if ($this->source_MYBLESSEDLIFE($controller))
+        {
+            foreach (pq('article > header > h2 a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller))
+                {
+                    break;
+                }
+            }
+        }
+        
         $controller->setPostLinks($postlinks);
     }
 
@@ -65,12 +80,15 @@ class Dua extends Numbers
             $this->parser = 'SheDied\parser\HomeDesigningParser';
         elseif ($this->source_ONEKINDESIGN($controller))
             $this->parser = 'SheDied\parser\OneKinDesignParser';
+        elseif ($this->source_MYBLESSEDLIFE($controller))
+            $this->parser = 'SheDied\parser\MyBlessedLifeParser';
     }
 
     static public function sources()
     {
         $sources = self::sources_homedesign();
         $sources += self::sources_onekindesign();
+        $sources += self::sources_myblessedlife();
 
         return $sources;
     }
@@ -97,6 +115,11 @@ class Dua extends Numbers
     protected function source_ONEKINDESIGN(PojokJogjaController $controller)
     {
         return $controller->getNewsSrc() > 21 && $controller->getNewsSrc() < 58;
+    }
+
+    protected function source_MYBLESSEDLIFE(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 60 && $controller->getNewsSrc() < 72;
     }
 
     public function fetchCustomUrls(PojokJogjaController $controller)
@@ -175,6 +198,23 @@ class Dua extends Numbers
         $sources[57] = ['name' => 'One Kin Design: Vacation Rental', 'url' => 'https://onekindesign.com/tag/vacation-rental/'];
 
         //$sources[] = ['name' => '', 'url' => ''];
+
+        return $sources;
+    }
+
+    protected static function sources_myblessedlife()
+    {
+        $sources[61] = ['name' => 'My Blessed Life: Holiday Decors', 'url' => 'https://myblessedlife.net/category/holiday-decor'];
+        $sources[62] = ['name' => 'My Blessed Life: Home Decor', 'url' => 'https://myblessedlife.net/category/diy-projects/home-decor'];
+        $sources[63] = ['name' => 'My Blessed Life: Wreaths', 'url' => 'https://myblessedlife.net/category/diy-projects/wreaths'];
+        $sources[64] = ['name' => 'My Blessed Life: Furniture Makeovers', 'url' => 'https://myblessedlife.net/category/diy-projects/furniture-makeovers'];
+        $sources[65] = ['name' => 'My Blessed Life: Wall Art', 'url' => 'https://myblessedlife.net/category/diy-projects/wall-art'];
+        $sources[66] = ['name' => 'My Blessed Life: Party Ideas', 'url' => 'https://myblessedlife.net/category/party-ideas'];
+        $sources[67] = ['name' => 'My Blessed Life: Room Makeovers', 'url' => 'https://myblessedlife.net/category/diy-projects/room-makeovers'];
+        $sources[68] = ['name' => 'My Blessed Life: Budget Decorating', 'url' => 'https://myblessedlife.net/category/life-hacks/budget-decorating'];
+        $sources[69] = ['name' => 'My Blessed Life: Home Hacks', 'url' => 'https://myblessedlife.net/category/life-hacks/home-hacks'];
+        $sources[70] = ['name' => 'My Blessed Life: Kitchen Hacks', 'url' => 'https://myblessedlife.net/category/life-hacks/kitchen-hacks'];
+        $sources[71] = ['name' => 'My Blessed Life: Organizing', 'url' => 'https://myblessedlife.net/category/life-hacks/organizing'];
 
         return $sources;
     }

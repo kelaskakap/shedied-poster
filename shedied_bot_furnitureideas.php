@@ -10,7 +10,7 @@ function bot_furnitureideas_sweeper()
     $start = 2;
     $end = 36;
     $current = (int) get_transient('furnitureideas_next_sweep');
-    $mapping = furnitureideas_mapping();
+    $mapping = array_reverse(furnitureideas_mapping(), TRUE);
 
     if ($current < $start OR $current > $end)
         $current = $start;
@@ -89,9 +89,9 @@ function bot_furnitureideas_run()
     $start = 2;
     $end = 36;
     $current = (int) get_transient('furnitureideas_next_run');
-    $mapping = furnitureideas_mapping();
+    $mapping = array_reverse(furnitureideas_mapping(), TRUE);
 
-    if ($current < $start AND $current > $end)
+    if ($current < $start OR $current > $end)
         $current = $start;
 
     foreach ($mapping as $source => $category)

@@ -99,7 +99,7 @@ class Tujuh extends Numbers
             return $url;
 
         if ($this->source_CONTEMPORIST($controller))
-            $default = 2000;
+            $default = 500;
         else
             $default = 100;
 
