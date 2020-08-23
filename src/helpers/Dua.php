@@ -15,13 +15,11 @@ class Dua extends Numbers
 
     public function __construct()
     {
-
         $this->set_Need_Gallery(true);
     }
 
     public function fetchPostLinks(PojokJogjaController $controller)
     {
-
         $doc = $this->fetchLinks($controller->getUrl());
 
         \phpQuery::newDocument($doc);
@@ -30,17 +28,14 @@ class Dua extends Numbers
 
         if ($this->source_HOMEDESIGNING($controller))
         {
-
             foreach (pq('div.heading a') as $a)
             {
-
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
                 if ($this->enough($postlinks, $controller))
                 {
-
                     break;
                 }
             }
@@ -48,46 +43,58 @@ class Dua extends Numbers
 
         if ($this->source_ONEKINDESIGN($controller))
         {
-
             foreach (pq('article.single-post > h2 a') as $a)
             {
-
                 $link = pq($a)->attr('href');
                 $title = pq($a)->elements[0]->nodeValue;
                 $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
 
                 if ($this->enough($postlinks, $controller))
                 {
-
                     break;
                 }
             }
         }
 
+        if ($this->source_MYBLESSEDLIFE($controller))
+        {
+            foreach (pq('article > header > h2 a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller))
+                {
+                    break;
+                }
+            }
+        }
+        
         $controller->setPostLinks($postlinks);
     }
 
     public function switchParsers(PojokJogjaController $controller)
     {
-
         if ($this->source_HOMEDESIGNING($controller))
             $this->parser = 'SheDied\parser\HomeDesigningParser';
         elseif ($this->source_ONEKINDESIGN($controller))
             $this->parser = 'SheDied\parser\OneKinDesignParser';
+        elseif ($this->source_MYBLESSEDLIFE($controller))
+            $this->parser = 'SheDied\parser\MyBlessedLifeParser';
     }
 
     static public function sources()
     {
-
         $sources = self::sources_homedesign();
         $sources += self::sources_onekindesign();
+        $sources += self::sources_myblessedlife();
 
         return $sources;
     }
 
     public function firstRunURL($url, $sourceId, PojokJogjaController $controller)
     {
-
         if (empty($this->fr) && !$this->isfr)
             return $url;
 
@@ -102,14 +109,17 @@ class Dua extends Numbers
 
     protected function source_HOMEDESIGNING(PojokJogjaController $controller)
     {
-
         return $controller->getNewsSrc() > 1 && $controller->getNewsSrc() < 22;
     }
 
     protected function source_ONEKINDESIGN(PojokJogjaController $controller)
     {
-
         return $controller->getNewsSrc() > 21 && $controller->getNewsSrc() < 58;
+    }
+
+    protected function source_MYBLESSEDLIFE(PojokJogjaController $controller)
+    {
+        return $controller->getNewsSrc() > 60 && $controller->getNewsSrc() < 72;
     }
 
     public function fetchCustomUrls(PojokJogjaController $controller)
@@ -124,7 +134,6 @@ class Dua extends Numbers
 
     protected static function sources_homedesign()
     {
-
         $sources[2] = ['name' => 'Home Designing: Living Room Designs', 'url' => 'http://www.home-designing.com/category/living-room-design/'];
         $sources[3] = ['name' => 'Home Designing: Bedroom Designs', 'url' => 'http://www.home-designing.com/category/bedroom-designs/'];
         $sources[6] = ['name' => 'Home Designing: Bathroom Designs', 'url' => 'http://www.home-designing.com/category/bathroom-designs/'];
@@ -148,7 +157,6 @@ class Dua extends Numbers
 
     static protected function sources_onekindesign()
     {
-
         $sources[22] = ['name' => 'One Kin Design: Barn Homes', 'url' => 'https://onekindesign.com/tag/barn-house/'];
         $sources[23] = ['name' => 'One Kin Design: Beach House', 'url' => 'https://onekindesign.com/tag/beach-house/'];
         $sources[24] = ['name' => 'One Kin Design: Cabin', 'url' => 'https://onekindesign.com/tag/cabin/'];
@@ -194,9 +202,25 @@ class Dua extends Numbers
         return $sources;
     }
 
+    protected static function sources_myblessedlife()
+    {
+        $sources[61] = ['name' => 'My Blessed Life: Holiday Decors', 'url' => 'https://myblessedlife.net/category/holiday-decor'];
+        $sources[62] = ['name' => 'My Blessed Life: Home Decor', 'url' => 'https://myblessedlife.net/category/diy-projects/home-decor'];
+        $sources[63] = ['name' => 'My Blessed Life: Wreaths', 'url' => 'https://myblessedlife.net/category/diy-projects/wreaths'];
+        $sources[64] = ['name' => 'My Blessed Life: Furniture Makeovers', 'url' => 'https://myblessedlife.net/category/diy-projects/furniture-makeovers'];
+        $sources[65] = ['name' => 'My Blessed Life: Wall Art', 'url' => 'https://myblessedlife.net/category/diy-projects/wall-art'];
+        $sources[66] = ['name' => 'My Blessed Life: Party Ideas', 'url' => 'https://myblessedlife.net/category/party-ideas'];
+        $sources[67] = ['name' => 'My Blessed Life: Room Makeovers', 'url' => 'https://myblessedlife.net/category/diy-projects/room-makeovers'];
+        $sources[68] = ['name' => 'My Blessed Life: Budget Decorating', 'url' => 'https://myblessedlife.net/category/life-hacks/budget-decorating'];
+        $sources[69] = ['name' => 'My Blessed Life: Home Hacks', 'url' => 'https://myblessedlife.net/category/life-hacks/home-hacks'];
+        $sources[70] = ['name' => 'My Blessed Life: Kitchen Hacks', 'url' => 'https://myblessedlife.net/category/life-hacks/kitchen-hacks'];
+        $sources[71] = ['name' => 'My Blessed Life: Organizing', 'url' => 'https://myblessedlife.net/category/life-hacks/organizing'];
+
+        return $sources;
+    }
+
     public function getIdentity()
     {
-
         return static::AWESOMEDECORS_US;
     }
 

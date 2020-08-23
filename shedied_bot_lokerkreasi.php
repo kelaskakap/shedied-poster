@@ -5,18 +5,18 @@ use SheDied\PojokJogjaController;
 use SheDied\helpers\Numbers;
 use SheDied\WPWrapper;
 
-function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient_name = '', $sweeper = false) {
-
-    try {
-
+function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient_name = '', $sweeper = false, $status = 'publish')
+{
+    try
+    {
         $post_links = get_transient($transient_name);
         $controller = new PojokJogjaController();
         $controller->isAuto(true);
 
-        if (empty($post_links) && !$sweeper && !empty($sources)) {
-
-            foreach ($sources as $sourceId => $source) {
-
+        if (empty($post_links) && !$sweeper && !empty($sources))
+        {
+            foreach ($sources as $sourceId => $source)
+            {
                 $controller->setNewsSrc($sourceId);
                 $controller->setCategory($source['cat']);
 
@@ -25,8 +25,8 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
                 //gofood
                 $params = WPWrapper::param_Query_for_Helper($helper);
-                $helper->scanURL($controller, $params);               
-                
+                $helper->scanURL($controller, $params);
+
                 $helper->fetchPostLinks($controller);
             }
 
@@ -36,15 +36,15 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
             syslog(LOG_DEBUG, '[shedied bot] - update transient ' . $transient_name . ' count(' . count($post_links) . ')');
         }
 
-        if (!empty($post_links) && $sweeper) {
-
+        if (!empty($post_links) && $sweeper)
+        {
             $to_run = array_slice($post_links, 0, $count);
             $to_save = array_slice($post_links, $count, count($post_links));
 
-            if (!empty($to_run)) {
-
+            if (!empty($to_run))
+            {
                 $controller->setAuthor(SheDieDConfig::AUTHOR_ID) //bot
-                        ->setBulkPostStatus('publish')
+                        ->setBulkPostStatus($status)
                         ->setBulkPostType($helper->getPostType())
                         ->setInterval(['value' => SheDieDConfig::BOT_POST_INVTERVAL, 'type' => 'minutes'])
                         ->setCount($count)
@@ -55,14 +55,14 @@ function shedied_exec_bot(Numbers $helper, $sources = [], $count = 1, $transient
 
             set_transient($transient_name, $to_save);
         }
-    } catch (\Exception $e) {
-
+    } catch (\Exception $e)
+    {
         syslog(LOG_ERR, '[shedied bot] - ' . $e->getMessage());
     }
 }
 
-function first_Run($name) {
-
+function first_Run($name)
+{
     $afr = get_transient('afr');
 
     if (!isset($afr[$name]))
@@ -71,8 +71,8 @@ function first_Run($name) {
         return $afr[$name];
 }
 
-function update_first_Run($name, $fr) {
-
+function update_first_Run($name, $fr)
+{
     $afr = get_transient('afr');
 
     if (!$afr)
@@ -83,10 +83,11 @@ function update_first_Run($name, $fr) {
     set_transient('afr', $afr);
 }
 
-function bot_lokerkreasi_1() {
-
+function bot_lokerkreasi_1()
+{
     $sources = array_slice(SheDieDConfig::getSourcesList(), 0, 10, true);
-    $sources = array_map(function($i) {
+    $sources = array_map(function($i)
+    {
         $i['cat'] = 5;
         return $i;
     }, $sources);
@@ -96,10 +97,11 @@ function bot_lokerkreasi_1() {
 
 add_action('bot_lokerkreasi_1', 'bot_lokerkreasi_1');
 
-function bot_lokerkreasi_2() {
-
+function bot_lokerkreasi_2()
+{
     $sources = array_slice(SheDieDConfig::getSourcesList(), 10, 10, true);
-    $sources = array_map(function($i) {
+    $sources = array_map(function($i)
+    {
         $i['cat'] = 5;
         return $i;
     }, $sources);
@@ -109,10 +111,11 @@ function bot_lokerkreasi_2() {
 
 add_action('bot_lokerkreasi_2', 'bot_lokerkreasi_2');
 
-function bot_lokerkreasi_3() {
-
+function bot_lokerkreasi_3()
+{
     $sources = array_slice(SheDieDConfig::getSourcesList(), 20, 10, true);
-    $sources = array_map(function($i) {
+    $sources = array_map(function($i)
+    {
         $i['cat'] = 5;
         return $i;
     }, $sources);
@@ -122,10 +125,11 @@ function bot_lokerkreasi_3() {
 
 add_action('bot_lokerkreasi_3', 'bot_lokerkreasi_3');
 
-function bot_lokerkreasi_4() {
-
+function bot_lokerkreasi_4()
+{
     $sources = array_slice(SheDieDConfig::getSourcesList(), 30, 10, true);
-    $sources = array_map(function($i) {
+    $sources = array_map(function($i)
+    {
         $i['cat'] = 5;
         return $i;
     }, $sources);
@@ -135,7 +139,8 @@ function bot_lokerkreasi_4() {
 
 add_action('bot_lokerkreasi_4', 'bot_lokerkreasi_4');
 
-function bot_lokerkreasi_sweeper() {
+function bot_lokerkreasi_sweeper()
+{
     shedied_exec_bot([], 5, 'tsnt_lokerkreasi_1', true);
     shedied_exec_bot([], 5, 'tsnt_lokerkreasi_2', true);
     shedied_exec_bot([], 5, 'tsnt_lokerkreasi_3', true);
