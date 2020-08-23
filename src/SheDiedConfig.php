@@ -9,22 +9,24 @@ use SheDied\helpers\Empat;
 use SheDied\helpers\Lima;
 use SheDied\helpers\Enam;
 use SheDied\helpers\Tujuh;
+use SheDied\helpers\Wolu;
 
-class SheDieDConfig {
+class SheDieDConfig
+{
 
     static $sources = [];
 
     /**
      * SITE DOMAIN adalah project yang aktif
      */
-    const SITE_DOMAIN = 'awesomedecors.us';
+    const SITE_DOMAIN = 'soundwooden.co';
     const AUTHOR_ID = 1;
     const BOT_POST_INVTERVAL = 10; //minutes
 
-    private static function _sources() {
-
-        if (empty(self::$sources)) {
-
+    private static function _sources()
+    {
+        if (empty(self::$sources))
+        {
             if (self::SITE_DOMAIN == Satu::LOKERKREASI_COM)
                 self::$sources = Satu::sources();
             elseif (self::SITE_DOMAIN == Dua::AWESOMEDECORS_US)
@@ -39,21 +41,25 @@ class SheDieDConfig {
                 self::$sources = Enam::sources();
             elseif (self::SITE_DOMAIN == Tujuh::FURNITUREIDEAS_US)
                 self::$sources = Tujuh::sources();
+            elseif (self::SITE_DOMAIN == Wolu::SWOODEN)
+                self::$sources = Wolu::sources();
         }
     }
 
-    public static function getSourcesList() {
-
+    public static function getSourcesList()
+    {
         self::_sources();
         return self::$sources;
     }
 
-    public static function getSource($id) {
-
+    public static function getSource($id)
+    {
         self::_sources();
-        if (array_key_exists($id, self::$sources)) {
+        if (array_key_exists($id, self::$sources))
+        {
             return self::$sources[$id];
-        } else {
+        } else
+        {
             return FALSE;
         }
     }
@@ -66,18 +72,19 @@ class SheDieDConfig {
      * $indexes[0] pairs $cats[0]
      * @return array
      */
-    static public function pick_Sources(Array $indexes, Array $cats) {
-
+    static public function pick_Sources(Array $indexes, Array $cats)
+    {
         if (count($indexes) != count($cats))
             return [];
 
         $x = [];
 
-        foreach ($indexes as $key => $val) {
-
+        foreach ($indexes as $key => $val)
+        {
             $t = self::getSource($val);
 
-            if ($t) {
+            if ($t)
+            {
 
                 $t['cat'] = $cats[$key];
                 $x[$val] = $t;
