@@ -8,7 +8,7 @@ function bot_swooden_sweeper()
     $count = 0;
     $max = 1;
     $start = 2;
-    $end = 11;
+    $end = 25;
     $current = (int) get_transient('swooden_next_sweep');
     $mapping = array_reverse(swooden_mapping(), TRUE);
 
@@ -54,7 +54,21 @@ function swooden_mapping()
         7 => 2,
         9 => 15,
         10 => 13,
-        11 => 14
+        11 => 14,
+        12 => 17,
+        13 => 12,
+        14 => 13,
+        15 => 18,
+        16 => 19,
+        17 => 14,
+        18 => 2,
+        19 => 2,
+        20 => 19,
+        21 => 19,
+        22 => 17,
+        23 => 13,
+        24 => 2,
+        25 => 18,
     ];
 }
 
@@ -63,7 +77,7 @@ function bot_swooden_run()
     $count = 0;
     $max = 1;
     $start = 2;
-    $end = 11;
+    $end = 25;
     $current = (int) get_transient('swooden_next_run');
     $mapping = array_reverse(swooden_mapping(), TRUE);
 
