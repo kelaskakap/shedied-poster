@@ -61,6 +61,9 @@ class TrendirParser extends AbstractParserWithGallery
             {
                 $index = self::idx . $counter_p;
                 $photo = trim(pq($img)->attr('data-lazy-src'));
+                if (empty($photo))
+                    $photo = trim(pq($img)->attr('src'));
+                
                 $alt = $this->title;
                 $image = $this->setPhotoSource($photo, $alt, $alt);
 
