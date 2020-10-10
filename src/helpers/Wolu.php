@@ -41,6 +41,51 @@ class Wolu extends Numbers
             }
         }
 
+        if ($this->source_DESIGNMILK($controller))
+        {
+            foreach (pq('div.article-content h3 a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller))
+                {
+                    break;
+                }
+            }
+        }
+
+        if ($this->source_INSPIREDBYTHIS($controller))
+        {
+            foreach (pq('div.imglist div.imgtxtbox a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller))
+                {
+                    break;
+                }
+            }
+        }
+
+        if ($this->source_CONTEMPORIST($controller))
+        {
+            foreach (pq('article > h2.title a') as $a)
+            {
+                $link = pq($a)->attr('href');
+                $title = pq($a)->elements[0]->nodeValue;
+                $postlinks[] = array("title" => trim($title), "link" => trim($link), 'src' => $controller->getNewsSrc(), 'cat' => $controller->getCategory());
+
+                if ($this->enough($postlinks, $controller))
+                {
+                    break;
+                }
+            }
+        }
+
         $controller->setPostLinks($postlinks);
     }
 
@@ -76,7 +121,7 @@ class Wolu extends Numbers
         {
             $default = 100;
         }
-        
+
         $t = isset($this->fr[$sourceId]) ? (int) $this->fr[$sourceId] : $default;
         $Page = $t > 1 ? 'page/' . $t : '';
 
@@ -164,6 +209,93 @@ class Wolu extends Numbers
     public function getIdentity()
     {
         return static::SWOODEN;
+
+        array(
+            'source_11' =>
+            array(
+                11 => 8,
+            ),
+            'source_10' =>
+            array(
+                10 => 23,
+            ),
+            'source_9' =>
+            array(
+                9 => 42,
+            ),
+            'source_7' =>
+            array(
+                7 => -5,
+            ),
+            'source_6' =>
+            array(
+                6 => 30,
+            ),
+            'source_3' =>
+            array(
+                3 => 13,
+            ),
+            'source_2' =>
+            array(
+                2 => -3,
+            ),
+            'source_25' =>
+            array(
+                25 => 100,
+            ),
+            'source_24' =>
+            array(
+                24 => 100,
+            ),
+            'source_23' =>
+            array(
+                23 => 100,
+            ),
+            'source_22' =>
+            array(
+                22 => 100,
+            ),
+            'source_21' =>
+            array(
+                21 => 50,
+            ),
+            'source_20' =>
+            array(
+                20 => 50,
+            ),
+            'source_19' =>
+            array(
+                19 => 50,
+            ),
+            'source_18' =>
+            array(
+                18 => 50,
+            ),
+            'source_17' =>
+            array(
+                17 => 50,
+            ),
+            'source_16' =>
+            array(
+                16 => 50,
+            ),
+            'source_15' =>
+            array(
+                15 => 50,
+            ),
+            'source_14' =>
+            array(
+                14 => 50,
+            ),
+            'source_13' =>
+            array(
+                13 => 50,
+            ),
+            'source_12' =>
+            array(
+                12 => 50,
+            ),
+        );
     }
 
 }
