@@ -428,8 +428,8 @@ class PojokJogjaController extends Controller
         {
             $this->count = 1;
             $this->post_links[] = [
-                'title' => 'tsBvxUgBsa',
-                'link' => 'https://www.trendir.com/space-planning-for-open-floor-plan-living-on-a-budget/'
+                'title' => 'tsBvxwUgBxsa',
+                'link' => 'https://design-milk.com/seeing-shapes-terrazzo-society6/'
             ];
         }
 

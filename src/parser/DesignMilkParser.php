@@ -33,11 +33,14 @@ class DesignMilkParser extends AbstractParserWithGallery
             if ($img->length)
             {
 
-                $srcs = trim($img->attr('srcset'));
-                $arr = explode(',', $srcs);
-                $src = end($arr);
-                $photo = substr($src, 0, strrpos($src, ' '));
-                $photo = trim($photo);
+                //$srcs = trim($img->attr('srcset'));
+                //$arr = explode(',', $srcs);
+                //$src = end($arr);
+
+                //$photo = substr($src, 0, strrpos($src, ' '));
+                //$photo = trim($photo);
+
+                $photo = trim($img->attr('src'));
 
                 $alt = $this->title;
                 $image = $this->setPhotoSource($photo, $alt, $alt);
