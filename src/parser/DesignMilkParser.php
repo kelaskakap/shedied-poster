@@ -32,13 +32,7 @@ class DesignMilkParser extends AbstractParserWithGallery
 
             if ($img->length)
             {
-
-                $srcs = trim($img->attr('srcset'));
-                $arr = explode(',', $srcs);
-                $src = end($arr);
-                $photo = substr($src, 0, strrpos($src, ' '));
-                $photo = trim($photo);
-
+                $photo = $this->parseImage($img);
                 $alt = $this->title;
                 $image = $this->setPhotoSource($photo, $alt, $alt);
 
@@ -65,13 +59,7 @@ class DesignMilkParser extends AbstractParserWithGallery
 
                 if ($img->length)
                 {
-
-                    $srcs = trim($img->attr('srcset'));
-                    $arr = explode(',', $srcs);
-                    $src = end($arr);
-                    $photo = substr($src, 0, strrpos($src, ' '));
-                    $photo = trim($photo);
-
+                    $photo = $this->parseImage($img);
                     $alt = $this->title;
                     $image = $this->setPhotoSource($photo, $alt, $alt);
 
@@ -82,6 +70,23 @@ class DesignMilkParser extends AbstractParserWithGallery
 
         //temp content
         $this->content = "Lorem ipsum";
+    }
+
+    protected function parseImage($img)
+    {
+        $srcs = trim($img->attr('srcset'));
+        $arr = explode(',', $srcs);
+        $src = end($arr);
+
+        $photo = substr($src, 0, strrpos($src, ' '));
+        $photo = trim($photo);
+
+        $size = substr($src, strrpos($src, ' '), -1);
+
+        if ((int) $size < 700) //px
+            $photo = trim($img->attr('src'));
+
+        return $photo;
     }
 
     public function grab()
